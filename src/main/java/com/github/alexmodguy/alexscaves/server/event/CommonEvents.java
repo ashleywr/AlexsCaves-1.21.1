@@ -90,6 +90,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import net.minecraft.server.level.ServerPlayer;
 
 @SuppressWarnings({"null", "deprecation", "unused"})
 public class CommonEvents {
@@ -440,6 +441,37 @@ public class CommonEvents {
                     event.getEntity().sendSystemMessage(Component.translatable("alexscaves.startup_warning.generation_incompatible", modid).withStyle(ChatFormatting.RED));
                 }
             }
+        }
+    }
+
+    /**
+     * Darkness Incarnate grants flight and revokes it from MobEffectEvent.Remove and
+     * Expired. If neither fires, for example because the effect ran out while the player
+     * was offline, the ability persisted and the player could fly indefinitely. Rejoining
+     * was the only known workaround. See AlexModGuy/AlexsCaves issue #1463.
+     *
+     * Rather than blanket revoking mayfly, which would steal flight granted by other mods,
+     * this only acts when the player still carries the boosted flying speed this effect
+     * sets and no longer has the effect. It logs when it fires so the case stays visible.
+     */
+    @SubscribeEvent
+    public void revokeStrandedDarknessFlight(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        if (player.isCreative() || player.isSpectator()) {
+            return;
+        }
+        if (player.hasEffect(ACEffectRegistry.DARKNESS_INCARNATE)) {
+            return;
+        }
+        float darknessFlightSpeed = 0.05F * 4.0F;
+        if (player.getAbilities().mayfly && player.getAbilities().getFlyingSpeed() == darknessFlightSpeed) {
+            player.getAbilities().mayfly = false;
+            player.getAbilities().flying = false;
+            player.getAbilities().setFlyingSpeed(0.05F);
+            player.onUpdateAbilities();
+            AlexsCaves.LOGGER.info("Revoked leftover Darkness Incarnate flight from {} on login; the effect was gone but the ability was still granted.", player.getGameProfile().getName());
         }
     }
 
