@@ -24,6 +24,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 import java.util.Optional;
+import net.minecraft.world.level.biome.FeatureSorter;
+import org.spongepowered.asm.mixin.Unique;
 
 /**
  * This mixin hooks into applyBiomeDecoration to manually place Alex's Caves features.
@@ -31,11 +33,26 @@ import java.util.Optional;
 @Mixin(ChunkGenerator.class)
 public class ChunkGeneratorMixin {
 
+    @Unique
+    private static boolean alexscaves$warnedEmptyFeatureSteps = false;
+
     @Redirect(method = "applyBiomeDecoration", at = @At(value = "INVOKE", target = "Ljava/util/List;get(I)Ljava/lang/Object;"))
     private Object ac_clampBiomeDecorationIndex(List<?> list, int index) {
+        if (list.isEmpty()) {
+            // An empty list here can only be featuresPerStep. Vanilla guards the biome
+            // feature list with its own size check, and the per-step features list is
+            // indexed from an array derived from that same list, so neither can be
+            // reached while empty. Clamping used to compute index 0 and then call get(0)
+            // on the empty list, which is the IndexOutOfBoundsException in issue #172.
+            // Returning an empty StepFeatureData makes vanilla's inner loop a no-op.
+            if (!alexscaves$warnedEmptyFeatureSteps) {
+                alexscaves$warnedEmptyFeatureSteps = true;
+                AlexsCaves.LOGGER.warn("featuresPerStep was empty during applyBiomeDecoration; skipping that step. This usually means another worldgen mod rebuilt the feature lists. Warning shown once.");
+            }
+            return new FeatureSorter.StepFeatureData(List.of(), placedFeature -> 0);
+        }
         if (index < 0 || index >= list.size()) {
-            int safeIndex = Math.max(0, Math.min(index, list.size() - 1));
-            return list.get(safeIndex);
+            return list.get(Math.max(0, Math.min(index, list.size() - 1)));
         }
         return list.get(index);
     }
