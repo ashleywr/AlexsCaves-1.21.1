@@ -1,7 +1,12 @@
 {
   "display": {
     "icon": {
-      "id": "alexscaves:rock_candy_pink"
+      "id": "citadel:icon_item",
+      "components": {
+        "citadel:icon_item_display": {
+          "icon_location": "alexscaves:textures/misc/advancement/icon/candy_cavity.png"
+        }
+      }
     },
     "title": {
       "translate": "advancements.alexscaves.discover_candy_cavity.title"

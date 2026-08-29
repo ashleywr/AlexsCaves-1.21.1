@@ -1,7 +1,12 @@
 {
   "display": {
     "icon": {
-      "id": "alexscaves:jelly_bean"
+      "id": "citadel:icon_item",
+      "components": {
+        "citadel:icon_item_display": {
+          "icon_location": "alexscaves:textures/misc/advancement/icon/tame_candicorn.png"
+        }
+      }
     },
     "title": {
       "translate": "advancements.alexscaves.tame_candicorn.title"

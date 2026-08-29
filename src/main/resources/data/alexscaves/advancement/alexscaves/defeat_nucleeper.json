@@ -1,7 +1,12 @@
 {
   "display": {
     "icon": {
-      "id": "alexscaves:uranium"
+      "id": "citadel:icon_item",
+      "components": {
+        "citadel:icon_item_display": {
+          "icon_location": "alexscaves:textures/misc/advancement/icon/defeat_nucleeper.png"
+        }
+      }
     },
     "title": {
       "translate": "advancements.alexscaves.defeat_nucleeper.title"

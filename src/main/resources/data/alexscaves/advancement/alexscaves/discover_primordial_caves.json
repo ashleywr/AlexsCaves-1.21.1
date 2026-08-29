@@ -1,7 +1,12 @@
 {
   "display": {
     "icon": {
-      "id": "alexscaves:heavy_bone"
+      "id": "citadel:icon_item",
+      "components": {
+        "citadel:icon_item_display": {
+          "icon_location": "alexscaves:textures/misc/advancement/icon/primordial_caves.png"
+        }
+      }
     },
     "title": {
       "translate": "advancements.alexscaves.discover_primordial_caves.title"

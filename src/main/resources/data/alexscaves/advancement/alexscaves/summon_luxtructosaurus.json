@@ -1,7 +1,12 @@
 {
   "display": {
     "icon": {
-      "id": "alexscaves:radiant_essence"
+      "id": "citadel:icon_item",
+      "components": {
+        "citadel:icon_item_display": {
+          "icon_location": "alexscaves:textures/misc/advancement/icon/summon_luxtructosaurus.png"
+        }
+      }
     },
     "title": {
       "translate": "advancements.alexscaves.summon_luxtructosaurus.title"

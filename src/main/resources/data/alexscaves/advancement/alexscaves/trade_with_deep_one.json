@@ -1,7 +1,12 @@
 {
   "display": {
     "icon": {
-      "id": "alexscaves:pearl"
+      "id": "citadel:icon_item",
+      "components": {
+        "citadel:icon_item_display": {
+          "icon_location": "alexscaves:textures/misc/advancement/icon/deep_one_1.png"
+        }
+      }
     },
     "title": {
       "translate": "advancements.alexscaves.trade_with_deep_one.title"

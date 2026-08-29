@@ -1,7 +1,12 @@
 {
   "display": {
     "icon": {
-      "id": "alexscaves:biome_treat"
+      "id": "citadel:icon_item",
+      "components": {
+        "citadel:icon_item_display": {
+          "icon_location": "alexscaves:textures/misc/advancement/icon/convert_biome.png"
+        }
+      }
     },
     "title": {
       "translate": "advancements.alexscaves.convert_biome.title"

@@ -1,7 +1,12 @@
 {
   "display": {
     "icon": {
-      "id": "alexscaves:occult_gem"
+      "id": "citadel:icon_item",
+      "components": {
+        "citadel:icon_item_display": {
+          "icon_location": "alexscaves:textures/misc/advancement/icon/underzealot_sacrifice.png"
+        }
+      }
     },
     "title": {
       "translate": "advancements.alexscaves.underzealot_sacrifice.title"
