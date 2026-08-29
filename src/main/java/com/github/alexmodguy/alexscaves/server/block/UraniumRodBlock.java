@@ -33,6 +33,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
+import net.minecraft.world.entity.player.Player;
 
 public class UraniumRodBlock extends RotatedPillarBlock implements SimpleWaterloggedBlock  {
 
@@ -105,7 +106,8 @@ public class UraniumRodBlock extends RotatedPillarBlock implements SimpleWaterlo
         return super.getStateForPlacement(context).setValue(LIQUID_LOGGED, getLiquidType(levelaccessor.getFluidState(blockpos)));
     }
 
-    public boolean canPlaceLiquid(BlockGetter getter, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+    @Override
+    public boolean canPlaceLiquid(Player player, BlockGetter getter, BlockPos blockPos, BlockState blockState, Fluid fluid) {
         return fluid == Fluids.WATER || fluid.getFluidType() == ACFluidRegistry.ACID_FLUID_TYPE.get();
     }
 
@@ -127,7 +129,8 @@ public class UraniumRodBlock extends RotatedPillarBlock implements SimpleWaterlo
         }
     }
 
-    public ItemStack pickupBlock(LevelAccessor levelAccessor, BlockPos blockPos, BlockState state) {
+    @Override
+    public ItemStack pickupBlock(Player player, LevelAccessor levelAccessor, BlockPos blockPos, BlockState state) {
         int liquidType = state.getValue(LIQUID_LOGGED);
         if (liquidType > 0) {
             levelAccessor.setBlock(blockPos, state.setValue(LIQUID_LOGGED, 0), 3);

@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import net.minecraft.world.entity.player.Player;
 
 public class SulfurBudBlock extends Block implements SimpleWaterloggedBlock {
     public static final IntegerProperty LIQUID_LOGGED = IntegerProperty.create("liquid_logged", 0, 2);
@@ -124,7 +125,8 @@ public class SulfurBudBlock extends Block implements SimpleWaterloggedBlock {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
-    public boolean canPlaceLiquid(BlockGetter getter, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+    @Override
+    public boolean canPlaceLiquid(Player player, BlockGetter getter, BlockPos blockPos, BlockState blockState, Fluid fluid) {
         return fluid == Fluids.WATER || fluid.getFluidType() == ACFluidRegistry.ACID_FLUID_TYPE.get();
     }
 
@@ -146,7 +148,8 @@ public class SulfurBudBlock extends Block implements SimpleWaterloggedBlock {
         }
     }
 
-    public ItemStack pickupBlock(LevelAccessor levelAccessor, BlockPos blockPos, BlockState state) {
+    @Override
+    public ItemStack pickupBlock(Player player, LevelAccessor levelAccessor, BlockPos blockPos, BlockState state) {
         int liquidType = state.getValue(LIQUID_LOGGED);
         if (liquidType > 0) {
             levelAccessor.setBlock(blockPos, state.setValue(LIQUID_LOGGED, 0), 3);

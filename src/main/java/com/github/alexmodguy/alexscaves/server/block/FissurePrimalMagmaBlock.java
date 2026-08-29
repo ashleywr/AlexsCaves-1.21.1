@@ -41,6 +41,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.level.LevelReader;
 
 public class FissurePrimalMagmaBlock extends Block {
 
@@ -151,11 +152,13 @@ public class FissurePrimalMagmaBlock extends Block {
         }
     }
 
-    public ItemStack getCloneItemStack(BlockGetter blockGetter, BlockPos blockPos, BlockState blockState) {
+    @Override
+    public ItemStack getCloneItemStack(LevelReader blockGetter, BlockPos blockPos, BlockState blockState) {
         return new ItemStack(ACBlockRegistry.PRIMAL_MAGMA.get());
     }
 
-    public boolean isPathfindable(BlockState blockState, BlockGetter getter, BlockPos blockPos, PathComputationType computationType) {
+    @Override
+    public boolean isPathfindable(BlockState blockState, PathComputationType computationType) {
         return false;
     }
 

@@ -76,7 +76,8 @@ public class GobthumperBlock extends BaseEntityBlock implements SimpleWaterlogge
         }
     }
 
-    public boolean isPathfindable(BlockState state, BlockGetter getter, BlockPos pos, PathComputationType type) {
+    @Override
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
 

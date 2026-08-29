@@ -85,7 +85,8 @@ public class GiantSweetberryBlock extends Block implements SimpleWaterloggedBloc
         }
     }
 
-    public boolean isPathfindable(BlockState state, BlockGetter getter, BlockPos pos, PathComputationType type) {
+    @Override
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
 
