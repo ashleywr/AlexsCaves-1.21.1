@@ -24,6 +24,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
+import net.minecraft.server.MinecraftServer;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
+import net.minecraft.core.registries.Registries;
 
 /**
  * This mixin injects Alex's Caves biomes into the world generation.
@@ -111,7 +114,12 @@ public class MultiNoiseBiomeSourceMixin implements MultiNoiseBiomeSourceAccessor
                     }
 
                     Holder<Biome> biomeHolder = biomeMap.get(condition.getKey());
-                    if (biomeHolder != null) {
+                    // Only hand back a holder the current world can resolve. A holder left over
+                    // from a previously loaded world still answers value(), but that Biome is
+                    // absent from this world's registry, so anything asking the registry for its
+                    // key gets null. Nature's Compass does exactly that and wraps the result in
+                    // Optional.of, which then throws and takes the server tick loop with it.
+                    if (biomeHolder != null && ac_isResolvableHere(biomeHolder)) {
                         cir.setReturnValue(biomeHolder);
                         return;
                     }
@@ -153,5 +161,38 @@ public class MultiNoiseBiomeSourceMixin implements MultiNoiseBiomeSourceAccessor
     public void setLastSampledDimension(ResourceKey<Level> dimension) {
         lastSampledDimension = dimension;
         ACWorldSeedHolder.setDimension(dimension);
+    }
+
+    @Unique
+    private static volatile MinecraftServer ac_validatedForServer = null;
+    @Unique
+    private static volatile boolean ac_holdersValid = true;
+
+    /**
+     * getNoiseBiome is one of the hottest paths in world generation, so the registry
+     * reverse lookup is done once per server rather than per sample. If the biome map
+     * belongs to a previously loaded world its holders are not resolvable here, and
+     * returning one gives callers a Biome whose registry key is null.
+     */
+    @Unique
+    private static boolean ac_isResolvableHere(Holder<Biome> holder) {
+        if (!holder.isBound() || holder.unwrapKey().isEmpty()) {
+            return false;
+        }
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        if (server == null) {
+            // Nothing to validate against, for example during world creation previews.
+            return true;
+        }
+        if (server != ac_validatedForServer) {
+            ac_holdersValid = server.registryAccess()
+                    .registryOrThrow(Registries.BIOME)
+                    .getKey(holder.value()) != null;
+            ac_validatedForServer = server;
+            if (!ac_holdersValid) {
+                AlexsCaves.LOGGER.warn("Alex's Caves biome holders do not belong to the current world; skipping biome injection until they are rebuilt.");
+            }
+        }
+        return ac_holdersValid;
     }
 }

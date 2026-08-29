@@ -22,6 +22,11 @@ public class ACBiomeMapHolder {
     // Store the registry access for lazy initialization
     private static volatile RegistryAccess storedRegistryAccess = null;
 
+    // The server whose registry the map was built from. Biome registries are per world,
+    // so a map built for one world holds Holder instances that a later world's registry
+    // cannot resolve. Anything asking that registry for their key gets null back.
+    private static volatile MinecraftServer builtForServer = null;
+
     public static Holder<Biome> getBiomeHolder(ResourceKey<Biome> key) {
         ensureInitialized();
         return biomeMap.get(key);
@@ -41,8 +46,20 @@ public class ACBiomeMapHolder {
     }
 
     private static void ensureInitialized() {
-        if (!initialized || biomeMap.isEmpty()) {
+        MinecraftServer current = ServerLifecycleHooks.getCurrentServer();
+        boolean staleWorld = current != null && builtForServer != null && builtForServer != current;
+        if (!initialized || biomeMap.isEmpty() || staleWorld) {
             synchronized (lock) {
+                current = ServerLifecycleHooks.getCurrentServer();
+                staleWorld = current != null && builtForServer != null && builtForServer != current;
+                if (staleWorld) {
+                    // Leaving the old entries in place would hand out holders from the previous
+                    // world, which is what produced a null biome key and crashed Nature's Compass.
+                    AlexsCaves.LOGGER.debug("Rebuilding the Alex's Caves biome map: it was built for a different world.");
+                    biomeMap.clear();
+                    initialized = false;
+                    storedRegistryAccess = null;
+                }
                 if (!initialized || biomeMap.isEmpty()) {
                     tryInitializeFromServer();
                 }
@@ -81,6 +98,7 @@ public class ACBiomeMapHolder {
             holderOptional.ifPresent(biomeHolder -> biomeMap.put(biomeResourceKey, biomeHolder));
         }
         initialized = true;
+        builtForServer = ServerLifecycleHooks.getCurrentServer();
     }
 
     public static void initializeFromRegistry(Registry<Biome> biomeRegistry) {
@@ -102,6 +120,7 @@ public class ACBiomeMapHolder {
             biomeMap.clear();
             initialized = false;
             storedRegistryAccess = null;
+            builtForServer = null;
         }
     }
 }
