@@ -26,6 +26,7 @@ public class DesolateDaggerItem extends SwordItem implements DemonicRarity {
             for(int i = 0; i < 1 + stack.getEnchantmentLevel(player.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(ACEnchantmentRegistry.DOUBLE_STAB)); i++){
                 DesolateDaggerEntity daggerEntity = ACEntityRegistry.DESOLATE_DAGGER.get().create(player.level());
                 daggerEntity.setTargetId(hurt.getId());
+                daggerEntity.setPlayerId(player.getId());
                 daggerEntity.copyPosition(player);
                 daggerEntity.setItemStack(stack);
                 daggerEntity.orbitFor = (delayedLevel > 0 ? 40 : 20) + player.getRandom().nextInt(10);
