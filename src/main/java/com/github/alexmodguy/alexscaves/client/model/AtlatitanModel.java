@@ -5,6 +5,7 @@ import com.github.alexthe666.citadel.client.model.AdvancedModelBox;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector4f;
 
@@ -104,6 +105,15 @@ public class AtlatitanModel extends SauropodBaseModel<AtlatitanEntity> {
         cube_r12.setTextureOffset(139, 62).addBox(-4.0F, -13.0F, 2.0F, 8.0F, 17.0F, 8.0F, 0.0F, false);
         cube_r12.setTextureOffset(139, 62).addBox(-4.0F, -10.0F, 51.0F, 8.0F, 17.0F, 8.0F, 0.0F, false);
         this.updateDefaultPose();
+    }
+
+    @Override
+    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int packedColor) {
+        this.renderToBuffer(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn,
+                FastColor.ARGB32.red(packedColor) / 255.0F,
+                FastColor.ARGB32.green(packedColor) / 255.0F,
+                FastColor.ARGB32.blue(packedColor) / 255.0F,
+                FastColor.ARGB32.alpha(packedColor) / 255.0F);
     }
 
     public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {

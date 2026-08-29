@@ -300,6 +300,15 @@ public class GrottoceratopsModel extends AdvancedEntityModel<GrottoceratopsEntit
         animator.resetKeyframe(5);
     }
 
+    @Override
+    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int packedColor) {
+        this.renderToBuffer(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn,
+                FastColor.ARGB32.red(packedColor) / 255.0F,
+                FastColor.ARGB32.green(packedColor) / 255.0F,
+                FastColor.ARGB32.blue(packedColor) / 255.0F,
+                FastColor.ARGB32.alpha(packedColor) / 255.0F);
+    }
+
     public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
         if (this.young) {
             float f = 1.5F;
