@@ -1,0 +1,55 @@
+{
+  "values": {
+    "alexscaves:pine_nuts": {
+      "chance": 0.5
+    },
+    "alexscaves:pewen_sap": {
+      "chance": 0.2
+    },
+    "alexscaves:pewen_sapling": {
+      "chance": 0.3
+    },
+    "alexscaves:pewen_pines": {
+      "chance": 0.3
+    },
+    "alexscaves:pewen_branch": {
+      "chance": 0.3
+    },
+    "alexscaves:ancient_sapling": {
+      "chance": 0.3
+    },
+    "alexscaves:ancient_leaves": {
+      "chance": 0.3
+    },
+    "alexscaves:fiddlehead": {
+      "chance": 0.4
+    },
+    "alexscaves:curly_fern": {
+      "chance": 0.3
+    },
+    "alexscaves:flytrap": {
+      "chance": 0.65
+    },
+    "alexscaves:cycad": {
+      "chance": 0.65
+    },
+    "alexscaves:tree_star": {
+      "chance": 0.65
+    },
+    "alexscaves:archaic_vine": {
+      "chance": 0.5
+    },
+    "alexscaves:fern_thatch": {
+      "chance": 0.85
+    },
+    "alexscaves:underweed": {
+      "chance": 0.3
+    },
+    "alexscaves:thornwood_branch": {
+      "chance": 0.3
+    },
+    "alexscaves:thornwood_sapling": {
+      "chance": 0.3
+    }
+  }
+}
