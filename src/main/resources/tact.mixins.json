@@ -4,27 +4,9 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "tact.refmap.json",
   "mixins": [
-    "BiomeTreatItemMixin",
     "BlockStateBaseAccessor",
-    "DesolateDaggerEntityMixin",
-    "ExtinctionSpearEntityMixin",
-    "FerrouslimeEntityMixin",
-    "ForsakenEntityMixin",
     "GeodeFeatureMixin",
-    "GobthumperBlockEntityMixin",
-    "HazmatArmorItemMixin",
-    "LuxtructosaurusMeleeGoalMixin",
-    "MagnetronEntityMixin",
-    "MobEffectInstanceAccessor",
-    "NuclearFurnaceBlockEntityAccessor",
-    "NuclearFurnaceBlockEntityMixin",
-    "PrimitiveClubItemMixin",
-    "RaygunItemMixin",
-    "SpearItemAccessor",
-    "SubterranodonEntityMixin",
-    "TremorsaurusEntityMixin",
-    "TremorzillaEntityMixin",
-    "VallumraptorEntityMixin"
+    "MobEffectInstanceAccessor"
   ],
   "client": [],
   "injectors": {

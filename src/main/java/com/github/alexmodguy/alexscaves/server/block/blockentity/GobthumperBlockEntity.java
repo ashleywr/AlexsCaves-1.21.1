@@ -68,7 +68,12 @@ public class GobthumperBlockEntity extends BlockEntity {
                         if(summonPos.getY() < level.getMinBuildHeight() + 2){
                             summonPos = summonPos.atY(level.getMinBuildHeight() + 2);
                         }
-                        if(level.isLoaded(summonPos) && level.getBlockState(summonPos).isSolid() && !level.getBlockState(summonPos).is(ACTagRegistry.GUM_WORM_BLOCKS_DIGGING)){
+                        // TACT: worm summoning can be disabled outright, or restricted to
+                        // the Candy Cavity biome. Gobthumpers still attract existing worms.
+                        boolean tactAllowsSummon = !com.telepathicgrunt.tact.Config.GOBTHUMPER_DISABLE_WORM_SPAWNING.get()
+                                && (!com.telepathicgrunt.tact.Config.GOBTHUMPER_SPAWNS_WORMS_FROM_CANDY_CAVITY_BIOME.get()
+                                        || level.getBiome(summonPos).is(com.telepathicgrunt.tact.BlockModifications.CANDY_CAVITY_BIOME_KEY));
+                        if(tactAllowsSummon && level.isLoaded(summonPos) && level.getBlockState(summonPos).isSolid() && !level.getBlockState(summonPos).is(ACTagRegistry.GUM_WORM_BLOCKS_DIGGING)){
                             flag = true;
                             break;
                         }

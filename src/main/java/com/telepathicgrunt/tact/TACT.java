@@ -21,6 +21,8 @@ public class TACT {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static TagKey<Biome> MANUALLY_CARVED = TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(MODID, "manually_carved"));
+    public static final net.minecraft.tags.TagKey<net.minecraft.world.entity.EntityType<?>> PRIMITIVE_CLUB_STUN_IMMUNE =
+            net.minecraft.tags.TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(MODID, "primitive_club_stun_immune"));
 
     public TACT(IEventBus modEventBus, ModContainer modContainer) {
 

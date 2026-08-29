@@ -57,19 +57,11 @@ public class HazmatArmorItem extends ArmorItem {
     }
 
     public static int getWornAmount(LivingEntity entity) {
-        int i = 0;
-        if (entity.getItemBySlot(EquipmentSlot.HEAD).is(ACItemRegistry.HAZMAT_MASK.get())) {
-            i++;
-        }
-        if (entity.getItemBySlot(EquipmentSlot.CHEST).is(ACItemRegistry.HAZMAT_CHESTPLATE.get())) {
-            i++;
-        }
-        if (entity.getItemBySlot(EquipmentSlot.LEGS).is(ACItemRegistry.HAZMAT_LEGGINGS.get())) {
-            i++;
-        }
-        if (entity.getItemBySlot(EquipmentSlot.FEET).is(ACItemRegistry.HAZMAT_BOOTS.get())) {
-            i++;
-        }
-        return i;
+        // TACT: counted via the tact:radioactive_and_acid_resistant_armor tag instead of
+        // hardcoded slot checks, so other mods' protective gear can be recognised. The
+        // tag already contains all four hazmat pieces, so this replaces the old checks
+        // rather than adding to them; adding would count hazmat armour twice.
+        return com.telepathicgrunt.tact.ItemModifications
+                .howManyEquippedRadioactiveOrAcidResistantArmorOnEntity(entity);
     }
 }

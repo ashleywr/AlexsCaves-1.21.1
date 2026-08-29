@@ -309,7 +309,7 @@ public class TremorzillaEntity extends DinosaurEntity implements KeybindUsingMou
                 screenShakeAmount = 2.0F;
             }
             if (this.walkAnimation.speed() > 0.5F && Math.abs(f1) < 0.1F) {
-                stompEffect(f2 > 0, 1F, 1.3F, 0.4F + this.walkAnimation.speed(), 2F);
+                stompEffect(f2 > 0, 1F, 1.3F, 0.4F + this.walkAnimation.speed(), com.telepathicgrunt.tact.Config.TREMORZILLA_WEAK_STOMP_DAMAGE.get().floatValue());
             }
         }
         tickMultipart();
@@ -369,17 +369,17 @@ public class TremorzillaEntity extends DinosaurEntity implements KeybindUsingMou
             }
             if ((this.getAnimation() == ANIMATION_RIGHT_SCRATCH || this.getAnimation() == ANIMATION_LEFT_SCRATCH) && this.getAnimationTick() == 18) {
                 Vec3 center = new Vec3(0, 5 * this.getScale(), 6 * this.getScale()).yRot(-this.yBodyRot * ((float) Math.PI / 180F)).add(position());
-                this.hurtEntitiesAround(center, 6.0F, 10.0F, 2.0F, false, true, true);
+                this.hurtEntitiesAround(center, 6.0F, com.telepathicgrunt.tact.Config.TREMORZILLA_SCRATCH_ATTACK_DAMAGE.get().floatValue(), 2.0F, false, true, true);
                 if (!level().isClientSide) {
                     this.breakBlocksAround(center, 3.0F, false, false, 0.6F);
                 }
             }
             if ((this.getAnimation() == ANIMATION_RIGHT_TAIL || this.getAnimation() == ANIMATION_LEFT_TAIL) && this.getAnimationTick() >= 10 && this.getAnimationTick() < 25) {
-                this.hurtEntitiesAround(tailPart1.centeredPosition(), 4.0F, 10.0F, 2.0F, false, true, true);
-                this.hurtEntitiesAround(tailPart2.centeredPosition(), 4.0F, 10.0F, 2.0F, false, true, true);
-                this.hurtEntitiesAround(tailPart3.centeredPosition(), 4.0F, 10.0F, 2.0F, false, true, true);
-                this.hurtEntitiesAround(tailPart4.centeredPosition(), 3.0F, 10.0F, 2.0F, false, true, true);
-                this.hurtEntitiesAround(tailPart5.centeredPosition(), 3.0F, 10.0F, 2.0F, false, true, true);
+                this.hurtEntitiesAround(tailPart1.centeredPosition(), 4.0F, com.telepathicgrunt.tact.Config.TREMORZILLA_TAIL_ATTACK_DAMAGE.get().floatValue(), 2.0F, false, true, true);
+                this.hurtEntitiesAround(tailPart2.centeredPosition(), 4.0F, com.telepathicgrunt.tact.Config.TREMORZILLA_TAIL_ATTACK_DAMAGE.get().floatValue(), 2.0F, false, true, true);
+                this.hurtEntitiesAround(tailPart3.centeredPosition(), 4.0F, com.telepathicgrunt.tact.Config.TREMORZILLA_TAIL_ATTACK_DAMAGE.get().floatValue(), 2.0F, false, true, true);
+                this.hurtEntitiesAround(tailPart4.centeredPosition(), 3.0F, com.telepathicgrunt.tact.Config.TREMORZILLA_TAIL_ATTACK_DAMAGE.get().floatValue(), 2.0F, false, true, true);
+                this.hurtEntitiesAround(tailPart5.centeredPosition(), 3.0F, com.telepathicgrunt.tact.Config.TREMORZILLA_TAIL_ATTACK_DAMAGE.get().floatValue(), 2.0F, false, true, true);
                 if (!level().isClientSide) {
                     this.breakBlocksAround(tailPart1.centeredPosition(), 2.0F, false, false, 0.6F);
                     this.breakBlocksAround(tailPart2.centeredPosition(), 2.0F, false, false, 0.6F);
@@ -389,12 +389,12 @@ public class TremorzillaEntity extends DinosaurEntity implements KeybindUsingMou
                 }
             }
             if ((this.getAnimation() == ANIMATION_LEFT_STOMP || this.getAnimation() == ANIMATION_RIGHT_STOMP) && this.getAnimationTick() == 18) {
-                this.stompEffect(this.getAnimation() == ANIMATION_LEFT_STOMP, 2.0F, 5F, 1.2F, 10F);
+                this.stompEffect(this.getAnimation() == ANIMATION_LEFT_STOMP, 2.0F, 5F, 1.2F, com.telepathicgrunt.tact.Config.TREMORZILLA_STRONG_STOMP_DAMAGE.get().floatValue());
                 screenShakeAmount = 4.0F;
             }
             if (this.getAnimation() == ANIMATION_BITE && this.getAnimationTick() == 10) {
                 Vec3 center = new Vec3(0, 7 * this.getScale(), 5 * this.getScale()).yRot(-this.yBodyRot * ((float) Math.PI / 180F)).add(position());
-                this.hurtEntitiesAround(center, 7.5F, 10.0F, 2.0F, false, true, true);
+                this.hurtEntitiesAround(center, 7.5F, com.telepathicgrunt.tact.Config.TREMORZILLA_BITE_ATTACK_DAMAGE.get().floatValue(), 2.0F, false, true, true);
                 if (!level().isClientSide) {
                     this.breakBlocksAround(center, 4.0F, false, false, 0.6F);
                 }
@@ -482,11 +482,11 @@ public class TremorzillaEntity extends DinosaurEntity implements KeybindUsingMou
             }
             float healthAmount = this.getHealth() / this.getMaxHealth();
             if (healthAmount <= 0.2F) {
-                healEveryTick(10, 5.0F);
+                healEveryTick(com.telepathicgrunt.tact.Config.TREMORZILLA_LOW_HEALTH_RECOVERY_RATE_IN_TICKS.get(), com.telepathicgrunt.tact.Config.TREMORZILLA_LOW_HEALTH_RECOVERY_AMOUNT.get().floatValue());
             } else if (healthAmount <= 0.5F) {
-                healEveryTick(20, 3.0F);
+                healEveryTick(com.telepathicgrunt.tact.Config.TREMORZILLA_MEDIUM_HEALTH_RECOVERY_RATE_IN_TICKS.get(), com.telepathicgrunt.tact.Config.TREMORZILLA_MEDIUM_HEALTH_RECOVERY_AMOUNT.get().floatValue());
             } else {
-                healEveryTick(100, 2.0F);
+                healEveryTick(com.telepathicgrunt.tact.Config.TREMORZILLA_HIGH_HEALTH_RECOVERY_RATE_IN_TICKS.get(), com.telepathicgrunt.tact.Config.TREMORZILLA_HIGH_HEALTH_RECOVERY_AMOUNT.get().floatValue());
             }
         }
         if (!this.isPowered()) {
@@ -787,10 +787,10 @@ public class TremorzillaEntity extends DinosaurEntity implements KeybindUsingMou
                         brokenClosestBlocks = this.breakBlocksAround(startClip, AlexsCaves.COMMON_CONFIG.devastatingTremorzillaBeam.get() ? destructionScale : destructionScale * 0.75F, false, true, 0.08F);
                         furthestBlockDist = (float) startClip.distanceTo(start);
                     }
-                    this.hurtEntitiesAround(startClip, destructionScale + 1, 20.0F, 1.0F, true, true, false);
+                    this.hurtEntitiesAround(startClip, destructionScale + 1, com.telepathicgrunt.tact.Config.TREMORZILLA_BEAM_ATTACK_DAMAGE.get().floatValue(), 1.0F, true, true, false);
                     walkThroughBeam += destructionScale;
                 }
-                this.hurtEntitiesAround(endBeamPos, 6F, 20.0F, 1.0F, true, true, false);
+                this.hurtEntitiesAround(endBeamPos, 6F, com.telepathicgrunt.tact.Config.TREMORZILLA_BEAM_ATTACK_DAMAGE.get().floatValue(), 1.0F, true, true, false);
                 if (AlexsCaves.COMMON_CONFIG.devastatingTremorzillaBeam.get() && beamTime % 6 == 0) {
                     this.breakBlocksAround(endBeamPos, 4F, false, true, 0.08F);
                 }
@@ -905,7 +905,7 @@ public class TremorzillaEntity extends DinosaurEntity implements KeybindUsingMou
     }
 
     public boolean breakBlocksInBoundingBox(float dropChance) {
-        if (this.isBaby() || !this.level().getGameRules().getBoolean(net.minecraft.world.level.GameRules.RULE_MOBGRIEFING) || level().isClientSide) {
+        if (!com.telepathicgrunt.tact.Config.TREMORZILLA_WALKING_BLOCK_GRIEFING.get() || this.isBaby() || !this.level().getGameRules().getBoolean(net.minecraft.world.level.GameRules.RULE_MOBGRIEFING) || level().isClientSide) {
             return false;
         }
         boolean flag = false;
@@ -1401,7 +1401,7 @@ public class TremorzillaEntity extends DinosaurEntity implements KeybindUsingMou
     }
 
     public float getStepHeight() {
-        return 1.6F;
+        return com.telepathicgrunt.tact.Config.TREMORZILLA_STEP_HEIGHT.get().floatValue();
     }
 
     public Vec3 getBeamShootFrom(float partialTicks) {

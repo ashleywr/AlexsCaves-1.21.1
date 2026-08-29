@@ -25,10 +25,16 @@ public class SpearItem extends Item {
 
     private static final ResourceLocation BASE_ATTACK_DAMAGE_ID = ResourceLocation.fromNamespaceAndPath("alexscaves", "base_attack_damage");
     private static final ResourceLocation BASE_ATTACK_SPEED_ID = ResourceLocation.fromNamespaceAndPath("alexscaves", "base_attack_speed");
-    private final double damage;
+    // TACT: not final so the configured melee damage can replace it at setup.
+    private double damage;
 
     public SpearItem(Properties properties, double damage) {
         super(properties);
+        this.damage = damage;
+    }
+
+    /** TACT: replaces the SpearItemAccessor mixin. Named to avoid Item.setDamage(ItemStack,int). */
+    public void setSpearDamage(double damage) {
         this.damage = damage;
     }
 

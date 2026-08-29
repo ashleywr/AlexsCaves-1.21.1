@@ -435,6 +435,13 @@ public class SubterranodonEntity extends DinosaurEntity implements PackAnimal, F
     }
 
     public void setMeterAmount(float flightPower) {
+        // TACT: scale the change rather than the absolute value, so recharge and
+        // depletion can be tuned independently.
+        float diff = flightPower - this.getMeterAmount();
+        diff *= diff > 0
+                ? com.telepathicgrunt.tact.Config.SUBTERRANODON_FLIGHT_METER_RECHARGE_SPEED.get().floatValue()
+                : com.telepathicgrunt.tact.Config.SUBTERRANODON_FLIGHT_METER_USAGE_SPEED.get().floatValue();
+        flightPower = this.getMeterAmount() + diff;
         this.entityData.set(METER_AMOUNT, flightPower);
     }
 

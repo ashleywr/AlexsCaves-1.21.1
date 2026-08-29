@@ -505,7 +505,10 @@ public class ForsakenEntity extends Monster implements IAnimatedEntity, ShakesSc
     }
 
     public float getSonicDamageAgainst(LivingEntity target) {
-        return target.getType().is(ACTagRegistry.WEAK_TO_FORSAKEN_SONIC_ATTACK) ? 45.0F : 4.0F;
+        // TACT: sonic boom damage is configurable, separately for weak-tagged targets.
+        return target.getType().is(ACTagRegistry.WEAK_TO_FORSAKEN_SONIC_ATTACK)
+                ? com.telepathicgrunt.tact.Config.FORSAKEN_SONIC_BOOM_WEAK_TAGGED_ATTACK_DAMAGE.get().floatValue()
+                : com.telepathicgrunt.tact.Config.FORSAKEN_SONIC_BOOM_NORMAL_ATTACK_DAMAGE.get().floatValue();
     }
 
     public float getStepHeight() {

@@ -137,7 +137,8 @@ public class ExtinctionSpearEntity extends AbstractArrow {
 
     protected void onHitEntity(EntityHitResult hitResult) {
         Entity entity = hitResult.getEntity();
-        float f = 10.0F;
+        // TACT: thrown Extinction Spear damage is configurable.
+        float f = com.telepathicgrunt.tact.Config.EXTINCTION_SPEAR_THROWN_DAMAGE.get().floatValue();
 
         Entity entity1 = this.getOwner();
         DamageSource damagesource = ACDamageTypes.causeSpiritDinosaurDamage(level().registryAccess(), (Entity) (entity1 == null ? this : entity1));

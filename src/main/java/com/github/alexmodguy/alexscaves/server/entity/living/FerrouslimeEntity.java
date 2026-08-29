@@ -110,8 +110,14 @@ public class FerrouslimeEntity extends Monster {
             if (this.mergeProgress < 5.0F) {
                 this.mergeProgress++;
             } else {
-                this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(Mth.clamp(getHeadCount() * 10, 10, 100));
-                this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Mth.clamp(getHeadCount() * 2, 2, 10));
+                // TACT: per-head health and attack damage scale from configured bases,
+                // keeping the original 10x and 5x clamp ratios.
+                double baseHealth = com.telepathicgrunt.tact.Config.FERROUSLIME_MAX_HEALTH.get();
+                double baseAttackDamage = com.telepathicgrunt.tact.Config.FERROUSLIME_ATTACK_DAMAGE.get();
+                this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(
+                        Mth.clamp(getHeadCount() * baseHealth, baseHealth, baseHealth * 10));
+                this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(
+                        Mth.clamp(getHeadCount() * baseAttackDamage, baseAttackDamage, baseAttackDamage * 5));
                 double d = this.getAttribute(Attributes.MAX_HEALTH).getValue();
                 if(this.getHealth() < d && getHeadCount() > 0){
                     this.heal((float) Math.ceil(d - this.getHealth()));

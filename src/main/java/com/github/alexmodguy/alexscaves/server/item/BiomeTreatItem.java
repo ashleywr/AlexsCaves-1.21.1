@@ -34,7 +34,9 @@ public class BiomeTreatItem extends CaveInfoItem {
         ItemStack itemstack = player.getItemInHand(hand);
         FoodProperties foodProps = itemstack.getFoodProperties(player);
         if (foodProps != null && getCaveBiome(itemstack) == null) {
-            if (player.canEat(foodProps.canAlwaysEat())) {
+            // TACT: allow eating when not hungry if configured, for packs that overhaul hunger.
+            if (com.telepathicgrunt.tact.Config.CAN_EAT_BIOME_TREAT_WHEN_NOT_HUNGRY.get()
+                    || player.canEat(foodProps.canAlwaysEat())) {
                 player.startUsingItem(hand);
                 return InteractionResultHolder.consume(itemstack);
             } else {

@@ -1,10 +1,10 @@
 package com.telepathicgrunt.tact;
 
 import com.github.alexmodguy.alexscaves.server.item.ACItemRegistry;
+import com.github.alexmodguy.alexscaves.server.item.SpearItem;
 import com.github.alexmodguy.alexscaves.server.potion.ACEffectRegistry;
 import com.google.common.collect.Multimap;
 import com.telepathicgrunt.tact.mixin.MobEffectInstanceAccessor;
-import com.telepathicgrunt.tact.mixin.SpearItemAccessor;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -48,8 +48,7 @@ public class ItemModifications {
     static void doItemAttributeModifications(final FMLCommonSetupEvent event) {
         // 1.21 builds the spear's modifiers on demand from its damage field rather than
         // caching a Multimap, so the configured melee damage is applied to that field.
-        ((SpearItemAccessor) ACItemRegistry.EXTINCTION_SPEAR.get())
-                .setDamage(Config.EXTINCTION_SPEAR_MELEE_DAMAGE.get());
+        ((SpearItem) ACItemRegistry.EXTINCTION_SPEAR.get()).setSpearDamage(Config.EXTINCTION_SPEAR_MELEE_DAMAGE.get());
     }
 
     public static int howManyEquippedRadioactiveOrAcidResistantArmorOnEntity(final LivingEntity entity) {

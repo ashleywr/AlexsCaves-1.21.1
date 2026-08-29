@@ -234,7 +234,9 @@ public class TremorsaurusEntity extends DinosaurEntity implements KeybindUsingMo
                     Vec3 minus = new Vec3(shakePreyPos.x - entity.getX(), shakePreyPos.y - entity.getY(), shakePreyPos.z - entity.getZ());
                     entity.setDeltaMovement(minus);
                     if (this.getAnimationTick() % 10 == 0) {
-                        entity.hurt(damageSources().mobAttack(this), 5 + this.getRandom().nextInt(2));
+                        // TACT: derived from the configured attack damage rather than a flat 5.
+                        entity.hurt(damageSources().mobAttack(this),
+                                (float) Math.max((com.telepathicgrunt.tact.Config.TREMORSAURUS_ATTACK_DAMAGE.get() / 2d) + this.getRandom().nextInt(2), 0));
                     }
                 }else{
                     entity.setDeltaMovement(entity.getDeltaMovement().scale(0.6F));

@@ -66,7 +66,9 @@ public class PrimitiveClubItem extends Item {
         stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
         if (!hurtEntity.level().isClientSide) {
             SoundEvent soundEvent = ACSoundRegistry.PRIMITIVE_CLUB_MISS.get();
-            if (hurtEntity.getRandom().nextFloat() < 0.8F) {
+            // TACT: entities in tact:primitive_club_stun_immune are never stunned.
+            if (!hurtEntity.getType().is(com.telepathicgrunt.tact.TACT.PRIMITIVE_CLUB_STUN_IMMUNE)
+                    && hurtEntity.getRandom().nextFloat() < 0.8F) {
                 MobEffectInstance instance = new MobEffectInstance(ACEffectRegistry.STUNNED, 150 + hurtEntity.getRandom().nextInt(150), 0, false, false);
                 if (hurtEntity.addEffect(instance)) {
                     AlexsCaves.sendMSGToAll(new UpdateEffectVisualityEntityMessage(hurtEntity.getId(), player.getId(), 3, instance.getDuration()));

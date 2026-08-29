@@ -1,0 +1,64 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.12/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Java: 21.0.3 JVM: 21.0.3+9-LTS(Eclipse Adoptium) Arch: amd64
+
+> Task :createMinecraftArtifacts UP-TO-DATE
+
+> Task :compileJava
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\compat\jei\AlexsCavesPlugin.java:92: 警告: [removal] ISubtypeRegistrationのregisterSubtypeInterpreter(Item,IIngredientSubtypeInterpreter<ItemStack>)は推奨されておらず、削除用にマークされています
+        registration.registerSubtypeInterpreter(ACItemRegistry.CAVE_TABLET.get(), CaveTabletSubtypeInterpreter.INSTANCE);
+                    ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\compat\jei\AlexsCavesPlugin.java:93: 警告: [removal] ISubtypeRegistrationのregisterSubtypeInterpreter(Item,IIngredientSubtypeInterpreter<ItemStack>)は推奨されておらず、削除用にマークされています
+        registration.registerSubtypeInterpreter(ACItemRegistry.CAVE_CODEX.get(), CaveTabletSubtypeInterpreter.INSTANCE);
+                    ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\compat\jei\NuclearFurnaceRecipeCategory.java:46: 警告: [removal] IRecipeCategoryのgetBackground()は推奨されておらず、削除用にマークされています
+    public IDrawable getBackground() {
+                     ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\entity\ACEntityRegistry.java:20: 警告: [removal] EventBusSubscriberのbus()は推奨されておらず、削除用にマークされています
+@EventBusSubscriber(modid = AlexsCaves.MODID, bus = EventBusSubscriber.Bus.MOD)
+                                              ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\entity\ACEntityRegistry.java:20: 警告: [removal] EventBusSubscriberのBusは推奨されておらず、削除用にマークされています
+@EventBusSubscriber(modid = AlexsCaves.MODID, bus = EventBusSubscriber.Bus.MOD)
+                                                                      ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\event\CommonEvents.java:137: 警告: [removal] IEntityExtensionのserializeNBT(Provider)は推奨されておらず、削除用にマークされています
+            CompoundTag entityTag = event.getTarget() instanceof Player ? new CompoundTag() : event.getTarget().serializeNBT(event.getLevel().registryAccess());
+                                                                                                               ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\SpearItem.java:65: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\GalenaGauntletItem.java:32: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\HazmatArmorItem.java:30: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\PrimitiveClubItem.java:125: 警告: [removal] IItemExtensionのonEntitySwing(ItemStack,LivingEntity)は推奨されておらず、削除用にマークされています
+    public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
+                   ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\PrimitiveClubItem.java:115: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\RaygunItem.java:55: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\SugarStaffItem.java:30: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+ノート: 一部の入力ファイルは推奨されないAPIを使用またはオーバーライドしています。
+ノート: 詳細は、-Xlint:deprecationオプションを指定して再コンパイルしてください。
+ノート: 入力ファイルの操作のうち、未チェックまたは安全ではないものがあります。
+ノート: 詳細は、-Xlint:uncheckedオプションを指定して再コンパイルしてください。
+警告13個
+
+[Incubating] Problems report is available at: file:///C:/WorkDir/Minecraft%20Mods/AlexsCaves/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.12/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 9s
+2 actionable tasks: 1 executed, 1 up-to-date

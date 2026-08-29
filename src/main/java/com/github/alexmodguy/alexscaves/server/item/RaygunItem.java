@@ -231,7 +231,10 @@ public class RaygunItem extends Item implements UpdatesStackTags, AlwaysCombinab
             int radiationLevel = gamma ? IrradiatedEffect.BLUE_LEVEL : 0;
             for (Entity entity : level.getEntities(living, hitBox, Entity::canBeHitByProjectile)) {
                 if (!entity.is(living) && !entity.isAlliedTo(living) && !living.isAlliedTo(entity) && !living.isPassengerOfSameVehicle(entity)) {
-                    boolean flag = entity instanceof TremorzillaEntity || entity.hurt(ACDamageTypes.causeRaygunDamage(level.registryAccess(), living), gamma ? 2F : 1.5F);
+                    // TACT: raygun damage is configurable, separately for gamma and normal.
+                    boolean flag = entity instanceof TremorzillaEntity || entity.hurt(ACDamageTypes.causeRaygunDamage(level.registryAccess(), living),
+                            gamma ? com.telepathicgrunt.tact.Config.RAYGUN_GAMMA_DAMAGE.get().floatValue()
+                                  : com.telepathicgrunt.tact.Config.RAYGUN_NORMAL_DAMAGE.get().floatValue());
                     if (flag && entity instanceof LivingEntity livingEntity && !livingEntity.getType().is(ACTagRegistry.RESISTS_RADIATION)) {
                         if (livingEntity.addEffect(new MobEffectInstance(ACEffectRegistry.IRRADIATED, 800, radiationLevel))) {
                             AlexsCaves.sendMSGToAll(new UpdateEffectVisualityEntityMessage(entity.getId(), living.getId(), gamma ? 4 : 0, 800));

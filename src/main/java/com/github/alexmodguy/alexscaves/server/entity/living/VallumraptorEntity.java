@@ -223,15 +223,19 @@ public class VallumraptorEntity extends DinosaurEntity implements IAnimatedEntit
         }
         if (isElder() && !hasElderAttributes) {
             hasElderAttributes = true;
-            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(32.0D);
-            this.getAttribute(Attributes.ARMOR).setBaseValue(5.0D);
-            this.heal(36.0F);
+            // TACT: elder tier scales from the configured base by 4/3, armour plus 5.
+            // The heal follows the scaled max health rather than the original 36.
+            double tactElderHealth = com.telepathicgrunt.tact.Config.VALLUMRAPTOR_MAX_HEALTH.get() * (4d / 3d);
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(tactElderHealth);
+            this.getAttribute(Attributes.ARMOR).setBaseValue((com.telepathicgrunt.tact.Config.VALLUMRAPTOR_ARMOR.get() * (4d / 3d)) + 5);
+            this.heal((float) tactElderHealth);
         }
         if (!isElder() && hasElderAttributes) {
             hasElderAttributes = false;
-            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(24.0D);
-            this.getAttribute(Attributes.ARMOR).setBaseValue(0.0D);
-            this.heal(28.0F);
+            // TACT: normal tier uses the configured values directly.
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(com.telepathicgrunt.tact.Config.VALLUMRAPTOR_MAX_HEALTH.get());
+            this.getAttribute(Attributes.ARMOR).setBaseValue(com.telepathicgrunt.tact.Config.VALLUMRAPTOR_ARMOR.get());
+            this.heal(com.telepathicgrunt.tact.Config.VALLUMRAPTOR_MAX_HEALTH.get().floatValue());
         }
         if (this.tickCount % (this.getHideFor() > 0 ? 15 : 100) == 0 && this.getHealth() < this.getMaxHealth()) {
             this.heal(2);

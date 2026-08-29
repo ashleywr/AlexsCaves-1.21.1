@@ -159,7 +159,11 @@ public class NuclearFurnaceBlockEntity extends BaseContainerBlockEntity implemen
                     entity.currentRecipe = entity.getRecipeFor(cookStack).orElse(null);
                 } else {
                     ItemStack cookResult = entity.currentRecipe.value().getResultItem(level.registryAccess());
-                    entity.maxCookTime = Math.max((int) Math.ceil(entity.currentRecipe.value().getCookingTime() * getSpeedReduction()), 5);
+                    // TACT: smelting speed modifier. Replaces an @Inject plus accessor pair that
+                    // rewrote maxCookTime immediately after it was set.
+                    entity.maxCookTime = Math.max((int) Math.ceil(entity.currentRecipe.value().getCookingTime()
+                            * getSpeedReduction()
+                            * com.telepathicgrunt.tact.Config.NUCLEAR_FURNACE_SMELTING_SPEED_MODIFIER.get()), 1);
                     if (entity.canFitInResultSlot(cookResult, 3)) {
                         if (entity.fissionTime <= 0) {
                             if (!rodStack.isEmpty() && rodStack.is(ACTagRegistry.NUCLEAR_FURNACE_RODS)) {

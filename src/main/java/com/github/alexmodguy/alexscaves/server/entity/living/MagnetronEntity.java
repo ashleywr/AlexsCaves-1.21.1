@@ -287,16 +287,21 @@ public class MagnetronEntity extends Monster {
         if (isFormed() && !hasFormedAttributes) {
             hasFormedAttributes = true;
             refreshDimensions();
-            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(80F);
+            // TACT: formed health is the configured base times 5/3. Note this is TACT's
+            // own ratio, not Alex's Caves': at the default base of 30 it yields 50 where
+            // the original hardcoded 80. Preserved as TACT defines it.
+            double tactFormedHealth = com.telepathicgrunt.tact.Config.MAGNETRON_MAX_HEALTH.get() * (5d / 3d);
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(tactFormedHealth);
             this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(1F);
-            this.heal(80F);
+            this.heal((float) tactFormedHealth);
         }
         if (!isFormed() && !isBaby() && hasFormedAttributes) {
             hasFormedAttributes = false;
             refreshDimensions();
-            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(30F);
+            // TACT: unformed health is the configured base directly.
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(com.telepathicgrunt.tact.Config.MAGNETRON_MAX_HEALTH.get());
             this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0F);
-            this.heal(30F);
+            this.heal(com.telepathicgrunt.tact.Config.MAGNETRON_MAX_HEALTH.get().floatValue());
         }
     }
 

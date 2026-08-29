@@ -96,7 +96,9 @@ public class LuxtructosaurusMeleeGoal extends Goal {
             }
             if (successfulJumpCooldown <= 0 && navigationCheckCooldown-- < 0 && (luxtructosaurus.onGround() || luxtructosaurus.isInLava())) {
                 navigationCheckCooldown = 20 + luxtructosaurus.getRandom().nextInt(40);
-                if (!canReach(target) && this.luxtructosaurus.getAnimation() == IAnimatedEntity.NO_ANIMATION) {
+                // TACT: treating the target as always reachable suppresses the leap.
+                if (!(canReach(target) || com.telepathicgrunt.tact.Config.LUXTRUCTOSAURUS_DISABLE_JUMP.get())
+                        && this.luxtructosaurus.getAnimation() == IAnimatedEntity.NO_ANIMATION) {
                     this.luxtructosaurus.setAnimation(LuxtructosaurusEntity.ANIMATION_JUMP);
                     this.luxtructosaurus.playSound(ACSoundRegistry.LUXTRUCTOSAURUS_JUMP.get(), 5.0F, this.luxtructosaurus.getVoicePitch());
                     this.luxtructosaurus.jumpTarget = target.position();

@@ -84,7 +84,10 @@ public class DesolateDaggerEntity extends Entity {
                 if (this.getStab() >= 1F) {
                     Entity player = getPlayer();
                     Entity damageFrom = player == null ? this : player;
-                    float damage = 2 + this.getItemStack().getEnchantmentLevel(level().holderOrThrow(ACEnchantmentRegistry.IMPENDING_STAB)) * 2F;
+                    // TACT: base and per-level Impending Stab damage are configurable.
+                    float damage = com.telepathicgrunt.tact.Config.DESOLATE_DAGGERS_ABILITY_BASE_DAMAGE.get().floatValue()
+                            + this.getItemStack().getEnchantmentLevel(level().holderOrThrow(ACEnchantmentRegistry.IMPENDING_STAB))
+                            * com.telepathicgrunt.tact.Config.DESOLATE_DAGGERS_ABILITY_IMPEDING_STAB_DAMAGE.get().floatValue();
                     if (entity.hurt(ACDamageTypes.causeDesolateDaggerDamage(this.level().registryAccess(), damageFrom), damage)) {
                         this.playSound(ACSoundRegistry.DESOLATE_DAGGER_HIT.get());
                         int healBy = this.getItemStack().getEnchantmentLevel(level().holderOrThrow(ACEnchantmentRegistry.SATED_BLADE));
