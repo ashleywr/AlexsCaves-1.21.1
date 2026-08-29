@@ -30,6 +30,9 @@ public class DesolateDaggerItem extends SwordItem implements DemonicRarity {
                 daggerEntity.copyPosition(player);
                 daggerEntity.setItemStack(stack);
                 daggerEntity.orbitFor = (delayedLevel > 0 ? 40 : 20) + player.getRandom().nextInt(10);
+                // TACT: ability delay multiplier. Was an @Inject mixin on this method.
+                daggerEntity.orbitFor = (int) (daggerEntity.orbitFor
+                        * com.telepathicgrunt.tact.Config.DESOLATE_DAGGERS_ABILITY_DELAY_MULTIPLIER.get());
                 player.level().addFreshEntity(daggerEntity);
             }
             return true;

@@ -1,0 +1,816 @@
+package com.telepathicgrunt.tact;
+
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.fml.event.config.ModConfigEvent;
+
+public class Config {
+
+    static final ModConfigSpec SPEC;
+
+    public static final ModConfigSpec.BooleanValue APPLY_TAG_ADJUSTMENTS;
+    public static final ModConfigSpec.BooleanValue APPLY_SPELUNKERY_COMPAT_ADJUSTMENTS;
+    public static final ModConfigSpec.BooleanValue REPLACEABLE_SMALL_PLANTS;
+    public static final ModConfigSpec.BooleanValue GUANO_BURN_FUEL;
+    public static final ModConfigSpec.IntValue PRIMITIVE_CLUB_BASE_STUN_TIME;
+    public static final ModConfigSpec.IntValue PRIMITIVE_CLUB_RANDOM_EXTRA_STUN_TIME;
+    public static final ModConfigSpec.BooleanValue RESTORE_END_STORY;
+    public static final ModConfigSpec.BooleanValue UNLOCK_ALL_COMPENDIUM_INFO;
+    public static final ModConfigSpec.ConfigValue<String> DREADBOW_ARROW_RAIN_OVERRIDES;
+    public static final ModConfigSpec.DoubleValue SUBTERRANODON_FLIGHT_METER_RECHARGE_SPEED;
+    public static final ModConfigSpec.DoubleValue SUBTERRANODON_FLIGHT_METER_USAGE_SPEED;
+    public static final ModConfigSpec.DoubleValue DESOLATE_DAGGERS_ABILITY_DELAY_MULTIPLIER;
+    public static final ModConfigSpec.DoubleValue DESOLATE_DAGGERS_ABILITY_BASE_DAMAGE;
+    public static final ModConfigSpec.DoubleValue DESOLATE_DAGGERS_ABILITY_IMPEDING_STAB_DAMAGE;
+    public static final ModConfigSpec.DoubleValue NUCLEAR_FURNACE_SMELTING_SPEED_MODIFIER;
+    public static final ModConfigSpec.BooleanValue GOBTHUMPER_SPAWNS_WORMS_FROM_CANDY_CAVITY_BIOME;
+    public static final ModConfigSpec.BooleanValue GOBTHUMPER_DISABLE_WORM_SPAWNING;
+
+    public static final ModConfigSpec.DoubleValue EXTINCTION_SPEAR_MELEE_DAMAGE;
+    public static final ModConfigSpec.DoubleValue EXTINCTION_SPEAR_THROWN_DAMAGE;
+    public static final ModConfigSpec.DoubleValue RAYGUN_NORMAL_DAMAGE;
+    public static final ModConfigSpec.DoubleValue RAYGUN_GAMMA_DAMAGE;
+    public static final ModConfigSpec.BooleanValue ALLOWED_CLOAK_OF_DARKNESS_ABILITY_IN_LIGHT;
+    public static final ModConfigSpec.BooleanValue CAN_EAT_BIOME_TREAT_WHEN_NOT_HUNGRY;
+
+    public static final ModConfigSpec.DoubleValue ATLATITAN_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue ATLATITAN_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue ATLATITAN_ARMOR;
+    public static final ModConfigSpec.DoubleValue BOUNDROID_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue BOUNDROID_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue BOUNDROID_ARMOR;
+    public static final ModConfigSpec.DoubleValue BOUNDROID_WINCH_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue BOUNDROID_WINCH_ARMOR;
+    public static final ModConfigSpec.DoubleValue BRAINIAC_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue BRAINIAC_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue BRAINIAC_ARMOR;
+    public static final ModConfigSpec.DoubleValue CANDICORN_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue CANDICORN_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue CANIAC_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue CANIAC_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue CARAMEL_CUBE_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue CARAMEL_CUBE_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue CORRODENT_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue CORRODENT_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue CORRODENT_ARMOR;
+    public static final ModConfigSpec.DoubleValue DEEP_ONE_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue DEEP_ONE_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue DEEP_ONE_ARMOR;
+    public static final ModConfigSpec.DoubleValue DEEP_ONE_KNIGHT_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue DEEP_ONE_KNIGHT_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue DEEP_ONE_KNIGHT_ARMOR;
+    public static final ModConfigSpec.DoubleValue DEEP_ONE_MAGE_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue DEEP_ONE_MAGE_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue DEEP_ONE_MAGE_ARMOR;
+    public static final ModConfigSpec.DoubleValue FERROUSLIME_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue FERROUSLIME_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue FERROUSLIME_ARMOR;
+    public static final ModConfigSpec.DoubleValue FORSAKEN_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue FORSAKEN_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue FORSAKEN_SONIC_BOOM_NORMAL_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue FORSAKEN_SONIC_BOOM_WEAK_TAGGED_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue FORSAKEN_ARMOR;
+    public static final ModConfigSpec.DoubleValue GAMMAROACH_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue GAMMAROACH_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue GAMMAROACH_ARMOR;
+    public static final ModConfigSpec.DoubleValue GINGERBREAD_MAN_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue GINGERBREAD_MAN_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue GLOOMOTH_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue GLOOMOTH_ARMOR;
+    public static final ModConfigSpec.DoubleValue GOSSAMER_WORM_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue GOSSAMER_WORM_ARMOR;
+    public static final ModConfigSpec.DoubleValue GROTTOCERATOPS_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue GROTTOCERATOPS_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue GROTTOCERATOPS_ARMOR;
+    public static final ModConfigSpec.DoubleValue GUMBEEPER_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue GUMBEEPER_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue GUMBEEPER_ARMOR;
+    public static final ModConfigSpec.DoubleValue GUMMY_BEAR_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue GUMMY_BEAR_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue GUM_WORM_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue GUM_WORM_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue GUM_WORM_ARMOR;
+    public static final ModConfigSpec.DoubleValue HULLBREAKER_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue HULLBREAKER_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue HULLBREAKER_ARMOR;
+    public static final ModConfigSpec.DoubleValue LANTERNFISH_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue LANTERNFISH_ARMOR;
+    public static final ModConfigSpec.DoubleValue LICOWITCH_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue LICOWITCH_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue LUXTRUCTOSAURUS_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue LUXTRUCTOSAURUS_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue LUXTRUCTOSAURUS_ARMOR;
+    public static final ModConfigSpec.DoubleValue LUXTRUCTOSAURUS_FIRE_BREATH_ATTACK_DAMAGE;
+    public static final ModConfigSpec.BooleanValue LUXTRUCTOSAURUS_DISABLE_JUMP;
+    public static final ModConfigSpec.DoubleValue MAGNETRON_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue MAGNETRON_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue MAGNETRON_ARMOR;
+    public static final ModConfigSpec.DoubleValue MINE_GUARDIAN_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue MINE_GUARDIAN_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue MINE_GUARDIAN_ARMOR;
+    public static final ModConfigSpec.DoubleValue NOTOR_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue NOTOR_ARMOR;
+    public static final ModConfigSpec.DoubleValue NUCLEEPER_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue NUCLEEPER_ARMOR;
+    public static final ModConfigSpec.DoubleValue RADGILL_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue RADGILL_ARMOR;
+    public static final ModConfigSpec.DoubleValue RAYCAT_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue RAYCAT_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue RAYCAT_ARMOR;
+    public static final ModConfigSpec.DoubleValue RELICHEIRUS_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue RELICHEIRUS_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue RELICHEIRUS_ARMOR;
+    public static final ModConfigSpec.DoubleValue SEA_PIG_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue SEA_PIG_ARMOR;
+    public static final ModConfigSpec.DoubleValue SWEETISH_FISH_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue SUBTERRANODON_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue SUBTERRANODON_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue SUBTERRANODON_ARMOR;
+    public static final ModConfigSpec.DoubleValue TELETOR_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue TELETOR_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue TELETOR_ARMOR;
+    public static final ModConfigSpec.DoubleValue TREMORSAURUS_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue TREMORSAURUS_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue TREMORSAURUS_ARMOR;
+    public static final ModConfigSpec.DoubleValue TREMORZILLA_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue TREMORZILLA_ARMOR;
+    public static final ModConfigSpec.DoubleValue TREMORZILLA_WEAK_STOMP_DAMAGE;
+    public static final ModConfigSpec.DoubleValue TREMORZILLA_STRONG_STOMP_DAMAGE;
+    public static final ModConfigSpec.DoubleValue TREMORZILLA_SCRATCH_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue TREMORZILLA_TAIL_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue TREMORZILLA_BITE_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue TREMORZILLA_BEAM_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue TREMORZILLA_HIGH_HEALTH_RECOVERY_AMOUNT;
+    public static final ModConfigSpec.IntValue TREMORZILLA_HIGH_HEALTH_RECOVERY_RATE_IN_TICKS;
+    public static final ModConfigSpec.DoubleValue TREMORZILLA_MEDIUM_HEALTH_RECOVERY_AMOUNT;
+    public static final ModConfigSpec.IntValue TREMORZILLA_MEDIUM_HEALTH_RECOVERY_RATE_IN_TICKS;
+    public static final ModConfigSpec.DoubleValue TREMORZILLA_LOW_HEALTH_RECOVERY_AMOUNT;
+    public static final ModConfigSpec.IntValue TREMORZILLA_LOW_HEALTH_RECOVERY_RATE_IN_TICKS;
+    public static final ModConfigSpec.DoubleValue TREMORZILLA_STEP_HEIGHT;
+    public static final ModConfigSpec.BooleanValue TREMORZILLA_WALKING_BLOCK_GRIEFING;
+    public static final ModConfigSpec.DoubleValue TRILOCARIS_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue TRILOCARIS_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue TRILOCARIS_ARMOR;
+    public static final ModConfigSpec.DoubleValue TRIPODFISH_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue TRIPODFISH_ARMOR;
+    public static final ModConfigSpec.DoubleValue UNDERZEALOT_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue UNDERZEALOT_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue UNDERZEALOT_ARMOR;
+    public static final ModConfigSpec.DoubleValue VALLUMRAPTOR_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue VALLUMRAPTOR_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue VALLUMRAPTOR_ARMOR;
+    public static final ModConfigSpec.DoubleValue VESPER_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue VESPER_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue VESPER_ARMOR;
+    public static final ModConfigSpec.DoubleValue WATCHER_MAX_HEALTH;
+    public static final ModConfigSpec.DoubleValue WATCHER_ATTACK_DAMAGE;
+    public static final ModConfigSpec.DoubleValue WATCHER_ARMOR;
+
+    public static final ModConfigSpec.IntValue CONFIG_VERSION;
+
+    static {
+        ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
+
+        APPLY_TAG_ADJUSTMENTS = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Whether to activate an internal datapack to add Alex's Caves biomes and blocks to certain tags for better mod compat.
+                    """)
+                .define("applyTagAdjustments", true);
+
+        APPLY_SPELUNKERY_COMPAT_ADJUSTMENTS = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Whether to activate an internal datapack to remove Spelunkery mod's wall mushrooms from Alex's Caves's Primordial Cave biome due to the mushrooms not having safe generation.
+                    """)
+                .define("applySpelunkeryCompatAdjustments", true);
+
+        REPLACEABLE_SMALL_PLANTS = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Whether to make Underweed, Tree Star, Fiddlehead, and Curly Fern be replaceable by
+                     another block when right clicking them while holding a block in your hands.
+                    """)
+                .define("replaceableSmallPlants", true);
+
+        GUANO_BURN_FUEL = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Whether to make Guano, Guano Block, and Guano Layer be able to be used as fuel in Furnaces.
+                    """)
+                .define("guanoBurnFuel", true);
+
+        PRIMITIVE_CLUB_BASE_STUN_TIME = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Minimum amount of time that Primative Club can stun a mob.
+                     Full stun time calculation is (Base Time) + (a random number between 0 and Random Extra Time)
+                    """)
+                .defineInRange("primitiveClubBaseStunTime", 150, 0, 1000000);
+
+        PRIMITIVE_CLUB_RANDOM_EXTRA_STUN_TIME = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Random amount of extra time that Primative Club can stun a mob.
+                     Full stun time calculation is (Base Time) + (a random number between 0 and Random Extra Time)
+                    """)
+                .defineInRange("primitiveClubRandomExtraStunTime", 150, 0, 1000000);
+
+        RESTORE_END_STORY = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Whether to revert the End Story back to its original form when beating Minecraft.
+                     Alex's Caves replaces this story with their own. This config puts it back to normal if enabled.
+                    """)
+                .define("restoreEndStory", false);
+
+        UNLOCK_ALL_COMPENDIUM_INFO = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     If enabled, this config makes the Compendium have all biomes and their info unlocked immediately on log-in.
+                    """)
+                .define("unlockAllCompendiumInfo", false);
+
+        DREADBOW_ARROW_RAIN_OVERRIDES = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Allows setting overrides for how many arrows to spawn with Dreadbow's rain-like attack.
+                     Format is the arrow item registry name. Then an equal sign =. And ends with the arrow amount.
+                     Separate multiple entries with a comma , and whitespace will be ignored.
+                     Example: "alexscaves:seeking_arrow=5, alexscaves:burrowing_arrow=100"
+                    
+                     Otherwise, will default to Alex's Caves original code for determining arrow amount for
+                     the attack which is 30 arrows for dark colored arrows and 5 arrows for all other arrows.
+                    """)
+                .define("dreadbowArrowRainOverrides", "");
+
+        SUBTERRANODON_FLIGHT_METER_RECHARGE_SPEED = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     How quickly the flight meter will recharge for Subterranodon.
+                     Putting 2 will recharge twice as fast. Putting 0.5 will halve the recharge rate.
+                    """)
+                .defineInRange("subterranodonFlightMeterRechargeSpeed", 1D, 0, 1000);
+
+        SUBTERRANODON_FLIGHT_METER_USAGE_SPEED = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     How quickly the flight meter will be depleted when flying with Subterranodon.
+                     Putting 2 will deplete the meter twice as fast. Putting 0.5 will slow the meter's usage rate.
+                    """)
+                .defineInRange("subterranodonFlightMeterUsageSpeed", 1D, 0, 1000);
+
+        configBuilder.push("Desolate Daggers Options");
+
+        DESOLATE_DAGGERS_ABILITY_DELAY_MULTIPLIER = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Multiplies the delay time for the floating dagger ability on Desolate Daggers.
+                     Doing 0.5 will halve the time for the ability.
+                    """)
+                .defineInRange("desolateDaggersAbilityDelay", 1D, 0, 10D);
+
+        DESOLATE_DAGGERS_ABILITY_BASE_DAMAGE = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Base damage for the floating dagger ability on Desolate Daggers.
+                    """)
+                .defineInRange("desolateDaggersAbilityBaseDamage", 2D, 0, 1000000);
+
+        DESOLATE_DAGGERS_ABILITY_IMPEDING_STAB_DAMAGE = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Extra damage per Impending Stable enchantment level for the floating dagger ability on Desolate Daggers.
+                    """)
+                .defineInRange("desolateDaggersAbilityImpendingStabDamage", 2D, 0, 1000000);
+
+        configBuilder.pop();
+
+        configBuilder.push("Nuclear Furnace Options");
+
+        NUCLEAR_FURNACE_SMELTING_SPEED_MODIFIER = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Multiplies the calculated item smelting time in Nuclear Furnace by this number.
+                     Lower number means faster smelting. Higher number means slower.
+                    """)
+                .defineInRange("nuclearFurnaceSmeltingSpeedModifier", 1D, 0, 1000000);
+
+        configBuilder.pop();
+
+        configBuilder.push("Gobthumper Options");
+
+        GOBTHUMPER_SPAWNS_WORMS_FROM_CANDY_CAVITY_BIOME = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Will only spawn a Gum Worm in a Candy Cavity biome.
+                     Attracting nearby Gum Worm behavior is unchanged.
+                    """)
+                .define("gobthumperSpawnsWormsFromCandyCavityBiome", false);
+
+        GOBTHUMPER_DISABLE_WORM_SPAWNING = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Disabled the Gum Worm spawning ability of Gobthumper.
+                     Attracting nearby Gum Worm behavior is unchanged.
+                    """)
+                .define("gobthumperDisableWormSpawning", false);
+
+        configBuilder.pop();
+
+        configBuilder.push("Cloak of Darkness Options");
+
+        ALLOWED_CLOAK_OF_DARKNESS_ABILITY_IN_LIGHT = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Whether Cloak of Darkness's ability should be usable anywhere. Including in bright light or sunlight.
+                    """)
+                .define("AllowedCloakOfDarknessAbilityInLight",  false);
+
+        configBuilder.pop();
+
+        configBuilder.push("Biome Treat Options");
+
+        CAN_EAT_BIOME_TREAT_WHEN_NOT_HUNGRY = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Whether Biome Treat can be eaten while player is not hungry.
+                     Might help allowing Biome Treat to be eaten when hunger overhaul mods are on.
+                    """)
+                .define("CanEatBiomeTreatWhenNotHungry",  false);
+
+        configBuilder.pop();
+
+        configBuilder.push("Extinction Spear Options");
+
+        EXTINCTION_SPEAR_MELEE_DAMAGE = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Damage amount for melee attack with Extinction Spear.
+                    """)
+                .defineInRange("extinctionSpearMeleeDamage", 8D, 0, 10000);
+
+        EXTINCTION_SPEAR_THROWN_DAMAGE = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Damage amount for ranged attack with Extinction Spear.
+                    """)
+                .defineInRange("extinctionSpearRangedDamage", 10D, 0, 10000);
+
+        configBuilder.pop();
+
+        configBuilder.push("Raygun Options");
+
+        RAYGUN_NORMAL_DAMAGE = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Rate of damage for Raygun normally.
+                    """)
+                .defineInRange("raygunNormalDamage", 1.5D, 0, 1000);
+
+        RAYGUN_GAMMA_DAMAGE = configBuilder
+                .comment("""
+                    ----------------------------------
+                    
+                     Rate of damage for Raygun when gamma enchanted.
+                    """)
+                .defineInRange("raygunGammaDamage", 2.0D, 0, 1000);
+
+        configBuilder.pop();
+
+        configBuilder.push("Mob Attack/Health Options");
+
+        ATLATITAN_MAX_HEALTH = configBuilder
+                .defineInRange("atlatitanMaxHealth", 400d, 1, 1000000);
+
+        ATLATITAN_ATTACK_DAMAGE = configBuilder
+                .defineInRange("atlatitanAttackDamage", 8.0d, 1, 1000000);
+
+        ATLATITAN_ARMOR = configBuilder
+                .defineInRange("atlatitanArmor", 0.0d, 0, 1000000);
+
+        BOUNDROID_MAX_HEALTH = configBuilder
+                .defineInRange("boundroidMaxHealth", 20d, 1, 1000000);
+
+        BOUNDROID_ATTACK_DAMAGE = configBuilder
+                .defineInRange("boundroidAttackDamage", 5.0d, 1, 1000000);
+
+        BOUNDROID_ARMOR = configBuilder
+                .defineInRange("boundroidArmor", 20.0d, 0, 1000000);
+
+        BOUNDROID_WINCH_MAX_HEALTH = configBuilder
+                .defineInRange("boundroidWrinchMaxHealth", 20d, 1, 1000000);
+
+        BOUNDROID_WINCH_ARMOR = configBuilder
+                .defineInRange("boundroidWrinchArmor", 0.0d, 0, 1000000);
+
+        BRAINIAC_MAX_HEALTH = configBuilder
+                .defineInRange("brainiacWrinchMaxHealth", 40d, 1, 1000000);
+
+        BRAINIAC_ATTACK_DAMAGE = configBuilder
+                .defineInRange("brainiacAttackDamage", 5.0d, 1, 1000000);
+
+        BRAINIAC_ARMOR = configBuilder
+                .defineInRange("brainiacArmor", 8.0d, 0, 1000000);
+
+        CANDICORN_MAX_HEALTH = configBuilder
+                .defineInRange("candicornMaxHealth", 30d, 1, 1000000);
+
+        CANDICORN_ATTACK_DAMAGE = configBuilder
+                .defineInRange("candicornAttackDamage", 6.0d, 1, 1000000);
+
+        CANIAC_MAX_HEALTH = configBuilder
+                .defineInRange("caniacMaxHealth", 38d, 1, 1000000);
+
+        CANIAC_ATTACK_DAMAGE = configBuilder
+                .defineInRange("caniacAttackDamage", 2.0d, 1, 1000000);
+
+        CARAMEL_CUBE_MAX_HEALTH = configBuilder
+                .defineInRange("caramelCubeMaxHealth", 4d, 1, 1000000);
+
+        CARAMEL_CUBE_ATTACK_DAMAGE = configBuilder
+                .defineInRange("caramelCubeAttackDamage", 2.0d, 1, 1000000);
+
+        CORRODENT_MAX_HEALTH = configBuilder
+                .defineInRange("corrodentMaxHealth", 16d, 1, 1000000);
+
+        CORRODENT_ATTACK_DAMAGE = configBuilder
+                .defineInRange("corrodentAttackDamage", 3.0d, 1, 1000000);
+
+        CORRODENT_ARMOR = configBuilder
+                .defineInRange("corrodentArmor", 2.0d, 0, 1000000);
+
+        DEEP_ONE_MAX_HEALTH = configBuilder
+                .defineInRange("deepOneMaxHealth", 30d, 1, 1000000);
+
+        DEEP_ONE_ATTACK_DAMAGE = configBuilder
+                .defineInRange("deepOneAttackDamage", 3.0d, 1, 1000000);
+
+        DEEP_ONE_ARMOR = configBuilder
+                .defineInRange("deepOneArmor", 0.0d, 0, 1000000);
+
+        DEEP_ONE_KNIGHT_MAX_HEALTH = configBuilder
+                .defineInRange("deepOneKnightMaxHealth", 60d, 1, 1000000);
+
+        DEEP_ONE_KNIGHT_ATTACK_DAMAGE = configBuilder
+                .defineInRange("deepOneKnightAttackDamage", 5.0d, 1, 1000000);
+
+        DEEP_ONE_KNIGHT_ARMOR = configBuilder
+                .defineInRange("deepOneKnightArmor", 0.0d, 0, 1000000);
+
+        DEEP_ONE_MAGE_MAX_HEALTH = configBuilder
+                .defineInRange("deepOneMageMaxHealth", 80d, 1, 1000000);
+
+        DEEP_ONE_MAGE_ATTACK_DAMAGE = configBuilder
+                .defineInRange("deepOneMageAttackDamage", 4.0d, 1, 1000000);
+
+        DEEP_ONE_MAGE_ARMOR = configBuilder
+                .defineInRange("deepOneMageArmor", 0.0d, 0, 1000000);
+
+        FERROUSLIME_MAX_HEALTH = configBuilder
+                .defineInRange("ferrouslimeMaxHealth", 10d, 1, 1000000);
+
+        FERROUSLIME_ATTACK_DAMAGE = configBuilder
+                .defineInRange("ferrouslimeAttackDamage", 2.0d, 1, 1000000);
+
+        FERROUSLIME_ARMOR = configBuilder
+                .defineInRange("ferrouslimeArmor", 0.0d, 0, 1000000);
+
+        FORSAKEN_MAX_HEALTH = configBuilder
+                .defineInRange("forsakenMaxHealth", 250d, 1, 1000000);
+
+        FORSAKEN_ATTACK_DAMAGE = configBuilder
+                .defineInRange("forsakenAttackDamage", 10.0d, 1, 1000000);
+
+        FORSAKEN_SONIC_BOOM_NORMAL_ATTACK_DAMAGE = configBuilder
+                .defineInRange("forsakenSonicBoomNormalAttackDamage", 4.0d, 1, 1000000);
+
+        FORSAKEN_SONIC_BOOM_WEAK_TAGGED_ATTACK_DAMAGE = configBuilder
+                .defineInRange("forsakenSonicBoomWeakTaggedAttackDamage", 45.0d, 1, 1000000);
+
+        FORSAKEN_ARMOR = configBuilder
+                .defineInRange("forsakenArmor", 0.0d, 0, 1000000);
+
+        GAMMAROACH_MAX_HEALTH = configBuilder
+                .defineInRange("gammaroachMaxHealth", 14d, 1, 1000000);
+
+        GAMMAROACH_ATTACK_DAMAGE = configBuilder
+                .defineInRange("gammaroachAttackDamage", 2.0d, 1, 1000000);
+
+        GAMMAROACH_ARMOR = configBuilder
+                .defineInRange("gammaroachArmor", 0.0d, 0, 1000000);
+
+        GINGERBREAD_MAN_MAX_HEALTH = configBuilder
+                .defineInRange("gingerbreadManMaxHealth", 10d, 1, 1000000);
+
+        GINGERBREAD_MAN_ATTACK_DAMAGE = configBuilder
+                .defineInRange("gingerbreadManAttackDamage", 2.0d, 1, 1000000);
+
+        GLOOMOTH_MAX_HEALTH = configBuilder
+                .defineInRange("gloomothMaxHealth", 4d, 1, 1000000);
+
+        GLOOMOTH_ARMOR = configBuilder
+                .defineInRange("gloomothArmor", 0.0d, 0, 1000000);
+
+        GOSSAMER_WORM_MAX_HEALTH = configBuilder
+                .defineInRange("gossamerWormMaxHealth", 10d, 1, 1000000);
+
+        GOSSAMER_WORM_ARMOR = configBuilder
+                .defineInRange("gossamerWormArmor", 0.0d, 0, 1000000);
+
+        GROTTOCERATOPS_MAX_HEALTH = configBuilder
+                .defineInRange("grottoceratopsMaxHealth", 50d, 1, 1000000);
+
+        GROTTOCERATOPS_ATTACK_DAMAGE = configBuilder
+                .defineInRange("grottoceratopsAttackDamage", 10.0d, 1, 1000000);
+
+        GROTTOCERATOPS_ARMOR = configBuilder
+                .defineInRange("grottoceratopsArmor", 8.0d, 0, 1000000);
+
+        GUMBEEPER_MAX_HEALTH = configBuilder
+                .defineInRange("gumbeeperMaxHealth", 14d, 1, 1000000);
+
+        GUMBEEPER_ATTACK_DAMAGE = configBuilder
+                .defineInRange("gumbeeperAttackDamage", 4.0d, 1, 1000000);
+
+        GUMBEEPER_ARMOR = configBuilder
+                .defineInRange("gumbeeperArmor", 4.0d, 0, 1000000);
+
+        GUMMY_BEAR_MAX_HEALTH = configBuilder
+                .defineInRange("gummyBearMaxHealth", 36d, 1, 1000000);
+
+        GUMMY_BEAR_ATTACK_DAMAGE = configBuilder
+                .defineInRange("gummyBearAttackDamage", 4.0d, 1, 1000000);
+
+        GUM_WORM_MAX_HEALTH = configBuilder
+                .defineInRange("gumWormMaxHealth", 150d, 1, 1000000);
+
+        GUM_WORM_ATTACK_DAMAGE = configBuilder
+                .defineInRange("gumWormAttackDamage", 10.0d, 1, 1000000);
+
+        GUM_WORM_ARMOR = configBuilder
+                .defineInRange("gumWormArmor", 9.0d, 0, 1000000);
+
+        HULLBREAKER_MAX_HEALTH = configBuilder
+                .defineInRange("hullbreakerMaxHealth", 400d, 1, 1000000);
+
+        HULLBREAKER_ATTACK_DAMAGE = configBuilder
+                .defineInRange("hullbreakerAttackDamage", 16.0d, 1, 1000000);
+
+        HULLBREAKER_ARMOR = configBuilder
+                .defineInRange("hullbreakerArmor", 0.0d, 0, 1000000);
+
+        LANTERNFISH_MAX_HEALTH = configBuilder
+                .defineInRange("lanternfishMaxHealth", 2d, 1, 1000000);
+
+        LANTERNFISH_ARMOR = configBuilder
+                .defineInRange("lanternfishArmor", 0.0d, 0, 1000000);
+
+        LICOWITCH_MAX_HEALTH = configBuilder
+                .defineInRange("licowitchMaxHealth", 40d, 1, 1000000);
+
+        LICOWITCH_ATTACK_DAMAGE = configBuilder
+                .defineInRange("licowitchAttackDamage", 3.0d, 1, 1000000);
+
+        LUXTRUCTOSAURUS_MAX_HEALTH = configBuilder
+                .defineInRange("luxtructosaurusMaxHealth", 600d, 1, 1000000);
+
+        LUXTRUCTOSAURUS_ATTACK_DAMAGE = configBuilder
+                .defineInRange("luxtructosaurusAttackDamage", 12.0d, 1, 1000000);
+
+        LUXTRUCTOSAURUS_ARMOR = configBuilder
+                .defineInRange("luxtructosaurusArmor", 20.0d, 0, 1000000);
+
+        LUXTRUCTOSAURUS_FIRE_BREATH_ATTACK_DAMAGE = configBuilder
+                .defineInRange("luxtructosaurusFireBreathAttackDamage", 3.0d, 1, 1000000);
+
+        LUXTRUCTOSAURUS_DISABLE_JUMP = configBuilder
+                .define("luxtructosaurusDisableJump", false);
+
+        MAGNETRON_MAX_HEALTH = configBuilder
+                .defineInRange("magnetronMaxHealth", 30d, 1, 1000000);
+
+        MAGNETRON_ATTACK_DAMAGE = configBuilder
+                .defineInRange("magnetronAttackDamage", 2.0d, 1, 1000000);
+
+        MAGNETRON_ARMOR = configBuilder
+                .defineInRange("magnetronArmor", 6.0d, 0, 1000000);
+
+        MINE_GUARDIAN_MAX_HEALTH = configBuilder
+                .defineInRange("mineGuardianMaxHealth", 20d, 1, 1000000);
+
+        MINE_GUARDIAN_ATTACK_DAMAGE = configBuilder
+                .defineInRange("mineGuardianAttackDamage", 1.0d, 1, 1000000);
+
+        MINE_GUARDIAN_ARMOR = configBuilder
+                .defineInRange("mineGuardianArmor", 0.0d, 0, 1000000);
+
+        NOTOR_MAX_HEALTH = configBuilder
+                .defineInRange("notorMaxHealth", 6d, 1, 1000000);
+
+        NOTOR_ARMOR = configBuilder
+                .defineInRange("notorArmor", 0.0d, 0, 1000000);
+
+        NUCLEEPER_MAX_HEALTH = configBuilder
+                .defineInRange("nucleeperMaxHealth", 30.0d, 1, 1000000);
+
+        NUCLEEPER_ARMOR = configBuilder
+                .defineInRange("nucleeperArmor", 4.0d, 0, 1000000);
+
+        RADGILL_MAX_HEALTH = configBuilder
+                .defineInRange("radgillMaxHealth", 8d, 1, 1000000);
+
+        RADGILL_ARMOR = configBuilder
+                .defineInRange("radgillArmor", 0.0d, 0, 1000000);
+
+        RAYCAT_MAX_HEALTH = configBuilder
+                .defineInRange("raycatMaxHealth", 24d, 1, 1000000);
+
+        RAYCAT_ATTACK_DAMAGE = configBuilder
+                .defineInRange("raycatAttackDamage", 1.0d, 1, 1000000);
+
+        RAYCAT_ARMOR = configBuilder
+                .defineInRange("raycatArmor", 0.0d, 0, 1000000);
+
+        RELICHEIRUS_MAX_HEALTH = configBuilder
+                .defineInRange("relicheirusMaxHealth", 120d, 1, 1000000);
+
+        RELICHEIRUS_ATTACK_DAMAGE = configBuilder
+                .defineInRange("relicheirusAttackDamage", 12.0d, 1, 1000000);
+
+        RELICHEIRUS_ARMOR = configBuilder
+                .defineInRange("relicheirusArmor", 0.0d, 0, 1000000);
+
+        SEA_PIG_MAX_HEALTH = configBuilder
+                .defineInRange("seaPigMaxHealth", 8d, 1, 1000000);
+
+        SEA_PIG_ARMOR = configBuilder
+                .defineInRange("seaPigArmor", 0.0d, 0, 1000000);
+
+        SWEETISH_FISH_MAX_HEALTH = configBuilder
+                .defineInRange("sweetishFishMaxHealth", 4d, 1, 1000000);
+
+        SUBTERRANODON_MAX_HEALTH = configBuilder
+                .defineInRange("subterranodonMaxHealth", 20d, 1, 1000000);
+
+        SUBTERRANODON_ATTACK_DAMAGE = configBuilder
+                .defineInRange("subterranodonAttackDamage", 2.0d, 1, 1000000);
+
+        SUBTERRANODON_ARMOR = configBuilder
+                .defineInRange("subterranodonArmor", 0.0d, 0, 1000000);
+
+        TELETOR_MAX_HEALTH = configBuilder
+                .defineInRange("teletorMaxHealth", 18d, 1, 1000000);
+
+        TELETOR_ATTACK_DAMAGE = configBuilder
+                .defineInRange("teletorAttackDamage", 2.0d, 1, 1000000);
+
+        TELETOR_ARMOR = configBuilder
+                .defineInRange("teletorArmor", 0.0d, 0, 1000000);
+
+        TREMORSAURUS_MAX_HEALTH = configBuilder
+                .defineInRange("tremorsaurusMaxHealth", 150d, 1, 1000000);
+
+        TREMORSAURUS_ATTACK_DAMAGE = configBuilder
+                .defineInRange("tremorsaurusAttackDamage", 14.0d, 1, 1000000);
+
+        TREMORSAURUS_ARMOR = configBuilder
+                .defineInRange("tremorsaurusArmor", 8.0d, 0, 1000000);
+
+        TREMORZILLA_MAX_HEALTH = configBuilder
+                .defineInRange("tremorzillaMaxHealth", 500d, 1, 1000000);
+
+        TREMORZILLA_ARMOR = configBuilder
+                .defineInRange("tremorzillaArmor", 10d, 0, 1000000);
+
+        TREMORZILLA_WEAK_STOMP_DAMAGE = configBuilder
+                .defineInRange("tremorzillaWeakStompDamage", 2.0d, 1, 1000000);
+
+        TREMORZILLA_STRONG_STOMP_DAMAGE = configBuilder
+                .defineInRange("tremorzillaStrongStompDamage", 10.0d, 1, 1000000);
+
+        TREMORZILLA_SCRATCH_ATTACK_DAMAGE = configBuilder
+                .defineInRange("tremorzillaScratchAttackDamage", 10.0d, 1, 1000000);
+
+        TREMORZILLA_TAIL_ATTACK_DAMAGE = configBuilder
+                .defineInRange("tremorzillaTailAttackDamage", 10.0d, 1, 1000000);
+
+        TREMORZILLA_BITE_ATTACK_DAMAGE = configBuilder
+                .defineInRange("tremorzillaBiteAttackDamage", 10.0d, 1, 1000000);
+
+        TREMORZILLA_BEAM_ATTACK_DAMAGE = configBuilder
+                .defineInRange("tremorzillaBeamAttackDamage", 20.0d, 1, 1000000);
+
+        TREMORZILLA_HIGH_HEALTH_RECOVERY_AMOUNT = configBuilder
+                .defineInRange("tremorzillaHighHealthRecoveryAmount", 2.0d, 0, 1000000);
+
+        TREMORZILLA_HIGH_HEALTH_RECOVERY_RATE_IN_TICKS = configBuilder
+                .defineInRange("tremorzillaHighHealthRecoveryRateInTicks", 100, 0, 1000000);
+
+        TREMORZILLA_MEDIUM_HEALTH_RECOVERY_AMOUNT = configBuilder
+                .defineInRange("tremorzillaMediumHealthRecoveryAmount", 3.0d, 0, 1000000);
+
+        TREMORZILLA_MEDIUM_HEALTH_RECOVERY_RATE_IN_TICKS = configBuilder
+                .defineInRange("tremorzillaMediumHealthRecoveryRateInTicks", 20, 0, 1000000);
+
+        TREMORZILLA_LOW_HEALTH_RECOVERY_AMOUNT = configBuilder
+                .defineInRange("tremorzillaLowHealthRecoveryAmount", 5.0d, 0, 1000000);
+
+        TREMORZILLA_LOW_HEALTH_RECOVERY_RATE_IN_TICKS = configBuilder
+                .defineInRange("tremorzillaLowHealthRecoveryRateInTicks", 10, 0, 1000000);
+
+        TREMORZILLA_STEP_HEIGHT = configBuilder
+                .defineInRange("tremorzillaStepHeight", 1.6d, 0, 1000000);
+
+        TREMORZILLA_WALKING_BLOCK_GRIEFING = configBuilder
+                .comment("NOTE: Turning this off could lead to Tremorzilla getting stuck with pathfinding!!! Do not report to Alex's Caves if you turned this off and the mob gets stuck.")
+                .define("tremorzillaWalkingBlockGriefing", true);
+
+        TRILOCARIS_MAX_HEALTH = configBuilder
+                .defineInRange("trilocarisMaxHealth", 10d, 1, 1000000);
+
+        TRILOCARIS_ATTACK_DAMAGE = configBuilder
+                .defineInRange("trilocarisAttackDamage", 1.0d, 1, 1000000);
+
+        TRILOCARIS_ARMOR = configBuilder
+                .defineInRange("trilocarisArmor", 0.0d, 0, 1000000);
+
+        TRIPODFISH_MAX_HEALTH = configBuilder
+                .defineInRange("tripodfishMaxHealth", 8d, 1, 1000000);
+
+        TRIPODFISH_ARMOR = configBuilder
+                .defineInRange("tripodfishArmor", 0.0d, 0, 1000000);
+
+        UNDERZEALOT_MAX_HEALTH = configBuilder
+                .defineInRange("underzealotMaxHealth", 20d, 1, 1000000);
+
+        UNDERZEALOT_ATTACK_DAMAGE = configBuilder
+                .defineInRange("underzealotAttackDamage", 4.0d, 1, 1000000);
+
+        UNDERZEALOT_ARMOR = configBuilder
+                .defineInRange("underzealotArmor", 0.0d, 0, 1000000);
+
+        VALLUMRAPTOR_MAX_HEALTH = configBuilder
+                .defineInRange("vallumraptorMaxHealth", 24d, 1, 1000000);
+
+        VALLUMRAPTOR_ATTACK_DAMAGE = configBuilder
+                .defineInRange("vallumraptorAttackDamage", 3.0d, 1, 1000000);
+
+        VALLUMRAPTOR_ARMOR = configBuilder
+                .defineInRange("vallumraptorArmor", 0.0d, 0, 1000000);
+
+        VESPER_MAX_HEALTH = configBuilder
+                .defineInRange("vesperMaxHealth", 16d, 1, 1000000);
+
+        VESPER_ATTACK_DAMAGE = configBuilder
+                .defineInRange("vesperAttackDamage", 3.0d, 1, 1000000);
+
+        VESPER_ARMOR = configBuilder
+                .defineInRange("vesperArmor", 0.0d, 0, 1000000);
+
+        WATCHER_MAX_HEALTH = configBuilder
+                .defineInRange("watcherMaxHealth", 30d, 1, 1000000);
+
+        WATCHER_ATTACK_DAMAGE = configBuilder
+                .defineInRange("watcherAttackDamage", 4.0d, 1, 1000000);
+
+        WATCHER_ARMOR = configBuilder
+                .defineInRange("watcherArmor", 0.0d, 0, 1000000);
+
+        configBuilder.pop();
+
+        configBuilder.push("INTERNAL MARKERS (DO NOT EDIT)");
+
+        CONFIG_VERSION = configBuilder
+                .defineInRange("configVersion", 1, 1, 1000000);
+
+        configBuilder.pop();
+
+        SPEC = configBuilder.build();
+    }
+
+    static void onLoad(final ModConfigEvent event) {
+        DreadbowRainAttackModification.setDreadbowOverrides(DREADBOW_ARROW_RAIN_OVERRIDES.get());
+    }
+}

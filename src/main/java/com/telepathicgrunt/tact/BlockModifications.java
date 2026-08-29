@@ -1,0 +1,59 @@
+package com.telepathicgrunt.tact;
+
+import com.github.alexmodguy.alexscaves.AlexsCaves;
+import com.google.common.base.Suppliers;
+import com.telepathicgrunt.tact.mixin.BlockStateBaseAccessor;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraft.core.registries.BuiltInRegistries;
+
+import java.util.Optional;
+import java.util.function.Supplier;
+
+public class BlockModifications {
+    public static ResourceKey<Biome> CANDY_CAVITY_BIOME_KEY = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(TACT.ALEXS_CAVES_MODID, "candy_cavity"));
+
+    static void doModifications(final FMLCommonSetupEvent event) {
+        if (Config.REPLACEABLE_SMALL_PLANTS.get()) {
+            makeReplaceable(ResourceLocation.fromNamespaceAndPath(TACT.ALEXS_CAVES_MODID, "underweed"));
+            makeReplaceable(ResourceLocation.fromNamespaceAndPath(TACT.ALEXS_CAVES_MODID, "tree_star"));
+            makeReplaceable(ResourceLocation.fromNamespaceAndPath(TACT.ALEXS_CAVES_MODID, "fiddlehead"));
+            makeReplaceable(ResourceLocation.fromNamespaceAndPath(TACT.ALEXS_CAVES_MODID, "curly_fern"));
+        }
+    }
+
+    private static final Supplier<Item> GUANO = Suppliers.memoize(() -> BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "guano")));
+    private static final Supplier<Item> GUANO_BLOCK = Suppliers.memoize(() -> BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "guano_block")));
+    private static final Supplier<Item> GUANO_LAYER = Suppliers.memoize(() -> BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "guano_layer")));
+
+    static void burnTimeModifications(final FurnaceFuelBurnTimeEvent event) {
+        if (Config.GUANO_BURN_FUEL.get()) {
+            ItemStack currentStack = event.getItemStack();
+            if (currentStack.is(GUANO.get())) {
+                event.setBurnTime(1600);
+            }
+            else if (currentStack.is(GUANO_BLOCK.get())) {
+                event.setBurnTime(7000);
+            }
+            else if (currentStack.is(GUANO_LAYER.get())) {
+                event.setBurnTime(3500);
+            }
+        }
+    }
+
+    private static void makeReplaceable(ResourceLocation targetBlock) {
+        Optional<Block> block = BuiltInRegistries.BLOCK.getOptional(targetBlock);
+        block.ifPresent(value ->
+                value.getStateDefinition().getPossibleStates().forEach(blockState ->
+                        ((BlockStateBaseAccessor) blockState).setReplaceable(true)
+                ));
+    }
+}

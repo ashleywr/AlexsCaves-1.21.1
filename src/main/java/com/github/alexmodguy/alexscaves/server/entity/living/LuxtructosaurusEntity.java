@@ -675,7 +675,10 @@ public class LuxtructosaurusEntity extends SauropodBaseEntity implements Enemy {
                     level().setBlockAndUpdate(pos, Blocks.FIRE.defaultBlockState());
                 }
             }
-            this.hurtEntitiesAround(burnPos, burnWidth, 3.0F, 0.3F, true, false);
+            // TACT: fire breath damage is configurable. Was a ModifyArg mixin on this call.
+            this.hurtEntitiesAround(burnPos, burnWidth,
+                    com.telepathicgrunt.tact.Config.LUXTRUCTOSAURUS_FIRE_BREATH_ATTACK_DAMAGE.get().floatValue(),
+                    0.3F, true, false);
             distanceBurned += burnWidth;
         }
     }

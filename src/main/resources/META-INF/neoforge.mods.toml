@@ -6,6 +6,9 @@ issueTrackerURL="https://github.com/AlexModGuy/AlexsCaves/issues"
 [[mixins]]
 config="alexscaves.mixins.json"
 
+[[mixins]]
+config="tact.mixins.json"
+
 [[mods]]
 modId="alexscaves"
 version="2.0.10.1"
@@ -32,3 +35,17 @@ description='''Explore new rare cave biomes hidden under the surface of the Over
 
 [modproperties.alexscaves]
     catalogueItemIcon="alexscaves:cave_tablet"
+
+[[mods]]
+modId="tact"
+version="1.5.3"
+displayName="TACT"
+authors="TelepathicGrunt"
+description='''Tiny Alex's Caves Tweaks, merged into this build. MIT licensed; see TACT-LICENSE.txt.'''
+
+[[dependencies.tact]]
+    modId="alexscaves"
+    type="required"
+    versionRange="[2.0.0,)"
+    ordering="AFTER"
+    side="BOTH"

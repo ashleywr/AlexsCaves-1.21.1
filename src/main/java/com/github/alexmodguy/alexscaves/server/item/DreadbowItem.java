@@ -223,6 +223,11 @@ public class DreadbowItem extends ProjectileWeaponItem implements UpdatesStackTa
                     }
                     boolean darkArrows = isConvertibleArrow(abstractArrow);
                     int maxArrows = darkArrows ? 30 : 8;
+                    // TACT: per-ammo arrow count override. Was a @ModifyVariable mixin
+                    // matching this local by ordinal, which any edit to the method could
+                    // silently redirect; keyed by name here instead.
+                    maxArrows = com.telepathicgrunt.tact.DreadbowRainAttackModification.DREADBOW_OVERRIDES
+                            .getOrDefault(ammoStack.getItem(), maxArrows);
                     abstractArrow.pickup = AbstractArrow.Pickup.ALLOWED;
                     for(int j = 0; j < Math.ceil(maxArrows * f); j++){
                         if(darkArrows){

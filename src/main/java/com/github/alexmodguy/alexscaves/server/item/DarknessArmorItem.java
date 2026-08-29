@@ -38,7 +38,11 @@ public class DarknessArmorItem extends ArmorItem implements CustomArmorPostRende
     }
 
     private static boolean canChargeUp(LivingEntity entity, boolean creative) {
-        return (!DarknessIncarnateEffect.isInLight(entity, 11) || creative && entity instanceof Player player && player.isCreative()) && entity.getItemBySlot(EquipmentSlot.HEAD).is(ACItemRegistry.HOOD_OF_DARKNESS.get()) && !entity.hasEffect(ACEffectRegistry.DARKNESS_INCARNATE);
+        // TACT: allow charging in bright light when configured. Was a WrapOperation
+        // mixin on this call; inlined so the compiler checks it.
+        boolean inLight = !com.telepathicgrunt.tact.Config.ALLOWED_CLOAK_OF_DARKNESS_ABILITY_IN_LIGHT.get()
+                && DarknessIncarnateEffect.isInLight(entity, 11);
+        return (!inLight || creative && entity instanceof Player player && player.isCreative()) && entity.getItemBySlot(EquipmentSlot.HEAD).is(ACItemRegistry.HOOD_OF_DARKNESS.get()) && !entity.hasEffect(ACEffectRegistry.DARKNESS_INCARNATE);
     }
 
     public static boolean canChargeUp(ItemStack itemStack) {

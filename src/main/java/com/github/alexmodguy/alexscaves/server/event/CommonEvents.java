@@ -211,7 +211,11 @@ public class CommonEvents {
         if (living.hasEffect(ACEffectRegistry.BUBBLED) && living.isInFluidType()) {
             living.removeEffect(ACEffectRegistry.BUBBLED);
         }
-        if (living.hasEffect(ACEffectRegistry.DARKNESS_INCARNATE) && living.tickCount % 5 == 0 && DarknessIncarnateEffect.isInLight(living, 11)) {
+        // TACT: allow the cloak ability in bright light when configured. Was a
+        // WrapOperation mixin on this call.
+        boolean darknessInLight = !com.telepathicgrunt.tact.Config.ALLOWED_CLOAK_OF_DARKNESS_ABILITY_IN_LIGHT.get()
+                && DarknessIncarnateEffect.isInLight(living, 11);
+        if (living.hasEffect(ACEffectRegistry.DARKNESS_INCARNATE) && living.tickCount % 5 == 0 && darknessInLight) {
             living.removeEffect(ACEffectRegistry.DARKNESS_INCARNATE);
         }
         if (living.getItemBySlot(EquipmentSlot.HEAD).is(ACItemRegistry.DIVING_HELMET.get())) {
