@@ -92,6 +92,7 @@ public class ACTagRegistry {
     public static final TagKey<EntityType<?>> CANDY_MOBS = registerEntityTag("candy_mobs");
     public static final TagKey<Structure> ON_UNDERGROUND_CABIN_MAPS = registerStructureTag("on_underground_cabin_maps");
     public static final TagKey<Structure> GINGERBREAD_MEN_WANDER_THROUGH = registerStructureTag("gingerbread_men_wander_through");
+    public static final TagKey<Structure> ORE_PROTECTED = registerStructureTag("ore_protected");
     public static final TagKey<DamageType> DEEP_ONE_IGNORES = registerDamageTypeTag("deep_one_ignores");
     public static final TagKey<Fluid> DOES_NOT_FLOW_INTO_WATERLOGGABLE_BLOCKS = registerFluidTag("does_not_flow_into_waterloggable_blocks");
 
