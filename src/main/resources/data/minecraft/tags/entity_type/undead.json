@@ -1,9 +1,10 @@
 {
   "replace": false,
   "values": [
-    "alexscaves:luxtructosaurus",
-    "alexscaves:watcher",
+    "alexscaves:brainiac",
+    "alexscaves:caniac",
     "alexscaves:forsaken",
-    "alexscaves:caniac"
+    "alexscaves:luxtructosaurus",
+    "alexscaves:watcher"
   ]
 }
