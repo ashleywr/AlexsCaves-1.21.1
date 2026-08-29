@@ -70,10 +70,10 @@ public class BiomeGenerationNoiseCondition {
         if (erosion != null && erosion.length >= 2 && (f1 < erosion[0] || f1 > erosion[1])) {
             return false;
         }
-        if (humidity != null && humidity.length >= 2 && (f2 < humidity[0] || f2 > humidity[1])) {
+        if (temperature != null && temperature.length >= 2 && (f2 < temperature[0] || f2 > temperature[1])) {
             return false;
         }
-        if (temperature != null && temperature.length >= 2 && (f3 < temperature[0] || f3 > temperature[1])) {
+        if (humidity != null && humidity.length >= 2 && (f3 < humidity[0] || f3 > humidity[1])) {
             return false;
         }
         if (weirdness != null && weirdness.length >= 2 && (f4 < weirdness[0] || f4 > weirdness[1])) {
@@ -105,6 +105,11 @@ public class BiomeGenerationNoiseCondition {
 
     public boolean isInvalid() {
         return false;
+    }
+
+    /** The configured continentalness band, or null if unrestricted. */
+    public float[] getContinentalness(){
+        return continentalness;
     }
 
     public int getRarityOffset(){

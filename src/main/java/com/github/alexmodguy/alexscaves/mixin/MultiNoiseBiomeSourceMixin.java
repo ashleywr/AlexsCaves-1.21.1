@@ -94,11 +94,19 @@ public class MultiNoiseBiomeSourceMixin implements MultiNoiseBiomeSourceAccessor
                 if (foundRarityOffset == condition.getValue().getRarityOffset() &&
                     condition.getValue().test(x, y, z, unquantizedDepth, sampler, dimension, voronoiInfo)) {
 
+                    // The config range is tested against the rare biome's centre, so a cell
+                    // centred offshore can still bleed onto land. Trim the local edge for
+                    // Abyssal Chasm, but honour the configured upper bound rather than a
+                    // hardcoded one, otherwise widening continentalness in the config is
+                    // silently clipped and the setting appears not to work.
                     if (condition.getKey() == ACBiomeRegistry.ABYSSAL_CHASM) {
-                        Climate.TargetPoint localPoint = sampler.sample(x, y, z);
-                        float localContinentalness = Climate.unquantizeCoord(localPoint.continentalness());
-                        if (localContinentalness > -0.5F) {
-                            continue; // Skip this biome, let vanilla handle it
+                        float[] configured = condition.getValue().getContinentalness();
+                        if (configured != null && configured.length >= 2) {
+                            Climate.TargetPoint localPoint = sampler.sample(x, y, z);
+                            float localContinentalness = Climate.unquantizeCoord(localPoint.continentalness());
+                            if (localContinentalness > configured[1]) {
+                                continue; // outside the configured band, let vanilla handle it
+                            }
                         }
                     }
 
