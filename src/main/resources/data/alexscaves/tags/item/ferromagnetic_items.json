@@ -72,6 +72,62 @@
     "minecraft:soul_lantern",
     "minecraft:basalt",
     "minecraft:smooth_basalt",
-    "minecraft:polished_basalt"
+    "minecraft:polished_basalt",
+    {
+      "id": "#c:plates/iron",
+      "required": false
+    },
+    {
+      "id": "#c:plates/steel",
+      "required": false
+    },
+    {
+      "id": "#c:plates/netherite",
+      "required": false
+    },
+    {
+      "id": "#c:gears/iron",
+      "required": false
+    },
+    {
+      "id": "#c:gears/steel",
+      "required": false
+    },
+    {
+      "id": "#c:rods/iron",
+      "required": false
+    },
+    {
+      "id": "#c:rods/steel",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/iron",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/steel",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/steel",
+      "required": false
+    },
+    {
+      "id": "#c:nuggets/steel",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/steel",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/steel",
+      "required": false
+    },
+    {
+      "id": "#c:nuggets/netherite",
+      "required": false
+    }
   ]
 }
