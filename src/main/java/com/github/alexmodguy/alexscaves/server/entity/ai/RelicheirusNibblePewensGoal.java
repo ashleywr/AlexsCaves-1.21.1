@@ -14,6 +14,7 @@ import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
+import net.minecraft.world.level.GameRules;
 
 public class RelicheirusNibblePewensGoal extends MoveToBlockGoal {
 
@@ -74,7 +75,9 @@ public class RelicheirusNibblePewensGoal extends MoveToBlockGoal {
                             return;
                         } else if (relicheirus.getAnimationTick() % 8 == 0) {
                             BlockState back = relicheirus.level().getBlockState(blockPos);
-                            relicheirus.level().destroyBlock(blockPos, false, relicheirus);
+                            if (relicheirus.level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+                                relicheirus.level().destroyBlock(blockPos, false, relicheirus);
+                            }
                             relicheirus.level().setBlock(blockPos, back, 3);
                         }
 

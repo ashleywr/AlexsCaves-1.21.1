@@ -14,6 +14,7 @@ import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
+import net.minecraft.world.level.GameRules;
 
 public class AtlatitanNibbleTreesGoal extends MoveToBlockGoal {
 
@@ -79,7 +80,9 @@ public class AtlatitanNibbleTreesGoal extends MoveToBlockGoal {
                         } else if (atlatitan.getAnimationTick() == 20) {
                             BlockState back = atlatitan.level().getBlockState(blockPos);
                             atlatitan.setLastEatenBlock(back);
-                            atlatitan.level().destroyBlock(blockPos, false, atlatitan);
+                            if (atlatitan.level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+                                atlatitan.level().destroyBlock(blockPos, false, atlatitan);
+                            }
                             atlatitan.level().setBlock(blockPos, back, 3);
                         }
 

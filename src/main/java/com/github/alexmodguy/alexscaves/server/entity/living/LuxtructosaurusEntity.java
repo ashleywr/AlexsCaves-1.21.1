@@ -66,6 +66,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.level.GameRules;
 
 public class LuxtructosaurusEntity extends SauropodBaseEntity implements Enemy {
 
@@ -401,7 +402,9 @@ public class LuxtructosaurusEntity extends SauropodBaseEntity implements Enemy {
                 for (BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX - 1), Mth.floor(aabb.minY - 1), Mth.floor(aabb.minZ - 1), Mth.ceil(aabb.maxX + 1), Mth.ceil(aabb.maxY + 2.0F), Mth.ceil(aabb.maxZ + 1))) {
                     BlockState blockstate = this.level().getBlockState(blockpos);
                     if (blockstate.is(ACTagRegistry.LUXTRUCTOSAURUS_BREAKS)) {
-                        this.level().destroyBlock(blockpos, random.nextFloat() < AlexsCaves.COMMON_CONFIG.luxtructosaurusBlockDropChance.get(), this);
+                        if (this.level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+                            this.level().destroyBlock(blockpos, random.nextFloat() < AlexsCaves.COMMON_CONFIG.luxtructosaurusBlockDropChance.get(), this);
+                        }
                     }
                     if (blockstate.getFluidState().is(FluidTags.WATER)) {
                         level().setBlock(blockpos, net.neoforged.neoforge.event.EventHooks.fireFluidPlaceBlockEvent(level(), blockpos, blockpos, Blocks.STONE.defaultBlockState()), 3);

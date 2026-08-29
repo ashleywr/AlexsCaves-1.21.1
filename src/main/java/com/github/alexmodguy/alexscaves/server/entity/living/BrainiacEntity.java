@@ -37,6 +37,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
+import net.minecraft.world.level.GameRules;
 
 public class BrainiacEntity extends Monster implements IAnimatedEntity {
 
@@ -408,7 +409,9 @@ public class BrainiacEntity extends Monster implements IAnimatedEntity {
                     }
                     if (BrainiacEntity.this.getAnimation() == ANIMATION_BITE && BrainiacEntity.this.getAnimationTick() >= 10 && BrainiacEntity.this.getAnimationTick() <= 15) {
                         if (isValidTarget(level(), blockPos)) {
-                            level().destroyBlock(blockPos, false);
+                            if (level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+                                level().destroyBlock(blockPos, false);
+                            }
                             BrainiacEntity.this.setHasBarrel(true);
                         }
                     }

@@ -14,6 +14,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.GameRules;
 
 public class GrottoceratopsEatPlantsGoal extends MoveToBlockGoal {
     private final GrottoceratopsEntity grottoceratops;
@@ -54,7 +55,9 @@ public class GrottoceratopsEatPlantsGoal extends MoveToBlockGoal {
                     if (grottoceratops.getAnimationTick() > 15) {
                         BlockPos plant = target;
                         BlockState state = grottoceratops.level().getBlockState(plant);
-                        grottoceratops.level().destroyBlock(plant, false);
+                        if (grottoceratops.level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+                            grottoceratops.level().destroyBlock(plant, false);
+                        }
                         if (state.is(ACBlockRegistry.CURLY_FERN.get())) {
                             grottoceratops.level().setBlockAndUpdate(plant, ACBlockRegistry.FIDDLEHEAD.get().defaultBlockState());
                         }

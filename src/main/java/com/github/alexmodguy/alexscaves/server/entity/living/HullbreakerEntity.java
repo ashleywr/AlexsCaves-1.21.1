@@ -59,6 +59,7 @@ import net.neoforged.neoforge.entity.PartEntity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import net.minecraft.world.level.GameRules;
 
 public class HullbreakerEntity extends WaterAnimal implements IAnimatedEntity, KaijuMob {
 
@@ -311,7 +312,9 @@ public class HullbreakerEntity extends WaterAnimal implements IAnimatedEntity, K
                             if (block != Blocks.AIR) {
                                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.6F, 1, 0.6F));
                                 flag = true;
-                                level().destroyBlock(pos, true);
+                                if (level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+                                    level().destroyBlock(pos, true);
+                                }
                                 if (state.is(BlockTags.ICE)) {
                                     level().setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
                                 }

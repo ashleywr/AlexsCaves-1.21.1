@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
+import net.minecraft.world.level.GameRules;
 
 public class GumWormDestroyGobthumperGoal extends Goal {
 
@@ -71,7 +72,9 @@ public class GumWormDestroyGobthumperGoal extends Goal {
             if(entity.isLeaping() && distance < 20.0F){
                 entity.attemptPlayAttackNoise();
                 Vec3 leapDelta = new Vec3(0, -0.2F, 1).yRot((float) -Math.toRadians(entity.yBodyRot));
-                entity.level().destroyBlock(gobthumperPos, false);
+                if (entity.level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+                    entity.level().destroyBlock(gobthumperPos, false);
+                }
                 entity.setGobthumperPos(null);
                 entity.setDeltaMovement(entity.getDeltaMovement().add(leapDelta));
             }

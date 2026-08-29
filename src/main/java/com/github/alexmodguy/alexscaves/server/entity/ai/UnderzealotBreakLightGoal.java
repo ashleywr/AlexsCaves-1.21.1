@@ -12,6 +12,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.GameRules;
 
 public class UnderzealotBreakLightGoal extends MoveToBlockGoal {
     private final UnderzealotEntity underzealot;
@@ -55,7 +56,9 @@ public class UnderzealotBreakLightGoal extends MoveToBlockGoal {
                 if (underzealot.getAnimation() == IAnimatedEntity.NO_ANIMATION) {
                     underzealot.setAnimation(UnderzealotEntity.ANIMATION_BREAKTORCH);
                 } else if (underzealot.getAnimation() == UnderzealotEntity.ANIMATION_BREAKTORCH && underzealot.getAnimationTick() == 10) {
-                    underzealot.level().destroyBlock(target, true);
+                    if (underzealot.level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+                        underzealot.level().destroyBlock(target, true);
+                    }
                 }
             }
         }
