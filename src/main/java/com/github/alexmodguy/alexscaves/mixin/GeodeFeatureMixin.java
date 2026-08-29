@@ -28,6 +28,14 @@ public class GeodeFeatureMixin {
      */
     @Inject(method = "place", at = @At("HEAD"), cancellable = true)
     private void ac_preventGeodeInStructure(FeaturePlaceContext<GeodeConfiguration> context, CallbackInfoReturnable<Boolean> cir) {
+        // TACT: also suppress geodes in biomes tagged tact:manually_carved, which covers
+        // the hand-carved Alex's Caves cave biomes. Folded in here rather than kept as a
+        // second HEAD inject on the same vanilla method, so this hot worldgen path is
+        // entered once and the cheaper biome test runs first.
+        if (context.level().getBiome(context.origin()).is(com.telepathicgrunt.tact.TACT.MANUALLY_CARVED)) {
+            cir.setReturnValue(false);
+            return;
+        }
         if (alexscaves$isInsideProtectedStructure(context.level(), context.origin())) {
             cir.setReturnValue(false);
         }

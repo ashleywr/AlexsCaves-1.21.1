@@ -5,7 +5,6 @@
   "refmap": "tact.refmap.json",
   "mixins": [
     "BlockStateBaseAccessor",
-    "GeodeFeatureMixin",
     "MobEffectInstanceAccessor"
   ],
   "client": [],
