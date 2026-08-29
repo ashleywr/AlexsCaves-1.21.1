@@ -36,6 +36,7 @@ import java.util.*;
 import java.util.Objects;
 
 import static com.github.alexmodguy.alexscaves.client.render.entity.NotorRenderer.renderEntityInHologram;
+import net.minecraft.world.phys.AABB;
 
 public class HologramProjectorBlockRenderer<T extends HologramProjectorBlockEntity> implements BlockEntityRenderer<T> {
 
@@ -225,5 +226,10 @@ public class HologramProjectorBlockRenderer<T extends HologramProjectorBlockEnti
 
     public int getViewDistance() {
         return 128;
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(T blockEntity) {
+        return blockEntity.getRenderBoundingBox();
     }
 }

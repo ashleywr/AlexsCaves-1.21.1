@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.phys.AABB;
 
 public class TelsaBulbBlockRenderer<T extends TeslaBulbBlockEntity> implements BlockEntityRenderer<T> {
 
@@ -43,5 +44,10 @@ public class TelsaBulbBlockRenderer<T extends TeslaBulbBlockEntity> implements B
 
     public int getViewDistance() {
         return 256;
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(T blockEntity) {
+        return blockEntity.getRenderBoundingBox();
     }
 }

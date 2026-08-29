@@ -21,6 +21,7 @@ import org.joml.Quaternionf;
 import java.util.*;
 
 import static net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY;
+import net.minecraft.world.phys.AABB;
 
 public class AmbersolBlockRenderer<T extends AmbersolBlockEntity> implements BlockEntityRenderer<T> {
 
@@ -129,5 +130,10 @@ public class AmbersolBlockRenderer<T extends AmbersolBlockEntity> implements Blo
 
     public int getViewDistance() {
         return 256;
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(T blockEntity) {
+        return blockEntity.getRenderBoundingBox();
     }
 }

@@ -34,6 +34,7 @@ import org.joml.Matrix4f;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import net.minecraft.world.phys.AABB;
 
 public class ConversionCrucibleBlockRenderer<T extends ConversionCrucibleBlockEntity> implements BlockEntityRenderer<T> {
 
@@ -181,5 +182,10 @@ public class ConversionCrucibleBlockRenderer<T extends ConversionCrucibleBlockEn
 
     public int getViewDistance() {
         return 128;
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(T blockEntity) {
+        return blockEntity.getRenderBoundingBox();
     }
 }

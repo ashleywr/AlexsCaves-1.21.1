@@ -20,6 +20,7 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 import static net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY;
+import net.minecraft.world.phys.AABB;
 
 public class SirenLightBlockRenderer<T extends SirenLightBlockEntity> implements BlockEntityRenderer<T> {
 
@@ -105,5 +106,10 @@ public class SirenLightBlockRenderer<T extends SirenLightBlockEntity> implements
 
     public int getViewDistance() {
         return 128;
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(T blockEntity) {
+        return blockEntity.getRenderBoundingBox();
     }
 }
