@@ -1,0 +1,124 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.12/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Java: 21.0.3 JVM: 21.0.3+9-LTS(Eclipse Adoptium) Arch: amd64
+
+> Task :createMinecraftArtifacts UP-TO-DATE
+
+> Task :compileJava
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\compat\jei\AlexsCavesPlugin.java:92: 警告: [removal] ISubtypeRegistrationのregisterSubtypeInterpreter(Item,IIngredientSubtypeInterpreter<ItemStack>)は推奨されておらず、削除用にマークされています
+        registration.registerSubtypeInterpreter(ACItemRegistry.CAVE_TABLET.get(), CaveTabletSubtypeInterpreter.INSTANCE);
+                    ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\compat\jei\AlexsCavesPlugin.java:93: 警告: [removal] ISubtypeRegistrationのregisterSubtypeInterpreter(Item,IIngredientSubtypeInterpreter<ItemStack>)は推奨されておらず、削除用にマークされています
+        registration.registerSubtypeInterpreter(ACItemRegistry.CAVE_CODEX.get(), CaveTabletSubtypeInterpreter.INSTANCE);
+                    ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\block\fluid\AcidFluidType.java:39: 警告: [removal] FluidTypeのinitializeClient(Consumer<IClientFluidTypeExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\block\fluid\PurpleSodaFluidType.java:40: 警告: [removal] FluidTypeのinitializeClient(Consumer<IClientFluidTypeExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\entity\ACEntityRegistry.java:20: 警告: [removal] EventBusSubscriberのbus()は推奨されておらず、削除用にマークされています
+@EventBusSubscriber(modid = AlexsCaves.MODID, bus = EventBusSubscriber.Bus.MOD)
+                                              ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\entity\ACEntityRegistry.java:20: 警告: [removal] EventBusSubscriberのBusは推奨されておらず、削除用にマークされています
+@EventBusSubscriber(modid = AlexsCaves.MODID, bus = EventBusSubscriber.Bus.MOD)
+                                                                      ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\event\CommonEvents.java:136: 警告: [removal] IEntityExtensionのserializeNBT(Provider)は推奨されておらず、削除用にマークされています
+            CompoundTag entityTag = event.getTarget() instanceof Player ? new CompoundTag() : event.getTarget().serializeNBT(event.getLevel().registryAccess());
+                                                                                                               ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\BlockItemWithISTER.java:16: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\CaveMapItem.java:47: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\DarknessArmorItem.java:63: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\DivingArmorItem.java:57: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\DreadbowItem.java:54: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\GalenaGauntletItem.java:32: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\GingerbreadArmorItem.java:59: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\HazmatArmorItem.java:30: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\OrtholanceItem.java:183: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\PrimitiveClubItem.java:123: 警告: [removal] IItemExtensionのonEntitySwing(ItemStack,LivingEntity)は推奨されておらず、削除用にマークされています
+    public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
+                   ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\PrimitiveClubItem.java:113: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\PrimordialArmorItem.java:26: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\RainbounceBootsItem.java:30: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\RaygunItem.java:55: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\ResistorShieldItem.java:31: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\SeaStaffItem.java:32: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\ShotGumItem.java:35: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\SpearItem.java:59: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\SugarStaffItem.java:30: 警告: [removal] ItemのinitializeClient(Consumer<IClientItemExtensions>)は推奨されておらず、削除用にマークされています
+    public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer) {
+                ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\TotemOfPossessionItem.java:200: 警告: [removal] IEntityExtensionのserializeNBT(Provider)は推奨されておらず、削除用にマークされています
+                                    CompoundTag entityTag = target.serializeNBT(level.registryAccess());
+                                                                  ^
+C:\WorkDir\Minecraft Mods\AlexsCaves\src\main\java\com\github\alexmodguy\alexscaves\server\item\TotemOfPossessionItem.java:319: 警告: [removal] IEntityExtensionのserializeNBT(Provider)は推奨されておらず、削除用にマークされています
+            CompoundTag entityTag = hurtMob.serializeNBT(hurtMob.level().registryAccess());
+                                           ^
+ノート: 一部の入力ファイルは推奨されないAPIを使用またはオーバーライドしています。
+ノート: 詳細は、-Xlint:deprecationオプションを指定して再コンパイルしてください。
+ノート: 入力ファイルの操作のうち、未チェックまたは安全ではないものがあります。
+ノート: 詳細は、-Xlint:uncheckedオプションを指定して再コンパイルしてください。
+警告28個
+
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :jarJar NO-SOURCE
+> Task :jar
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+
+> Task :deploy
+deploy: target mods directory does not exist: D:\instances\NeoForge 1.21.1\minecraft\mods
+
+[Incubating] Problems report is available at: file:///C:/WorkDir/Minecraft%20Mods/AlexsCaves/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.12/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 13s
+5 actionable tasks: 3 executed, 2 up-to-date
