@@ -10,6 +10,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
+import java.util.Set;
+import net.neoforged.neoforge.common.EffectCure;
+import net.minecraft.world.effect.MobEffectInstance;
 
 public class IrradiatedEffect extends MobEffect {
 
@@ -43,8 +46,13 @@ public class IrradiatedEffect extends MobEffect {
         }
     }
 
-    public List<ItemStack> getCurativeItems() {
-        return List.of();
+    @Override
+    public void fillEffectCures(Set<EffectCure> cures, MobEffectInstance effectInstance) {
+        // 1.20.1 expressed this as getCurativeItems() returning an empty list. NeoForge
+        // 1.21 replaced that with fillEffectCures, so the old override compiled but bound
+        // to nothing and milk cleared the effect. Clearing the set restores the intent:
+        // nothing cures this.
+        cures.clear();
     }
 
 }
