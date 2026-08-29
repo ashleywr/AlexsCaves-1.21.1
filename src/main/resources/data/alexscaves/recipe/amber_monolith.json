@@ -13,13 +13,14 @@
       "item": "alexscaves:amber_curiosity"
     },
     "L": {
-      "item": "alexscaves:limestone"
+      "tag": "c:stones/limestone"
     },
     "D": {
       "tag": "c:gems/diamond"
     }
   },
-  "result": { "id": "alexscaves:amber_monolith",
+  "result": {
+    "id": "alexscaves:amber_monolith",
     "count": 1
   }
 }

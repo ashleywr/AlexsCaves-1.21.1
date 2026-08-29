@@ -6,10 +6,11 @@
   ],
   "key": {
     "G": {
-      "item": "alexscaves:limestone"
+      "tag": "c:stones/limestone"
     }
   },
-  "result": { "id": "alexscaves:limestone_wall",
+  "result": {
+    "id": "alexscaves:limestone_wall",
     "count": 6
   }
 }

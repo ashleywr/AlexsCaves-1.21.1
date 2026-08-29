@@ -7,10 +7,11 @@
   ],
   "key": {
     "G": {
-      "item": "alexscaves:limestone"
+      "tag": "c:stones/limestone"
     }
   },
-  "result": { "id": "alexscaves:limestone_stairs",
+  "result": {
+    "id": "alexscaves:limestone_stairs",
     "count": 4
   }
 }

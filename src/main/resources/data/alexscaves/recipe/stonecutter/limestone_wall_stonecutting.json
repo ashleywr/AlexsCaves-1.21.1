@@ -2,7 +2,9 @@
   "type": "minecraft:stonecutting",
   "count": 2,
   "ingredient": {
-    "item": "alexscaves:limestone"
+    "tag": "c:stones/limestone"
   },
-  "result": { "id": "alexscaves:limestone_wall" }
+  "result": {
+    "id": "alexscaves:limestone_wall"
+  }
 }

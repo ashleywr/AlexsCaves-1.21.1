@@ -7,13 +7,14 @@
   ],
   "key": {
     "L": {
-      "item": "alexscaves:limestone"
+      "tag": "c:stones/limestone"
     },
     "S": {
       "tag": "c:rods/wooden"
     }
   },
-  "result": { "id": "alexscaves:limestone_spear",
+  "result": {
+    "id": "alexscaves:limestone_spear",
     "count": 4
   }
 }
