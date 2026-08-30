@@ -50,7 +50,13 @@ public class FertilizerItem extends Item {
 
     private static boolean applyFertilizer(ItemStack itemStack, Level level, BlockPos blockPos, Player player) {
         BlockState blockstate = level.getBlockState(blockPos);
-        // Skip event hook for now - just proceed with default behavior
+        // Upstream calls the Forge bonemeal hook here so other mods can handle or veto
+        // growth on their own blocks; the port dropped it. NeoForge 1.21 renamed it to
+        // fireBonemealEvent, used exactly as vanilla BoneMealItem#applyBonemeal does.
+        var bonemealEvent = net.neoforged.neoforge.event.EventHooks.fireBonemealEvent(player, level, blockPos, blockstate, itemStack);
+        if (bonemealEvent.isCanceled()) {
+            return bonemealEvent.isSuccessful();
+        }
         if (blockstate.getBlock() instanceof BonemealableBlock) {
             BonemealableBlock bonemealableblock = (BonemealableBlock) blockstate.getBlock();
             if (bonemealableblock.isValidBonemealTarget(level, blockPos, blockstate)) {
