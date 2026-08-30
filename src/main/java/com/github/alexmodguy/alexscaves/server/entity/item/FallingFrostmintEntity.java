@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.phys.Vec3;
 
@@ -120,6 +121,15 @@ private FallingFrostmintEntity(Level level, double x, double y, double z, BlockS
                                 setAboveState = ACBlockRegistry.FROSTMINT.get().defaultBlockState().setValue(FrostmintBlock.TYPE, slabType);
                             }
                         }
+                        // Vanilla FallingBlockEntity re-waterlogs a waterloggable block when it
+                        // lands in water; frostmint is a SlabBlock so it inherits the property and
+                        // was deleting the water instead (official #1342). A double slab cannot be
+                        // waterlogged, so leave that case alone.
+                        boolean landedDouble = setState.hasProperty(FrostmintBlock.TYPE) && setState.getValue(FrostmintBlock.TYPE) == SlabType.DOUBLE;
+                        if (!landedDouble && setState.hasProperty(BlockStateProperties.WATERLOGGED)
+                                && this.level().getFluidState(blockpos).getType() == Fluids.WATER) {
+                            setState = setState.setValue(BlockStateProperties.WATERLOGGED, Boolean.valueOf(true));
+                        }
                         if (flag2 && flag4) {
                             boolean flag5 = false;
                             if (this.level().setBlockAndUpdate(blockpos, setState)) {
@@ -132,6 +142,10 @@ private FallingFrostmintEntity(Level level, double x, double y, double z, BlockS
                             if (setAboveState != null) {
                                 BlockPos abovePos = blockpos.above();
                                 BlockState aboveState = this.level().getBlockState(abovePos);
+                                if (setAboveState.hasProperty(BlockStateProperties.WATERLOGGED)
+                                        && this.level().getFluidState(abovePos).getType() == Fluids.WATER) {
+                                    setAboveState = setAboveState.setValue(BlockStateProperties.WATERLOGGED, Boolean.valueOf(true));
+                                }
                                 if (aboveState.canBeReplaced(new DirectionalPlaceContext(this.level(), abovePos, Direction.DOWN, ItemStack.EMPTY, Direction.UP))) {
                                     this.level().setBlockAndUpdate(abovePos, setAboveState);
                                 } else {
