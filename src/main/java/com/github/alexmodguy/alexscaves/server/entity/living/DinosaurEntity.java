@@ -327,7 +327,11 @@ public abstract class DinosaurEntity extends TamableAnimal implements IDancesToJ
                 }
             }
         }
-        return type;
+        // mobInteract runs the item interaction itself above, so it has to report
+        // that result. Returning the superclass result meant a successful feed looked
+        // like PASS, which both suppressed the vanilla interact advancement trigger and
+        // let Player.interactOn run interactLivingEntity a second time.
+        return interactionresult.consumesAction() ? interactionresult : type;
     }
 
     public boolean startRiding(Entity entity, boolean force) {
