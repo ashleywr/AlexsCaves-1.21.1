@@ -1,5 +1,6 @@
 package com.github.alexmodguy.alexscaves.server.block.blockentity;
 
+import com.github.alexmodguy.alexscaves.mixin.SurfaceRulesContextAccessor;
 import com.github.alexmodguy.alexscaves.AlexsCaves;
 import com.github.alexmodguy.alexscaves.client.particle.ACParticleRegistry;
 import com.github.alexmodguy.alexscaves.server.block.ACBlockRegistry;
@@ -51,6 +52,13 @@ import java.util.*;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import net.minecraft.world.level.levelgen.NoiseChunk;
+import net.minecraft.world.level.levelgen.Beardifier;
+import net.minecraft.world.level.levelgen.Aquifer;
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
+import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.WorldGenerationContext;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 public class ConversionCrucibleBlockEntity extends BlockEntity {
 
@@ -239,9 +247,11 @@ public class ConversionCrucibleBlockEntity extends BlockEntity {
             try {
                 Registry<Biome> registry = serverLevel.registryAccess().registryOrThrow(Registries.BIOME);
                 Optional<Holder.Reference<Biome>> biomeHolder = registry.getHolder(convertingToBiome);
-                // NeoForge 1.21: WorldGenRegion constructor changed - commented out for now
-                // ChunkAccess chunkaccess = serverLevel.getChunk(this.getBlockPos());
-                // WorldGenRegion worldGenRegion = new WorldGenRegion(serverLevel, List.of(chunkaccess), ChunkStatus.SURFACE, 0);
+                // 1.21's WorldGenRegion needs a StaticCache2D and ChunkStep, which cannot be
+                // assembled outside the generation pipeline. It was only ever built to hand a
+                // Blender to the noise chunk, and for a synthetic lookup like this one no
+                // blending with neighbouring chunks is wanted anyway, so use Blender.empty().
+                ChunkAccess chunkaccess = serverLevel.getChunk(this.getBlockPos());
                 ResourceKey<NoiseGeneratorSettings> dimensionType = NoiseGeneratorSettings.OVERWORLD;
                 if (biomeHolder.isPresent()) {
                     if (biomeHolder.get().is(BiomeTags.IS_NETHER)) {
@@ -256,11 +266,15 @@ public class ConversionCrucibleBlockEntity extends BlockEntity {
                 Holder<NoiseGeneratorSettings> settings = serverLevel.registryAccess().registryOrThrow(Registries.NOISE_SETTINGS).getHolderOrThrow(dimensionType);
                 //for compat with other world types, like flat worlds, we cannot assume the chunk generator of the world is noise-based so we must create a new one
                 NoiseBasedChunkGenerator noiseBasedChunkGenerator = new NoiseBasedChunkGenerator(new ACDummyBiomeSource(), settings);
-                //TODO: NeoForge 1.21 - createNoiseChunk is now private, need alternative approach or access widener
-                //get or create a dummy noise chunk
-                /*NoiseChunk noisechunk = chunkaccess.getOrCreateNoiseChunk((chunkAccess) -> {
-                    return noiseBasedChunkGenerator.createNoiseChunk(chunkAccess, serverLevel.structureManager(), Blender.of(worldGenRegion), serverLevel.getChunkSource().randomState());
-                });
+                // NoiseBasedChunkGenerator#createNoiseChunk is private in 1.21, but it only
+                // forwards to the public NoiseChunk#forChunk, so inline it rather than widen access.
+                NoiseChunk noisechunk = chunkaccess.getOrCreateNoiseChunk((chunkAccess) -> NoiseChunk.forChunk(
+                        chunkAccess,
+                        serverLevel.getChunkSource().randomState(),
+                        Beardifier.forStructuresInChunk(serverLevel.structureManager(), chunkAccess.getPos()),
+                        settings.value(),
+                        createFluidPicker(settings.value()),
+                        Blender.empty()));
                 //should ideally be merged when we get it, for some reason isn't. Idk why
                 SurfaceRules.RuleSource ruleSource = SurfaceRulesManager.mergeOverworldRules(noiseBasedChunkGenerator.generatorSettings().value().surfaceRule());
                 WorldGenerationContext worldGenerationContext = new WorldGenerationContext(noiseBasedChunkGenerator, serverLevel);
@@ -271,28 +285,37 @@ public class ConversionCrucibleBlockEntity extends BlockEntity {
                 int z = this.getBlockPos().getZ();
                 //one over the top (grass condition)
                 int topHeight = serverLevel.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, x, z) + 1;
-                surfacerulesContext.updateXZ(x, z);
-                surfacerulesContext.updateY(1, 1, topHeight, x, topHeight, z);
+                SurfaceRulesContextAccessor surfaceContextAccess = (SurfaceRulesContextAccessor) (Object) surfacerulesContext;
+                surfaceContextAccess.ac_updateXZ(x, z);
+                surfaceContextAccess.ac_updateY(1, 1, topHeight, x, topHeight, z);
                 BlockState grass = rule.tryApply(x, topHeight, z);
                 if (grass != null && !grass.is(Blocks.BEDROCK)) {
                     topBlockForBiome = grass;
                 }
                 //tell it that there is a block about the top position
-                surfacerulesContext.updateY(1, 1, topHeight + 1, x, topHeight, z);
+                surfaceContextAccess.ac_updateY(1, 1, topHeight + 1, x, topHeight, z);
                 BlockState dirt = rule.tryApply(x, topHeight, z);
                 if (dirt != null && !dirt.is(Blocks.BEDROCK)) {
                     middleBlockForBiome = dirt;
                 }
                 //tell it that there is many blocks about the top position
-                surfacerulesContext.updateY(1, 1, topHeight + 20, x, topHeight, z);
+                surfaceContextAccess.ac_updateY(1, 1, topHeight + 20, x, topHeight, z);
                 BlockState stone = rule.tryApply(x, topHeight, z);
                 if (stone != null && !stone.is(Blocks.BEDROCK)) {
                     bottomBlockForBiome = stone;
-                }*/
+                }
             } catch (Exception e) {
                 AlexsCaves.LOGGER.warn("Encountered error finding the surface blocks of a biome");
             }
         }
+    }
+
+    // Copy of the private NoiseBasedChunkGenerator#createFluidPicker; it only uses public API.
+    private static Aquifer.FluidPicker createFluidPicker(NoiseGeneratorSettings settings) {
+        Aquifer.FluidStatus lava = new Aquifer.FluidStatus(-54, Blocks.LAVA.defaultBlockState());
+        int seaLevel = settings.seaLevel();
+        Aquifer.FluidStatus sea = new Aquifer.FluidStatus(seaLevel, settings.defaultFluid());
+        return (x, y, z) -> y < Math.min(-54, seaLevel) ? lava : sea;
     }
 
     private boolean isBiomeBlock(BlockState blockState) {

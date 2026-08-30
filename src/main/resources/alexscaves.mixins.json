@@ -41,6 +41,7 @@
     "ServerChunkCacheMixin",
     "ShipwreckStructureMixin",
     "StrongholdStructureMixin",
+    "SurfaceRulesContextAccessor",
     "SwampHutPieceMixin",
     "UtilMixin",
     "WorldGenOptionsMixin"
