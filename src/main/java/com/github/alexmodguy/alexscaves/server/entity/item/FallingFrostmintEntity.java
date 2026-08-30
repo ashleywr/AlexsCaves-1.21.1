@@ -172,6 +172,13 @@ private FallingFrostmintEntity(Level level, double x, double y, double z, BlockS
     protected void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.frostMintState = NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK), tag.getCompound("BlockState"));
+        // /summon with no NBT yields an empty BlockState tag, which reads back as air and
+        // makes tick() discard the entity immediately. Vanilla FallingBlockEntity guards the
+        // same case by falling back to sand.
+        if (this.frostMintState.isAir()) {
+            this.frostMintState = ACBlockRegistry.FROSTMINT.get().defaultBlockState();
+        }
+        ((com.github.alexmodguy.alexscaves.server.entity.util.FallingBlockEntityAccessor) this).setBlockState(this.frostMintState);
     }
 
     public BlockState getBlockState() {
