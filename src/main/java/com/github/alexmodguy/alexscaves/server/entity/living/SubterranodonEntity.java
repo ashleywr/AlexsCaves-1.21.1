@@ -311,7 +311,8 @@ public class SubterranodonEntity extends DinosaurEntity implements PackAnimal, F
         lastStepZ = this.zo;
     }
 
-    public void lerpTo(double x, double y, double z, float yr, float xr, int steps, boolean b) {
+    @Override
+    public void lerpTo(double x, double y, double z, float yr, float xr, int steps) {
         this.lx = x;
         this.ly = y;
         this.lz = z;

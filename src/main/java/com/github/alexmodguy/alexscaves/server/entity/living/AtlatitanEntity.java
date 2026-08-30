@@ -353,7 +353,8 @@ public class AtlatitanEntity extends SauropodBaseEntity implements KeybindUsingM
         return new Vec3(this.getX(), this.getBoundingBox().minY, this.getZ());
     }
 
-    public int getExperienceReward() {
+    @Override
+    protected int getBaseExperienceReward() {
         return 30;
     }
 
