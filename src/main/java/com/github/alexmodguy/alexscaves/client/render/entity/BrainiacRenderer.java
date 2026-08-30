@@ -4,7 +4,6 @@ import com.github.alexmodguy.alexscaves.AlexsCaves;
 import com.github.alexmodguy.alexscaves.client.model.BrainiacModel;
 import com.github.alexmodguy.alexscaves.client.render.entity.layer.BrainiacBackBarrelLayer;
 import com.github.alexmodguy.alexscaves.server.entity.living.BrainiacEntity;
-import com.github.alexmodguy.alexscaves.server.entity.living.RadgillEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -25,7 +24,8 @@ public class BrainiacRenderer extends MobRenderer<BrainiacEntity, BrainiacModel>
         this.addLayer(new LayerGlow());
     }
 
-    protected void scale(RadgillEntity mob, PoseStack matrixStackIn, float partialTicks) {
+    @Override
+    protected void scale(BrainiacEntity mob, PoseStack matrixStackIn, float partialTicks) {
         matrixStackIn.scale(0.9F, 0.9F, 0.9F);
     }
 
