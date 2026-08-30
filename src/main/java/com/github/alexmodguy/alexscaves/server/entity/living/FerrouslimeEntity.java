@@ -296,7 +296,8 @@ public class FerrouslimeEntity extends Monster {
         return this.isAlive() && mergeCooldown <= 0;
     }
 
-    public int getExperienceReward() {
+    @Override
+    protected int getBaseExperienceReward() {
         return 2;
     }
 

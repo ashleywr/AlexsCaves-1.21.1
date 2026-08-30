@@ -295,7 +295,8 @@ public class LanternfishEntity extends WaterAnimal implements Bucketable {
     }
 
     @Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn) {
         if (spawnDataIn == null) {
             spawnDataIn = new LanternfishEntity.GroupData(this);
         } else {

@@ -477,7 +477,8 @@ public class GumWormSegmentEntity extends Entity implements ICustomCollisions, K
         return f > 0.1F;
     }
 
-    public void lerpTo(double x, double y, double z, float yr, float xr, int steps, boolean b) {
+    @Override
+    public void lerpTo(double x, double y, double z, float yr, float xr, int steps) {
         this.lx = x;
         this.ly = y;
         this.lz = z;
