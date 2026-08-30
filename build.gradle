@@ -140,11 +140,63 @@ task deploy {
     dependsOn tasks.named('jar')
     
     doLast {
-        def modsDir = file('D:/instances/NeoForge 1.21.1/minecraft/mods')
+        // The Synesthesia Prism instance, reached through the junction in the sibling
+        // control repo rather than a hardcoded AppData path. Was D:/instances/... ,
+        // the port author's own machine, which silently no-opped here.
+        def instanceDir = file('../Synesthesia Modpack/live-instance')
+        def modsDir = new File(instanceDir, 'mods')
 
         if (!modsDir.exists()) {
             logger.warn("deploy: target mods directory does not exist: ${modsDir}")
             return
+        }
+
+        // Overwriting a jar the game already has open does NOT fail. The copy
+        // succeeds, and the running JVM keeps reading the old file's offsets out of
+        // the new bytes, throwing ZipException "invalid distance too far back" on
+        // random entries. It looks exactly like mod corruption. Since `build` is
+        // finalizedBy this task, an unguarded deploy poisons the instance on every
+        // build. Only the Synesthesia instance holds this jar, so other instances
+        // running at the same time are none of our business.
+        if (!project.hasProperty('skipRunningCheck')) {
+            // toRealPath resolves the junction to the real AppData path, which is what
+            // the game's command line actually contains. getCanonicalFile does NOT --
+            // it resolves '..' but leaves the junction itself untouched, so matching on
+            // it silently never fires and the guard looks like it passed.
+            def instancePath = instanceDir.toPath().toRealPath().toString().replace("'", "''")
+            def probe = "Get-CimInstance Win32_Process" +
+                    " | Where-Object { \$_.Name -eq 'javaw.exe' -or \$_.Name -eq 'java.exe' }" +
+                    " | Where-Object { \$_.CommandLine -and \$_.CommandLine.Contains('${instancePath}') }" +
+                    " | Select-Object -First 1 -ExpandProperty ProcessId"
+            def pid = null
+            def probed = false
+            try {
+                def proc = ['powershell', '-NoProfile', '-NonInteractive', '-Command', probe].execute()
+                def out = new StringWriter(), err = new StringWriter()
+                proc.waitForProcessOutput(out, err)
+                if (proc.exitValue() == 0) {
+                    probed = true
+                    def text = out.toString().trim()
+                    if (text) {
+                        pid = text
+                    }
+                } else {
+                    logger.warn("deploy: running-instance probe failed: ${err.toString().trim()}")
+                }
+            } catch (Throwable e) {
+                logger.warn("deploy: could not probe for a running instance: ${e.message}")
+            }
+
+            if (pid != null) {
+                throw new GradleException("deploy: the Synesthesia instance is running (PID ${pid}). " +
+                        "Close it first - overwriting a jar it has open corrupts the running game " +
+                        "without failing the copy. Re-run with -PskipRunningCheck to override.")
+            }
+            if (!probed) {
+                logger.warn("deploy: SKIPPED - could not confirm the Synesthesia instance is closed. " +
+                        "Close it and re-run, or pass -PskipRunningCheck.")
+                return
+            }
         }
 
         modsDir.listFiles().each { f ->
