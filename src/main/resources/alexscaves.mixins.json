@@ -22,6 +22,7 @@
     "ItemStackMixin",
     "JigsawStructureMixin",
     "KelpFeatureMixin",
+    "LakeFeatureMixin",
     "LivingEntityMixin",
     "MapDecorationMixin",
     "MapDecorationTypeMixin",
@@ -47,6 +48,10 @@
     "WorldGenOptionsMixin"
   ],
   "client": [
+    "client.AdvancementTabAccessor",
+    "client.AdvancementTabMixin",
+    "client.AdvancementWidgetAccessor",
+    "client.AdvancementsScreenAccessor",
     "client.BiomeAmbientSoundsHandlerInstanceMixin",
     "client.BiomeAmbientSoundsHandlerMixin",
     "client.CameraMixin",
@@ -66,6 +71,7 @@
     "client.LivingEntityRendererMixin",
     "client.LocalPlayerMixin",
     "client.MapRendererMapInstanceMixin",
+    "client.MinecartSoundInstanceMixin",
     "client.MinecraftMixin",
     "client.OptionsMixin",
     "client.RidingMinecartSoundInstanceMixin",
