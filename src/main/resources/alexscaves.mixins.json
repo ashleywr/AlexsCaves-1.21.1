@@ -22,6 +22,7 @@
     "ItemStackMixin",
     "JigsawStructureMixin",
     "KelpFeatureMixin",
+    "LakeFeatureMixin",
     "LivingEntityMixin",
     "MapDecorationMixin",
     "MapDecorationTypeMixin",
