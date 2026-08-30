@@ -192,7 +192,13 @@ public class CaveBiomeMapWorldWorker implements WorldWorkerManager.IWorker {
             while (biomeDown < 64 && getNoiseBiomeAtPos(source, biomeCorner.below(biomeDown), sampler).is(biomeResourceKey)) {
                 biomeDown += 8;
             }
-            yCentered = biomeCorner.atY((int) (Math.floor(biomeUp * 0.25F)) - biomeDown);
+            // atY sets an absolute Y, so this discarded the corner's height entirely:
+            // with biomeUp capped at 32 and biomeDown at 64 the result always landed
+            // between roughly y=-56 and y=8, and the horizontal centering below then ran
+            // at that wrong height, walking through whatever biome happens to be there.
+            // Offset from the corner instead, matching how the north/south/east/west
+            // extents are applied at the end of this method.
+            yCentered = biomeCorner.offset(0, biomeUp - biomeDown, 0);
         }
         while (biomeNorth < 800 && getNoiseBiomeAtPos(source, yCentered.north(biomeNorth), sampler).is(biomeResourceKey)) {
             biomeNorth += 8;
