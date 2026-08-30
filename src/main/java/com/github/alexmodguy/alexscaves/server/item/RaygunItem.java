@@ -333,7 +333,11 @@ public class RaygunItem extends Item implements UpdatesStackTags, AlwaysCombinab
     }
 
 
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    // 1.21 changed this hook's second parameter from Level to Item.TooltipContext, so the
+    // old signature overrode nothing and the charge line never appeared. Every other item
+    // in the mod was converted; this one was missed.
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         if (getCharge(stack) != 0) {
             String chargeLeft = "" + (int) (MAX_CHARGE - getCharge(stack));
             tooltip.add(Component.translatable("item.alexscaves.raygun.charge", chargeLeft, MAX_CHARGE).withStyle(ChatFormatting.GREEN));
