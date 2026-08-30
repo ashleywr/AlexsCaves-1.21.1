@@ -12,6 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.UUID;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.CustomData;
 
 public record UpdateCaveBiomeMapTagMessage(UUID userUUID, UUID caveBiomeMapUUID, CompoundTag tag) implements CustomPacketPayload {
 
@@ -47,14 +49,15 @@ public record UpdateCaveBiomeMapTagMessage(UUID userUUID, UUID caveBiomeMapUUID,
                     for (int i = 0; i < player.getInventory().items.size(); i++) {
                         ItemStack itemStack = player.getInventory().items.get(i);
                         if (itemStack.is(ACItemRegistry.CAVE_MAP.get())) {
-                            // TODO 1.21: NBT tags replaced with DataComponents - needs conversion
-                            // This needs to be updated to use DataComponents instead of getTag()
-                            set = itemStack;
-                            break;
+                            CompoundTag existing = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+                            if (existing.contains("MapUUID") && message.caveBiomeMapUUID.equals(existing.getUUID("MapUUID"))) {
+                                set = itemStack;
+                                break;
+                            }
                         }
                     }
                     if (set != null) {
-                        // TODO 1.21: set.setTag(message.tag) - needs DataComponent conversion
+                        set.set(DataComponents.CUSTOM_DATA, CustomData.of(message.tag));
                     }
                 }
             }
