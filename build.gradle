@@ -185,3 +185,10 @@ tasks.named('clean') {
 tasks.named('build') {
     finalizedBy deploy
 }
+
+// Dev only: ModDevGradle's run tasks do not forward the Gradle daemon's stdin to the
+// forked game JVM, so a console 'stop' never arrives and the server can only be killed.
+// Wiring standardInput lets the mc-server-smoke skill drive the console (stop, forceload).
+tasks.withType(JavaExec).configureEach {
+    standardInput = System.in
+}
