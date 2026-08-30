@@ -31,8 +31,14 @@ public class HazmatArmorItem extends ArmorItem {
         consumer.accept((IClientItemExtensions) AlexsCaves.PROXY.getArmorProperties());
     }
 
-    @SuppressWarnings("removal")
-    public void onArmorTick(ItemStack stack, Level level, Player player) {
+    // See DivingArmorItem: onArmorTick no longer exists in 1.21, so the mask's breathing
+    // particles never played.
+    @Override
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
+        super.inventoryTick(stack, level, entity, slot, selected);
+        if (!(entity instanceof Player player) || player.getItemBySlot(EquipmentSlot.HEAD) != stack) {
+            return;
+        }
         if (stack.is(ACItemRegistry.HAZMAT_MASK.get()) && Math.cos(player.tickCount * 0.05F) >= 0.9F) {
             Vec3 eyes = player.getEyePosition();
             if (level.random.nextBoolean()) {
