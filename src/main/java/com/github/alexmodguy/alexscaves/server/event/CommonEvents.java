@@ -178,8 +178,8 @@ public class CommonEvents {
             event.setNewDamage(0);
             player.playSound(SoundEvents.SHIELD_BLOCK);
         }
-        if (event.getEntity() instanceof Player player && event.getSource().is(DamageTypes.FALL) && player.getItemBySlot(EquipmentSlot.FEET).is(ACItemRegistry.RAINBOUNCE_BOOTS.get())) {
-            player.fallDistance = 0.0F;
+        if (event.getSource().is(DamageTypes.FALL) && event.getEntity().getItemBySlot(EquipmentSlot.FEET).is(ACItemRegistry.RAINBOUNCE_BOOTS.get())) {
+            event.getEntity().fallDistance = 0.0F;
             event.setNewDamage(0);
         }
     }
