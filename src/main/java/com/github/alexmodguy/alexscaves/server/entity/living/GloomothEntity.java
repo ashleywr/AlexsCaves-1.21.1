@@ -231,7 +231,9 @@ public class GloomothEntity extends PathfinderMob implements UnderzealotSacrific
         return (prevFlightRoll + (flightRoll - prevFlightRoll) * partialTick);
     }
 
-    public boolean causeFallDamage(float distance, float damageMultiplier) {
+    @Override
+
+    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
 

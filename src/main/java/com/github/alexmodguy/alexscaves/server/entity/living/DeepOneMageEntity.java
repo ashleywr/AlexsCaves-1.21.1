@@ -164,7 +164,9 @@ public class DeepOneMageEntity extends DeepOneBaseEntity {
         return !this.isDeepOneSwimming() || super.isNoGravity();
     }
 
-    public boolean causeFallDamage(float distance, float damageMultiplier) {
+    @Override
+
+    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
 

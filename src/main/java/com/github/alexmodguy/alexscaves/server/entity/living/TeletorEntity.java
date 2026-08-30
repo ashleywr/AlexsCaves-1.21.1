@@ -200,7 +200,9 @@ public class TeletorEntity extends Monster {
         return true;
     }
 
-    public boolean causeFallDamage(float distance, float damageMultiplier) {
+    @Override
+
+    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
 
