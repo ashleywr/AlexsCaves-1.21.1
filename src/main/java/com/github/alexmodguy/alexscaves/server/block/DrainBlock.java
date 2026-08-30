@@ -199,7 +199,11 @@ public class DrainBlock extends TransparentBlock {
             BlockState state = level.getBlockState(blockpos);
             int j = tuple.getB();
             if (!state.getFluidState().isEmpty()) {
-                fullBlocks++;
+                // Only sources may be re-created below; counting flowing fluid here is what
+                // let one source become many (official #1451, #1585).
+                if (state.getFluidState().isSource()) {
+                    fullBlocks++;
+                }
                 if (state.getBlock() instanceof BucketPickup) {
                     ((BucketPickup) state.getBlock()).pickupBlock(null, level, blockpos, state);
                 }else{
@@ -218,7 +222,9 @@ public class DrainBlock extends TransparentBlock {
                         lastFluidState = fluidstate;
                     }
                     ++i;
-                    fullBlocks++;
+                    if (blockstate.getFluidState().isSource()) {
+                        fullBlocks++;
+                    }
                     level.setBlockAndUpdate(blockpos1, blockstate.setValue(BlockStateProperties.WATERLOGGED, false));
                     if (j < MAX_FLUID_SPREAD) {
                         queue.add(new Tuple<>(blockpos1, j + 1));
@@ -228,7 +234,9 @@ public class DrainBlock extends TransparentBlock {
                         lastFluidState = fluidstate;
                     }
                     ++i;
-                    fullBlocks++;
+                    if (blockstate.getFluidState().isSource()) {
+                        fullBlocks++;
+                    }
                     ((BucketPickup) blockstate.getBlock()).pickupBlock(null, level, blockpos1, blockstate);
                     if (j < MAX_FLUID_SPREAD) {
                         queue.add(new Tuple<>(blockpos1, j + 1));
