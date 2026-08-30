@@ -1087,13 +1087,13 @@ public class ClientEvents {
         } else if (ClientProxy.possessionStrengthAmount > 0F) {
             ClientProxy.possessionStrengthAmount = Math.max(ClientProxy.possessionStrengthAmount - 0.05F, 0F);
         }
-        // if (Minecraft.getInstance().screen instanceof AdvancementsScreen advancementsScreen && advancementsScreen instanceof AdvancementsScreenAccessor screenAccessor) {
-        //     if (screenAccessor.getSelectedTab() != null && screenAccessor.getSelectedTab() instanceof AdvancementTabAccessor tabAccessor) {
-        //         if (ACAdvancementTabs.isAlexsCavesWidget(tabAccessor.getRootAdvancement())) {
-        //             ACAdvancementTabs.tick();
-        //         }
-        //     }
-        // }
+        if (Minecraft.getInstance().screen instanceof AdvancementsScreen advancementsScreen && advancementsScreen instanceof AdvancementsScreenAccessor screenAccessor) {
+            if (screenAccessor.getSelectedTab() != null && screenAccessor.getSelectedTab() instanceof AdvancementTabAccessor tabAccessor) {
+                if (ACAdvancementTabs.isAlexsCavesWidget(tabAccessor.getRootNode().holder())) {
+                    ACAdvancementTabs.tick();
+                }
+            }
+        }
         if (ClientProxy.primordialBossActive && Minecraft.getInstance().level != null && !Minecraft.getInstance().isPaused()) {
             ClientLevel level = Minecraft.getInstance().level;
             BlockPos cameraBlockPos = Minecraft.getInstance().getCameraEntity().blockPosition();

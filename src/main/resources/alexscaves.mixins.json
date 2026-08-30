@@ -48,6 +48,10 @@
     "WorldGenOptionsMixin"
   ],
   "client": [
+    "client.AdvancementTabAccessor",
+    "client.AdvancementTabMixin",
+    "client.AdvancementWidgetAccessor",
+    "client.AdvancementsScreenAccessor",
     "client.BiomeAmbientSoundsHandlerInstanceMixin",
     "client.BiomeAmbientSoundsHandlerMixin",
     "client.CameraMixin",

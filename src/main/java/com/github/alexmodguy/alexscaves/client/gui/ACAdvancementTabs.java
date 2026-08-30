@@ -161,12 +161,12 @@ public class ACAdvancementTabs {
             if (accessor.getProgress() != null && accessor.getProgress().isDone()) {
                 return true;
             }
-            Type direct = getDirectType(accessor.getAdvancement());
+            Type direct = getDirectType(accessor.getAdvancementNode().holder());
             AdvancementWidget next = advancementWidget;
             while (direct == DEFAULT && accessor.getParent() != null) {
                 next = accessor.getParent();
                 accessor = (AdvancementWidgetAccessor) next;
-                direct = getDirectType(accessor.getAdvancement());
+                direct = getDirectType(accessor.getAdvancementNode().holder());
             }
             return direct == DEFAULT || accessor.getProgress() != null && accessor.getProgress().isDone();
         }
