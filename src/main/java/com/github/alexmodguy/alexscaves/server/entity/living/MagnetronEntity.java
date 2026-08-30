@@ -395,7 +395,9 @@ public class MagnetronEntity extends Monster {
             Vec3 aboveGround = ground.add(0, idealDistance, 0);
             Vec3 diff = aboveGround.subtract(bottom);
             this.gravityFlag = true;
-            if (this.isAlive() && bottom.distanceTo(ground) < 7 && ground.y > level().getMinBuildHeight()) {
+            // NoAI must suppress the hover propulsion, otherwise the magnetron keeps station-keeping
+            // and drifts around. Falling through to plain gravity matches vanilla NoAI semantics.
+            if (this.isAlive() && !this.isNoAi() && bottom.distanceTo(ground) < 7 && ground.y > level().getMinBuildHeight()) {
                 if (diff.length() > 1) {
                     diff = diff.normalize();
                 }
