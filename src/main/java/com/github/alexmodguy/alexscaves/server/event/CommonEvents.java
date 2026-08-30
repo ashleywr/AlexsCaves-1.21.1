@@ -91,6 +91,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import com.github.alexmodguy.alexscaves.server.enchantment.ACEnchantmentRegistry;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 
 @SuppressWarnings({"null", "deprecation", "unused"})
 public class CommonEvents {
@@ -188,8 +191,19 @@ public class CommonEvents {
     @SubscribeEvent
     public void livingAttack(LivingIncomingDamageEvent event) {
         if (event.getSource().getDirectEntity() instanceof AbstractArrow arrow && event.getEntity().isBlocking() && event.getEntity().getUseItem().is(ACItemRegistry.RESISTOR_SHIELD.get())) {
-            // Enchantment checking is now data-driven in 1.21 - skip for now
-            // Would need to check via new enchantment system
+            ItemStack shield = event.getEntity().getUseItem();
+            Level shieldLevel = event.getEntity().level();
+            // Tridents are AbstractArrows too, and converting one destroys it (official #1130),
+            // so only ordinary arrows are inducted.
+            if (!(arrow instanceof ThrownTrident) && arrow.getType() != ACEntityRegistry.SEEKING_ARROW.get()
+                    && EnchantmentHelper.getItemEnchantmentLevel(shieldLevel.holderOrThrow(ACEnchantmentRegistry.ARROW_INDUCTING), shield) > 0) {
+                SeekingArrowEntity seekingArrowEntity = new SeekingArrowEntity(shieldLevel, event.getEntity());
+                seekingArrowEntity.copyPosition(arrow);
+                seekingArrowEntity.setDeltaMovement(arrow.getDeltaMovement().scale(-0.4D));
+                seekingArrowEntity.setYRot(arrow.getYRot() + 180.0F);
+                shieldLevel.addFreshEntity(seekingArrowEntity);
+                arrow.discard();
+            }
         }
         // In 1.21, DeferredHolder IS a Holder - don't call .get()
         if (event.getSource() != null && event.getSource().getDirectEntity() instanceof LivingEntity directSource && directSource.hasEffect(ACEffectRegistry.STUNNED)) {
