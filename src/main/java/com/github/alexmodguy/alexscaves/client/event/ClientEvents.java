@@ -622,6 +622,9 @@ public class ClientEvents {
     public void onPostRenderGuiOverlay(RenderGuiLayerEvent.Post event) {
         Player player = AlexsCaves.PROXY.getClientSidePlayer();
         if (player == null) return;
+        // None of the overlays below are drawn by vanilla's own layers, so nothing else
+        // hides them when the HUD is toggled off with F1 (official #1423).
+        if (Minecraft.getInstance().options.hideGui) return;
         int hudY = 0;
         if (event.getName().equals(VanillaGuiLayers.CROSSHAIR) && player.getVehicle() instanceof RidingMeterMount mount && mount.hasRidingMeter()) {
             int screenWidth = event.getGuiGraphics().guiWidth();
