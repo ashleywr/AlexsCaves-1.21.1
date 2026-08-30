@@ -463,5 +463,29 @@ public class ACBlockRegistry {
         flowerPotBlock.addPlant(UNDERWEED.getId(), POTTED_UNDERWEED);
         flowerPotBlock.addPlant(THORNWOOD_BRANCH.getId(), POTTED_THORNWOOD_BRANCH);
         flowerPotBlock.addPlant(THORNWOOD_SAPLING.getId(), POTTED_THORNWOOD_SAPLING);
+        registerFlammability();
+    }
+
+    // The mod shipped no flammability at all, so none of its wood, leaves or plants
+    // would burn or carry fire (official #953). Values mirror the vanilla equivalents
+    // in FireBlock#bootStrap. Doors, trapdoors, buttons, pressure plates and signs are
+    // deliberately left out, because vanilla leaves its own inert too.
+    private static void registerFlammability() {
+        FireBlock fire = (FireBlock) Blocks.FIRE;
+        setFlammable(fire, 5, 20, PEWEN_PLANKS, PEWEN_PLANKS_STAIRS, PEWEN_PLANKS_SLAB, PEWEN_PLANKS_FENCE,
+                PEWEN_FENCE_GATE, PEWEN_BRANCH, THORNWOOD_PLANKS, THORNWOOD_PLANKS_STAIRS,
+                THORNWOOD_PLANKS_SLAB, THORNWOOD_PLANKS_FENCE, THORNWOOD_FENCE_GATE, THORNWOOD_BRANCH);
+        setFlammable(fire, 5, 5, PEWEN_LOG, PEWEN_WOOD, THORNWOOD_LOG, THORNWOOD_WOOD);
+        setFlammable(fire, 30, 60, PEWEN_PINES, ANCIENT_LEAVES);
+        setFlammable(fire, 60, 100, PEWEN_SAPLING, THORNWOOD_SAPLING, ANCIENT_SAPLING, FIDDLEHEAD,
+                CURLY_FERN, CYCAD, FLYTRAP, UNDERWEED);
+        setFlammable(fire, 15, 100, ARCHAIC_VINE, ARCHAIC_VINE_PLANT);
+    }
+
+    @SafeVarargs
+    private static void setFlammable(FireBlock fire, int encouragement, int flammability, DeferredHolder<Block, Block>... blocks) {
+        for (DeferredHolder<Block, Block> holder : blocks) {
+            fire.setFlammable(holder.get(), encouragement, flammability);
+        }
     }
 }
