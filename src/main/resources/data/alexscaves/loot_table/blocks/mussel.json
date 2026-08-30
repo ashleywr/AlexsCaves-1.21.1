@@ -26,7 +26,65 @@
                   }
                 }
               ],
-              "name": "alexscaves:mussel"
+              "name": "alexscaves:mussel",
+              "functions": [
+                {
+                  "add": false,
+                  "count": 5.0,
+                  "function": "minecraft:set_count",
+                  "conditions": [
+                    {
+                      "block": "alexscaves:mussel",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "mussels": "5"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "add": false,
+                  "count": 4.0,
+                  "function": "minecraft:set_count",
+                  "conditions": [
+                    {
+                      "block": "alexscaves:mussel",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "mussels": "4"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "add": false,
+                  "count": 3.0,
+                  "function": "minecraft:set_count",
+                  "conditions": [
+                    {
+                      "block": "alexscaves:mussel",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "mussels": "3"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "add": false,
+                  "count": 2.0,
+                  "function": "minecraft:set_count",
+                  "conditions": [
+                    {
+                      "block": "alexscaves:mussel",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "mussels": "2"
+                      }
+                    }
+                  ]
+                }
+              ]
             },
             {
               "type": "minecraft:alternatives",
@@ -49,7 +107,65 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "name": "alexscaves:mussel"
+                  "name": "alexscaves:mussel",
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 5.0,
+                      "function": "minecraft:set_count",
+                      "conditions": [
+                        {
+                          "block": "alexscaves:mussel",
+                          "condition": "minecraft:block_state_property",
+                          "properties": {
+                            "mussels": "5"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "add": false,
+                      "count": 4.0,
+                      "function": "minecraft:set_count",
+                      "conditions": [
+                        {
+                          "block": "alexscaves:mussel",
+                          "condition": "minecraft:block_state_property",
+                          "properties": {
+                            "mussels": "4"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "add": false,
+                      "count": 3.0,
+                      "function": "minecraft:set_count",
+                      "conditions": [
+                        {
+                          "block": "alexscaves:mussel",
+                          "condition": "minecraft:block_state_property",
+                          "properties": {
+                            "mussels": "3"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "add": false,
+                      "count": 2.0,
+                      "function": "minecraft:set_count",
+                      "conditions": [
+                        {
+                          "block": "alexscaves:mussel",
+                          "condition": "minecraft:block_state_property",
+                          "properties": {
+                            "mussels": "2"
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
               ],
               "conditions": [

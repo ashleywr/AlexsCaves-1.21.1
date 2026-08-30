@@ -6,7 +6,65 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "alexscaves:moth_ball"
+          "name": "alexscaves:moth_ball",
+          "functions": [
+            {
+              "add": false,
+              "count": 5.0,
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "block": "alexscaves:moth_ball",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "balls": "5"
+                  }
+                }
+              ]
+            },
+            {
+              "add": false,
+              "count": 4.0,
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "block": "alexscaves:moth_ball",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "balls": "4"
+                  }
+                }
+              ]
+            },
+            {
+              "add": false,
+              "count": 3.0,
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "block": "alexscaves:moth_ball",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "balls": "3"
+                  }
+                }
+              ]
+            },
+            {
+              "add": false,
+              "count": 2.0,
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "block": "alexscaves:moth_ball",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "balls": "2"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }

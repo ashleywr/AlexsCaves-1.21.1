@@ -14,7 +14,51 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "alexscaves:sprinkles"
+          "name": "alexscaves:sprinkles",
+          "functions": [
+            {
+              "add": false,
+              "count": 4.0,
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "block": "alexscaves:sprinkles",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "amount": "4"
+                  }
+                }
+              ]
+            },
+            {
+              "add": false,
+              "count": 3.0,
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "block": "alexscaves:sprinkles",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "amount": "3"
+                  }
+                }
+              ]
+            },
+            {
+              "add": false,
+              "count": 2.0,
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "block": "alexscaves:sprinkles",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "amount": "2"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ],
       "rolls": 1.0
