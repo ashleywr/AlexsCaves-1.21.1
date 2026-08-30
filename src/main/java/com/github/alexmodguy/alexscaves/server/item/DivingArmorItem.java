@@ -67,7 +67,15 @@ public class DivingArmorItem extends ArmorItem {
         return this.divingArmorAttributes;
     }
 
-    public void onArmorTick(ItemStack stack, Level level, Player player) {
+    // NeoForge removed onArmorTick in 1.21, so this never ran and the diving helmet
+    // granted no water breathing at all. DarknessArmorItem was already moved to
+    // inventoryTick for the same reason; this one and the hazmat mask were missed.
+    @Override
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
+        super.inventoryTick(stack, level, entity, slot, selected);
+        if (!(entity instanceof Player player) || player.getItemBySlot(EquipmentSlot.HEAD) != stack) {
+            return;
+        }
         if (!level.isClientSide && this.type == Type.HELMET) {
             player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 220, 0, false, false, true));
             if (player.isEyeInFluid(FluidTags.WATER) || player.getVehicle() instanceof SubmarineEntity) {
