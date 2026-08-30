@@ -36,7 +36,7 @@ public class BiomeGenerationConfig {
     // Minimum depth prevents biome from appearing at surface level
     // Maximum depth allows biome to extend deep underground
     private static final BiomeGenerationNoiseCondition MAGNETIC_CAVES_CONDITION = new BiomeGenerationNoiseCondition.Builder()
-            .dimensions(OVERWORLD).distanceFromSpawn(400).alexscavesRarityOffset(0).continentalness(-1F, 1F).depth(0.05F, 2F).build();
+            .dimensions(OVERWORLD).distanceFromSpawn(400).alexscavesRarityOffset(0).continentalness(0.6F, 1F).depth(0.05F, 2F).build();
     private static final BiomeGenerationNoiseCondition PRIMORDIAL_CAVES_CONDITION = new BiomeGenerationNoiseCondition.Builder()
             .dimensions(OVERWORLD).distanceFromSpawn(450).alexscavesRarityOffset(1).continentalness(0.4F, 1F).depth(0.05F, 2F).build();
     private static final BiomeGenerationNoiseCondition TOXIC_CAVES_CONDITION = new BiomeGenerationNoiseCondition.Builder()
@@ -44,7 +44,7 @@ public class BiomeGenerationConfig {
     private static final BiomeGenerationNoiseCondition ABYSSAL_CHASM_CONDITION = new BiomeGenerationNoiseCondition.Builder()
             .dimensions(OVERWORLD).distanceFromSpawn(400).alexscavesRarityOffset(3).continentalness(-0.95F, -0.65F).temperature(-1.0F, 0.5F).depth(0.05F, 2F).build();
     private static final BiomeGenerationNoiseCondition FORLORN_HOLLOWS_CONDITION = new BiomeGenerationNoiseCondition.Builder()
-            .dimensions(OVERWORLD).distanceFromSpawn(650).alexscavesRarityOffset(4).continentalness(-1F, 1F).depth(0.05F, 2F).build();
+            .dimensions(OVERWORLD).distanceFromSpawn(650).alexscavesRarityOffset(4).continentalness(0.6F, 1F).depth(0.05F, 2F).build();
     private static final BiomeGenerationNoiseCondition CANDY_CAVITY_CONDITION = new BiomeGenerationNoiseCondition.Builder()
             .dimensions(OVERWORLD).distanceFromSpawn(500).alexscavesRarityOffset(5).continentalness(0.5F, 1F).depth(0.05F, 2F).build();
     public static final LinkedHashMap<ResourceKey<Biome>, BiomeGenerationNoiseCondition> BIOMES = new LinkedHashMap<>();
