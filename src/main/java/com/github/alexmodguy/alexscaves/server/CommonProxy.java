@@ -2,7 +2,6 @@ package com.github.alexmodguy.alexscaves.server;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
 import com.github.alexmodguy.alexscaves.server.config.ACServerConfig;
-import com.github.alexmodguy.alexscaves.server.event.CommonEvents;
 import com.github.alexmodguy.alexscaves.server.level.storage.ACWorldData;
 import com.github.alexthe666.citadel.server.entity.pathfinding.raycoms.PathfindingConstants;
 import com.github.alexthe666.citadel.server.tick.ServerTickRateTracker;
@@ -18,7 +17,6 @@ import net.minecraft.world.level.saveddata.maps.MapDecoration;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
-import net.neoforged.neoforge.common.NeoForge;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -30,8 +28,8 @@ public class CommonProxy {
     }
 
     public void commonInit() {
-        // Register CommonEvents to the NeoForge event bus
-        NeoForge.EVENT_BUS.register(new CommonEvents());
+        // CommonEvents is registered in AlexsCaves, not here -- ClientProxy overrides this
+        // method without calling super, so anything registered here never runs on a client.
     }
 
     public void clientInit() {

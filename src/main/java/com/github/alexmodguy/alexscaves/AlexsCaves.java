@@ -32,6 +32,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import com.github.alexmodguy.alexscaves.server.event.CommonEvents;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.world.chunk.RegisterTicketControllersEvent;
 import net.neoforged.neoforge.common.world.chunk.TicketController;
@@ -107,6 +108,10 @@ public class AlexsCaves {
         
         PROXY.setModEventBus(modEventBus);
         PROXY.commonInit();
+        // Registered here, not in CommonProxy: ClientProxy overrides commonInit without
+        // calling super, so a registration living in the proxy is silently lost on the
+        // client -- which includes singleplayer. Upstream registers it here too.
+        NeoForge.EVENT_BUS.register(new CommonEvents());
         ACBiomeRegistry.init();
     }
 
