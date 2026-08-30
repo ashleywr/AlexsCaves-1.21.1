@@ -94,6 +94,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import com.github.alexmodguy.alexscaves.server.enchantment.ACEnchantmentRegistry;
 import net.minecraft.world.entity.projectile.ThrownTrident;
+import net.minecraft.world.entity.LightningBolt;
+import com.github.alexmodguy.alexscaves.server.entity.util.EntityDropChanceAccessor;
 
 @SuppressWarnings({"null", "deprecation", "unused"})
 public class CommonEvents {
@@ -109,8 +111,31 @@ public class CommonEvents {
             }
         }
         if (!event.getEntity().level().isClientSide && event.getEntity() instanceof Mob mob && event.getSource() != null && event.getSource().getDirectEntity() instanceof LivingEntity directSource && directSource.getItemInHand(InteractionHand.MAIN_HAND).is(ACItemRegistry.PRIMITIVE_CLUB.get())) {
-            // Enchantment checking is now data-driven in 1.21 - skip this feature for now
-            // The BONKING enchantment would need to be checked via the new enchantment system
+            ItemStack club = directSource.getItemInHand(InteractionHand.MAIN_HAND);
+            Level clubLevel = event.getEntity().level();
+            if (EnchantmentHelper.getItemEnchantmentLevel(clubLevel.holderOrThrow(ACEnchantmentRegistry.BONKING), club) > 0 && clubLevel.random.nextFloat() < 0.33F) {
+                Creeper fakeCreeperForSkullDrop = EntityType.CREEPER.create(mob.level());
+                if (fakeCreeperForSkullDrop != null) {
+                    if (clubLevel instanceof ServerLevel serverLevel) {
+                        LightningBolt fakeThunder = EntityType.LIGHTNING_BOLT.create(serverLevel);
+                        if (fakeThunder != null) {
+                            fakeThunder.setVisualOnly(true);
+                            fakeCreeperForSkullDrop.thunderHit(serverLevel, fakeThunder);
+                        }
+                    }
+                    DamageSource fakeCreeperDamage = mob.level().damageSources().mobAttack(fakeCreeperForSkullDrop);
+                    java.util.HashMap<EquipmentSlot, Float> prevLootDropChances = new java.util.HashMap<>();
+                    EntityDropChanceAccessor dropChanceAccessor = (EntityDropChanceAccessor) mob;
+                    for (EquipmentSlot slot : EquipmentSlot.values()) {
+                        prevLootDropChances.put(slot, dropChanceAccessor.ac_getEquipmentDropChance(slot));
+                        dropChanceAccessor.ac_setDropChance(slot, 0.0F);
+                    }
+                    dropChanceAccessor.ac_dropCustomDeathLoot(fakeCreeperDamage, 0, false);
+                    for (EquipmentSlot slot : EquipmentSlot.values()) {
+                        dropChanceAccessor.ac_setDropChance(slot, prevLootDropChances.get(slot));
+                    }
+                }
+            }
         }
         if (event.getEntity() instanceof Player) {
             if (event.getEntity().getUUID().toString().equals("71363abe-fd03-49c9-940d-aae8b8209b7c")) {
