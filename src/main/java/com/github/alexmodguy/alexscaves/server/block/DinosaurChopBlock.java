@@ -194,6 +194,13 @@ public class DinosaurChopBlock extends Block implements SimpleWaterloggedBlock {
         return getOutputSignal(blockState.getValue(BITES));
     }
 
+    // Without this a comparator never reads getAnalogOutputSignal -- the default on
+    // BlockBehaviour is false. Vanilla CakeBlock, which this signal formula comes from,
+    // overrides both.
+    public boolean hasAnalogOutputSignal(BlockState blockState) {
+        return true;
+    }
+
     public static int getOutputSignal(int i) {
         return (7 - i) * 2;
     }
