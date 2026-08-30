@@ -56,6 +56,14 @@ public abstract class MinecraftServerMixin {
                         
                         if (!acBiomes.isEmpty()) {
                             for (ResourceKey<LevelStem> levelStemKey : levelStems.registryKeySet()) {
+                                // Alex's Caves biomes only ever generate in the overworld -- the
+                                // getNoiseBiome injection returns immediately for any other dimension.
+                                // Expanding every dimension's possibleBiomes() advertised them in the
+                                // nether and the end, where Nature's Compass and anything else reading
+                                // that set would list them as end biomes.
+                                if (!levelStemKey.equals(LevelStem.OVERWORLD)) {
+                                    continue;
+                                }
                                 Optional<Holder.Reference<LevelStem>> stemHolder = levelStems.getHolder(levelStemKey);
                                 if (stemHolder.isPresent()) {
                                     var biomeSource = stemHolder.get().value().generator().getBiomeSource();
