@@ -3,9 +3,7 @@
     "icon": {
       "id": "citadel:icon_item",
       "components": {
-        "citadel:icon_item_display": {
-          "icon_location": "alexscaves:textures/misc/advancement/icon/deep_one_3.png"
-        }
+        "citadel:icon_location": "alexscaves:textures/misc/advancement/icon/deep_one_3.png"
       }
     },
     "title": {
