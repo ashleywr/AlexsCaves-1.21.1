@@ -112,10 +112,6 @@ public class SackOfSatingItem extends SweetRarityItem {
 
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean held) {
         super.inventoryTick(stack, level, entity, i, held);
-        CompoundTag tag = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
-        if(tag.isEmpty()){
-            stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(new CompoundTag()));
-        }
         int hungerValue = getHunger(stack);
         long timestamp = getFeedTimestamp(stack);
         if(!level.isClientSide && hungerValue > 0 && entity instanceof Player player && !player.getAbilities().invulnerable && player.tickCount % 100 == 0 && player.canEat(false) && (timestamp == -1 || player.level().getGameTime() - timestamp > 40)){
