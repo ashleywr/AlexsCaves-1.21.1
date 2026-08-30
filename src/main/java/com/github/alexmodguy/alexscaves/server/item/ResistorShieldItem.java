@@ -60,6 +60,16 @@ public class ResistorShieldItem extends ShieldItem {
         return 72000;
     }
 
+    // isAlliedTo ignores a team's friendly-fire setting, so the bash used to spare
+    // teammates even with friendlyFire on (official #1658). Player.canHarmPlayer is the
+    // vanilla rule for player-on-player damage and does respect it.
+    private static boolean canBash(LivingEntity attacker, LivingEntity target) {
+        if (attacker instanceof Player attackingPlayer && target instanceof Player targetPlayer) {
+            return attackingPlayer.canHarmPlayer(targetPlayer);
+        }
+        return !attacker.isAlliedTo(target);
+    }
+
     public void onUseTick(Level level, LivingEntity living, ItemStack stack, int timeUsing) {
         super.onUseTick(level, living, stack, timeUsing);
         int i = getUseDuration(stack, living) - timeUsing;
@@ -92,7 +102,7 @@ public class ResistorShieldItem extends ShieldItem {
         if (i >= 10 && i % 5 == 0) {
             AABB bashBox = living.getBoundingBox().inflate(5, 1, 5);
             for (LivingEntity entity : living.level().getEntitiesOfClass(LivingEntity.class, bashBox)) {
-                if (!living.isAlliedTo(entity) && !entity.equals(living) && entity.distanceTo(living) <= range) {
+                if (canBash(living, entity) && !entity.equals(living) && entity.distanceTo(living) <= range) {
                     entity.hurt(living.damageSources().mobAttack(living), firstHit ? 6 + (slamEnchantAmount * 3) : 2);
                     if (scarlet) {
                         entity.knockback(firstHit ? 0.5D : 0.2D, entity.getX() - living.getX(), entity.getZ() - living.getZ());
