@@ -29,6 +29,11 @@ public class ACBiomeRarity {
     
     private static final double BIOME_BOUNDARY_EXTENSION = 1.0D;
 
+    // Lattice spacing for mayContainACBiome, in blocks. Must stay well below the smallest
+    // plausible cave biome radius (cave_biome_mean_width, default 160) so the gate cannot
+    // step over a biome entirely.
+    private static final int GATE_LATTICE_STEP = 16;
+
     // Per-thread cache to avoid contention. Each world gen thread works on nearby chunks,
     // so a thread-local cache has great spatial coherence.
     private static final int MAX_THREAD_CACHE_SIZE = 8192;
@@ -103,6 +108,66 @@ public class ACBiomeRarity {
 
     public static boolean isQuartInRareBiome(long worldSeed, int x, int z) {
         return ACBiomeRarity.getRareBiomeInfoForQuad(worldSeed, x, z) != null;
+    }
+
+    /**
+     * Cheap conservative pre-check used by the vanilla-structure mixins.
+     *
+     * <p>Those mixins veto a structure when its surroundings contain an AC cave biome, which they
+     * establish with {@link net.minecraft.world.level.biome.BiomeSource#getBiomesWithin} - a full
+     * quart-resolution scan of a cube ((2*(radius>>2)+1)^3 samples, e.g. 15,625 at radius 50).
+     * Every one of those samples resolves a biome through whatever biome source is installed, so on
+     * packs that layer a custom biome source over a large density-function graph the cost is
+     * enormous, and it is paid in every chunk regardless of whether an AC biome is anywhere near.
+     *
+     * <p>An AC cave biome can only exist where {@link #getRareBiomeInfoForQuad} returns non-null -
+     * the biome source requires that as a precondition before testing the noise conditions - so a
+     * coarse voronoi lattice is a sound gate: when it finds nothing, no position in the cube can be
+     * an AC biome and the expensive scan can be skipped entirely. Cave biomes are ~160 blocks in
+     * radius by default, so a 16-block lattice cannot step over one.
+     *
+     * <p>The approximation is at the boundary only: a biome overlapping the cube by less than the
+     * lattice step near a corner can be missed, which lets a structure generate where the precise
+     * scan would have vetoed it. The interior - where a structure would actually carve through a
+     * cave biome - stays exact.
+     *
+     * @return true if the area may contain an AC cave biome and the caller must run its precise
+     *         check; false if it definitely does not.
+     */
+    public static boolean mayContainACBiome(long worldSeed, int blockX, int blockZ, int radius) {
+        ensureInitialized();
+
+        if (seperationDistance <= 0) {
+            return false;
+        }
+        if (worldSeed == 0) {
+            return true;
+        }
+
+        int span = radius * 2;
+        int steps = Math.max(1, (span + GATE_LATTICE_STEP - 1) / GATE_LATTICE_STEP);
+        for (int ix = 0; ix <= steps; ix++) {
+            int x = blockX - radius + (int) Math.round((double) span * ix / steps);
+            for (int iz = 0; iz <= steps; iz++) {
+                int z = blockZ - radius + (int) Math.round((double) span * iz / steps);
+                if (getRareBiomeInfoForQuad(worldSeed, x >> 2, z >> 2) != null) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Resolves the world seed for a worldgen callback, falling back to {@link ACWorldSeedHolder}
+     * when the generation context reports 0. Returns 0 when the seed cannot be determined, which
+     * callers should treat as "unknown" and handle conservatively.
+     */
+    public static long resolveWorldSeed(long contextSeed) {
+        if (contextSeed != 0) {
+            return contextSeed;
+        }
+        return ACWorldSeedHolder.isInitialized() ? ACWorldSeedHolder.getSeed() : 0L;
     }
 
     @Nullable

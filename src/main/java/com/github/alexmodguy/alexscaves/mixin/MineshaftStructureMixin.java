@@ -26,8 +26,14 @@ public class MineshaftStructureMixin {
         int x = context.chunkPos().getMiddleBlockX();
         int z = context.chunkPos().getMiddleBlockZ();
         
-        if (ACBiomeRarity.getACBiomeForPosition(context.seed(), x, z) != null) {
+        long seed = ACBiomeRarity.resolveWorldSeed(context.seed());
+
+        if (seed != 0 && ACBiomeRarity.getACBiomeForPosition(seed, x, z) != null) {
             cir.setReturnValue(Optional.empty());
+            return;
+        }
+
+        if (!ACBiomeRarity.mayContainACBiome(seed, x, z, 50)) {
             return;
         }
 

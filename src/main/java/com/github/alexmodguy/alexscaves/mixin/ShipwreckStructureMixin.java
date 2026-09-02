@@ -1,5 +1,6 @@
 package com.github.alexmodguy.alexscaves.mixin;
 
+import com.github.alexmodguy.alexscaves.server.level.biome.ACBiomeRarity;
 import com.github.alexmodguy.alexscaves.server.level.biome.ACBiomeRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.biome.Biome;
@@ -24,6 +25,10 @@ public class ShipwreckStructureMixin {
     private void ac_findGenerationPoint(Structure.GenerationContext context, CallbackInfoReturnable<Optional<Structure.GenerationStub>> cir) {
         int i = context.chunkPos().getBlockX(9);
         int j = context.chunkPos().getBlockZ(9);
+
+        if (!ACBiomeRarity.mayContainACBiome(ACBiomeRarity.resolveWorldSeed(context.seed()), i, j, 29)) {
+            return;
+        }
 
         for (Holder<Biome> holder : context.biomeSource().getBiomesWithin(i, context.chunkGenerator().getSeaLevel() - 80, j, 29, context.randomState().sampler())) {
             if (holder.is(ACBiomeRegistry.ABYSSAL_CHASM)) {

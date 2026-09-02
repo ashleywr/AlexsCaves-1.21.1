@@ -42,11 +42,19 @@ public class JigsawStructureMixin {
         
         boolean isAncientCity = jigsawName.equals("minecraft:city_anchor") || poolName.contains("ancient_city");
         
-        if (isTrialChamber || isAncientCity) {
-            if (ACBiomeRarity.getACBiomeForPosition(context.seed(), x, z) != null) {
-                cir.setReturnValue(Optional.empty());
-                return;
-            }
+        if (!isTrialChamber && !isAncientCity) {
+            return;
+        }
+
+        long seed = ACBiomeRarity.resolveWorldSeed(context.seed());
+
+        if (seed != 0 && ACBiomeRarity.getACBiomeForPosition(seed, x, z) != null) {
+            cir.setReturnValue(Optional.empty());
+            return;
+        }
+
+        if (!ACBiomeRarity.mayContainACBiome(seed, x, z, 50)) {
+            return;
         }
 
         if (isAncientCity) {
