@@ -4,14 +4,13 @@ package com.github.alexmodguy.alexscaves.server.level.surface;
 import com.github.alexmodguy.alexscaves.AlexsCaves;
 import com.github.alexmodguy.alexscaves.server.config.BiomeGenerationConfig;
 import com.github.alexmodguy.alexscaves.server.config.BiomeGenerationNoiseCondition;
-import com.github.alexmodguy.alexscaves.server.level.biome.ACBiomeRarity;
 import com.github.alexmodguy.alexscaves.server.level.biome.ACBiomeRegistry;
 import com.github.alexmodguy.alexscaves.server.level.biome.ACWorldSeedHolder;
 import com.github.alexmodguy.alexscaves.server.misc.ACMath;
-import com.github.alexmodguy.alexscaves.server.misc.VoronoiGenerator;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.KeyDispatchDataCodec;
@@ -20,6 +19,8 @@ import net.minecraft.world.level.levelgen.SurfaceRules;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredHolder;
+
+import java.util.Optional;
 
 public class ACSurfaceRuleConditionRegistry {
 
@@ -101,33 +102,20 @@ public class ACSurfaceRuleConditionRegistry {
                     if (y > MAX_Y_LEVEL) {
                         return false;
                     }
-                    
-                    long seed = ACWorldSeedHolder.getSeed();
-                    if (seed == 0) {
-                        return false;
-                    }
-                    
-                    int x = context.blockX;
-                    int z = context.blockZ;
-                    int quartX = x >> 2;
-                    int quartZ = z >> 2;
-                    
-                    VoronoiGenerator.VoronoiInfo info = ACBiomeRarity.getRareBiomeInfoForQuad(seed, quartX, quartZ);
-                    if (info == null) {
-                        return false;
-                    }
-                    
-                    int foundOffset = ACBiomeRarity.getRareBiomeOffsetId(info);
-                    if (foundOffset != ACBiomeConditionSource.this.rarityOffset) {
+
+                    // Ask the biome the world already resolved for this column (the same
+                    // Holder MultiNoiseBiomeSourceMixin handed back, memoized on the context)
+                    // instead of re-deriving an approximate match from the Voronoi cell.
+                    // The approximate check agreed with itself but not with the real biome
+                    // source near a cell's edge, painting chasm blocks into columns the
+                    // world never actually placed Abyssal Chasm in.
+                    Holder<Biome> biomeHere = context.biome.get();
+                    Optional<ResourceKey<Biome>> biomeKeyHere = biomeHere.unwrapKey();
+                    if (biomeKeyHere.isEmpty()) {
                         return false;
                     }
 
-                    ResourceKey<Biome> biomeAtPos = ACBiomeRarity.getACBiomeForPosition(seed, x, z);
-                    if (biomeAtPos == null) {
-                        return false;
-                    }
-
-                    BiomeGenerationNoiseCondition noiseCondition = BiomeGenerationConfig.getBiomesSnapshot().get(biomeAtPos);
+                    BiomeGenerationNoiseCondition noiseCondition = BiomeGenerationConfig.getBiomesSnapshot().get(biomeKeyHere.get());
                     return noiseCondition != null && noiseCondition.getRarityOffset() == ACBiomeConditionSource.this.rarityOffset;
                 }
             }
