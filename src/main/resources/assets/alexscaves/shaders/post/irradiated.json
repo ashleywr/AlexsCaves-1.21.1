@@ -35,7 +35,7 @@
       ]
     },
     {
-      "name": "bumpy",
+      "name": "citadel:bumpy",
       "intarget": "final",
       "outtarget": "swap"
     },
