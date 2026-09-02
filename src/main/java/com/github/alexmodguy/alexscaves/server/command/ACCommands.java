@@ -10,16 +10,20 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.biome.Climate;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -101,31 +105,57 @@ public class ACCommands {
         long seed = level.getSeed();
         int playerChunkX = playerPos.getX() >> 4;
         int playerChunkZ = playerPos.getZ() >> 4;
-        
+
+        ServerChunkCache chunkSource = level.getChunkSource();
+        BiomeSource biomeSource = chunkSource.getGenerator().getBiomeSource();
+        Climate.Sampler sampler = chunkSource.randomState().sampler();
+
         // Search in expanding squares - check every 4 chunks for speed (AC biomes are large)
         int searchRadius = 500; // Search up to 500 chunks (8000 blocks)
         int step = 4; // Check every 4 chunks
-        
+
         for (int radius = 0; radius < searchRadius; radius += step) {
             for (int dx = -radius; dx <= radius; dx += step) {
                 for (int dz = -radius; dz <= radius; dz += step) {
                     // Only check the perimeter of each square
                     if (radius > 0 && Math.abs(dx) != radius && Math.abs(dz) != radius) continue;
-                    
+
                     int chunkX = playerChunkX + dx;
                     int chunkZ = playerChunkZ + dz;
                     int blockX = chunkX * 16 + 8;
                     int blockZ = chunkZ * 16 + 8;
-                    
-                    // Check if this location would have the AC biome
-                    ResourceKey<Biome> biomeAtPos = ACBiomeRarity.getACBiomeForPosition(seed, blockX, blockZ);
-                    if (biomeAtPos != null && biomeAtPos.equals(biomeKey)) {
-                        return new BlockPos(blockX, 0, blockZ);
+
+                    // Cheap Voronoi pre-filter before touching the real biome source.
+                    ResourceKey<Biome> approxBiomeAtPos = ACBiomeRarity.getACBiomeForPosition(seed, blockX, blockZ);
+                    if (approxBiomeAtPos == null || !approxBiomeAtPos.equals(biomeKey)) {
+                        continue;
+                    }
+
+                    // The Voronoi cell alone can say "yes" past the noise-condition edges the
+                    // real biome source (MultiNoiseBiomeSourceMixin) enforces, which used to
+                    // report locations with chasm blocks but no real biome underneath. Confirm
+                    // against the real biome source, scanning depth, before reporting a hit.
+                    BlockPos verifiedPos = findRealBiomeInColumn(level, biomeSource, sampler, blockX, blockZ, biomeKey);
+                    if (verifiedPos != null) {
+                        return verifiedPos;
                     }
                 }
             }
         }
-        
+
+        return null;
+    }
+
+    @javax.annotation.Nullable
+    private static BlockPos findRealBiomeInColumn(ServerLevel level, BiomeSource biomeSource, Climate.Sampler sampler, int blockX, int blockZ, ResourceKey<Biome> biomeKey) {
+        int minY = level.getMinBuildHeight() + 1;
+        int maxY = level.getMaxBuildHeight();
+        for (int y = minY; y < maxY; y += 8) {
+            Holder<Biome> biomeHere = biomeSource.getNoiseBiome(blockX >> 2, y >> 2, blockZ >> 2, sampler);
+            if (biomeHere.is(biomeKey)) {
+                return new BlockPos(blockX, y, blockZ);
+            }
+        }
         return null;
     }
 }
