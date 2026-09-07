@@ -37,6 +37,15 @@ public class VillagerUndergroundCabinMapTrade implements VillagerTrades.ItemList
             return null;
         } else {
             ServerLevel serverlevel = (ServerLevel)entity.level();
+            // findNearestMapStructure blocks on ServerChunkCache.getChunk. Off the server thread that
+            // parks on a CompletableFuture only the server thread can complete, and a trader placed by
+            // a structure is serialised mid-generation (ProtoChunk.addEntity -> Entity.save -> getOffers
+            // -> updateTrades -> here) on a worldgen worker the server thread is itself waiting on, so
+            // the search would deadlock world generation. Skip the trade instead; updateTrades runs
+            // again on the server thread while the trader still has no offers.
+            if (!serverlevel.getServer().isSameThread()) {
+                return null;
+            }
             BlockPos blockpos = serverlevel.findNearestMapStructure(ACTagRegistry.ON_UNDERGROUND_CABIN_MAPS, entity.blockPosition(), 100, true);
             if (blockpos != null) {
                 ItemStack itemstack = MapItem.create(serverlevel, blockpos.getX(), blockpos.getZ(), (byte)2, true, true);
