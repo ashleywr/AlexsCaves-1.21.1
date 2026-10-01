@@ -32,53 +32,13 @@ import java.util.stream.Stream;
 public class MagnetUtil {
 
     private static Stream<BlockPos> getNearbyAttractingMagnets(BlockPos blockpos, ServerLevel world, int range) {
-        // Try POI system first
         PoiManager pointofinterestmanager = world.getPoiManager();
-        Stream<BlockPos> poiResult = pointofinterestmanager.findAll(poiTypeHolder -> poiTypeHolder.is(ACPOIRegistry.ATTRACTING_MAGNETS.getKey()), Predicates.alwaysTrue(), blockpos, range, PoiManager.Occupancy.ANY);
-        
-        // Also do a direct block scan as fallback (POI system can be unreliable)
-        List<BlockPos> directScan = new ArrayList<>();
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-        for (int x = -range; x <= range; x++) {
-            for (int y = -range; y <= range; y++) {
-                for (int z = -range; z <= range; z++) {
-                    mutable.set(blockpos.getX() + x, blockpos.getY() + y, blockpos.getZ() + z);
-                    BlockState state = world.getBlockState(mutable);
-                    if (state.is(ACBlockRegistry.SCARLET_NEODYMIUM_NODE.get()) || 
-                        state.is(ACBlockRegistry.SCARLET_NEODYMIUM_PILLAR.get()) ||
-                        state.is(ACBlockRegistry.BLOCK_OF_SCARLET_NEODYMIUM.get())) {
-                        directScan.add(mutable.immutable());
-                    }
-                }
-            }
-        }
-        
-        return Stream.concat(poiResult, directScan.stream()).distinct();
+        return pointofinterestmanager.findAll(poiTypeHolder -> poiTypeHolder.is(ACPOIRegistry.ATTRACTING_MAGNETS.getKey()), Predicates.alwaysTrue(), blockpos, range, PoiManager.Occupancy.ANY);
     }
 
     private static Stream<BlockPos> getNearbyRepellingMagnets(BlockPos blockpos, ServerLevel world, int range) {
-        // Try POI system first
         PoiManager pointofinterestmanager = world.getPoiManager();
-        Stream<BlockPos> poiResult = pointofinterestmanager.findAll(poiTypeHolder -> poiTypeHolder.is(ACPOIRegistry.REPELLING_MAGNETS.getKey()), Predicates.alwaysTrue(), blockpos, range, PoiManager.Occupancy.ANY);
-        
-        // Also do a direct block scan as fallback (POI system can be unreliable)
-        List<BlockPos> directScan = new ArrayList<>();
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-        for (int x = -range; x <= range; x++) {
-            for (int y = -range; y <= range; y++) {
-                for (int z = -range; z <= range; z++) {
-                    mutable.set(blockpos.getX() + x, blockpos.getY() + y, blockpos.getZ() + z);
-                    BlockState state = world.getBlockState(mutable);
-                    if (state.is(ACBlockRegistry.AZURE_NEODYMIUM_NODE.get()) || 
-                        state.is(ACBlockRegistry.AZURE_NEODYMIUM_PILLAR.get()) ||
-                        state.is(ACBlockRegistry.BLOCK_OF_AZURE_NEODYMIUM.get())) {
-                        directScan.add(mutable.immutable());
-                    }
-                }
-            }
-        }
-        
-        return Stream.concat(poiResult, directScan.stream()).distinct();
+        return pointofinterestmanager.findAll(poiTypeHolder -> poiTypeHolder.is(ACPOIRegistry.REPELLING_MAGNETS.getKey()), Predicates.alwaysTrue(), blockpos, range, PoiManager.Occupancy.ANY);
     }
 
     public static void tickMagnetism(Entity entity) {
