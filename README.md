@@ -1,43 +1,44 @@
-# Alex's Caves - 1.21.1 Port
+# Alex's Caves — Features and Fixes for NeoForge 1.21.1
 
-This is a port of [Alex's Caves](https://github.com/AlexModGuy/AlexsCaves) to Minecraft 1.21.1.
+This is my feature and maintenance fork of [Raguto's unofficial NeoForge 1.21.1 port](https://github.com/Raguto/AlexsCaves-1.21.1) of [Alex's Caves](https://github.com/AlexModGuy/AlexsCaves). AlexModGuy and the original contributors created the mod; Raguto and the port contributors created the unofficial port this fork builds on. I am continuing that port with additional features, fixes and compatibility work.
 
-**Original Author:** [AlexModGuy](https://github.com/AlexModGuy)  
-**License:** GPL-3.0
+This is an unofficial derivative. It is **not** the original mod's official release, and it is **not** a port with no gameplay changes.
 
-## Changes
+## My changes
 
-- Updated code to work with Minecraft 1.21.1 API changes
-- Ported from Forge to NeoForge
-- Fixed deprecated methods and API calls
-- No gameplay or feature changes
+- Integrates **Alex's Caves Tweak (TACT)** into the same JAR, including its gameplay changes and integrations. TACT is credited separately under its MIT license.
+- Repairs cave biome surface-rule handling and checks biome-locate results against the actual biome source.
+- Fixes structure-search threading and repeated block scanning around magnetic entities.
+- Repairs advancement-icon compatibility with the Citadel line used by this build.
+- Fixes behavior such as harvested mussel clusters reappearing, alongside other maintenance changes on the existing port.
 
-All credit goes to the original author. This is purely a version compatibility update.
+The `maintenance` branch contains focused repairs; the `pack` branch is the combined feature build with TACT and is the source of my published combined JARs. The branch name is an implementation detail, not a requirement to use a particular modpack.
 
-<!-- ashley-release-information -->
+## Downloads and requirements
 
-## Ashley's builds
+Download the matching runtime JAR from [my releases](https://github.com/ashleywr/alexs-caves-neoforge-1.21.1/releases).
 
-This is an unofficial maintenance fork. Original authors retain ownership and credit. See the [upstream project](https://github.com/Raguto/AlexsCaves-1.21.1) for the original mod. Local changes do not imply upstream endorsement.
+- Minecraft **1.21.1**, **NeoForge**, and **Java 21**.
+- A matching **Citadel** build. This maintenance line was built and checked with Citadel **2.7.1** for NeoForge.
 
-Licensing: **GPL-3.0**. Existing license files, copyright notices, attribution and any separate asset terms remain in force. This fork does not relicense upstream work.
+Use the chosen release's exact dependency requirements. Install the matching build on the server and clients, and keep only one Alex's Caves build installed.
 
-Provided **AS IS**, without warranty of any kind. Maintenance, updates and support are best effort; compatibility with every modpack is not guaranteed.
+**Do not add a separate TACT JAR alongside the combined build.** It already contains the `alexscaves` and `tact` mod IDs. The repository rename does not change those IDs or rename saved-world content.
 
-### Downloads and installation
+## Building
 
-Download a runtime `.jar` from [GitHub Releases](https://github.com/ashleywr/AlexsCaves-1.21.1/releases). Use the Minecraft version and loader named in that release and install its required dependencies. Do not install `-sources`, `-dev`, `-slim`, `-common` or test JARs as the mod.
-
-Close Minecraft, back up your world, and place the matching runtime JAR in the instance's `mods/` directory. Replace older versions of this same mod rather than loading duplicates. For content mods, install matching versions on the server and its clients unless the release explicitly says client-only or server-only.
-
-### Building and reporting problems
-
-Use Java 21 and the checked-in Gradle wrapper:
+Use Java 21 and the checked-in wrapper:
 
 ```powershell
-.\gradlew.bat build
+.\gradlew.bat build -x deploy
 ```
 
-Build outputs are under `build/libs/` or each loader subproject's `build/libs/`. Some projects require the local development dependencies described above; those dependencies are not included in the download.
+Exclude `deploy` for an ordinary build: the checkout contains a local deployment task. The runtime JAR is written to `build/libs/`.
 
-For a problem report, include the exact release filename, Minecraft and loader versions, relevant mod versions, `logs/latest.log`, and a crash report if one was written. Remove private information before sharing logs. Remove the JAR to uninstall; worlds containing this mod's blocks, entities or world generation may require restoring a backup.
+Successful compilation does not certify every gameplay path or modpack combination. For a fork-specific problem, use [my issue tracker](https://github.com/ashleywr/alexs-caves-neoforge-1.21.1/issues) with the exact release filename, dependency versions, logs and reproduction steps.
+
+## Credits and license
+
+Credit for the original mod, assets and design remains with AlexModGuy, Noonyeyz and the original contributors. Credit for the unofficial NeoForge port remains with Raguto and its contributors. TACT is by TelepathicGrunt and its contributors.
+
+Alex's Caves remains under **GPL-3.0**. The integrated TACT work retains its **MIT** terms in [TACT-LICENSE.txt](TACT-LICENSE.txt). Existing copyright notices and asset credits remain in place. My additions do not imply endorsement by the original authors or earlier port maintainers. Builds are provided as is; maintenance is best effort.
